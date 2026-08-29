@@ -241,10 +241,11 @@ html_content = r'''<!DOCTYPE html>
             <div class="max-w-4xl mx-auto px-4 py-3 flex flex-col gap-2">
                 <!-- Row 1: User & Controls -->
                 <div class="flex justify-between items-center text-sm font-medium text-blue-100 dark:text-gray-300">
-                    <div class="flex items-center">
-                        <span id="welcome-text" class="truncate">Hoş geldin</span>
+                    <button onclick="window.openProfileModal()" class="flex items-center hover:bg-white/10 px-2 py-1.5 -ml-2 rounded-lg transition-colors group cursor-pointer" title="Profil ve Ayarlar">
+                        <svg class="w-5 h-5 mr-1.5 text-blue-200 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <span id="welcome-text" class="truncate font-semibold">Hoş geldin</span>
                         <span id="user-level" class="hidden ml-2 px-2.5 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold rounded-full shadow-sm shadow-yellow-500/30">Çömez</span>
-                    </div>
+                    </button>
                     <div class="flex items-center gap-2 shrink-0">
                         <button onclick="window.toggleDarkMode()" class="text-xs bg-white/10 hover:bg-white/20 p-1.5 rounded transition-colors" title="Karanlık/Aydınlık Mod">
                             <svg id="theme-icon-app" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
@@ -300,6 +301,16 @@ html_content = r'''<!DOCTYPE html>
                     
                     <div class="w-full md:w-1/2 flex flex-col items-end gap-3">
                         <div class="flex flex-wrap justify-end gap-2 w-full md:w-auto">
+                            <!-- Suggestion Button -->
+                            <button onclick="window.openSuggestionModal()" class="flex-1 md:flex-none md:w-auto px-4 py-2.5 bg-fuchsia-50 dark:bg-fuchsia-900/30 text-fuchsia-600 dark:text-fuchsia-400 border border-fuchsia-200 dark:border-fuchsia-800 rounded-lg font-bold hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm" title="Bize Öneri veya Hata Bildirin">
+                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                Öneri Gönder
+                            </button>
+                            <!-- Admin Panel Button (Hidden by default) -->
+                            <button id="admin-panel-btn" onclick="window.openAdminPanel()" class="hidden flex-1 md:flex-none md:w-auto px-4 py-2.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg font-bold hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors items-center justify-center gap-2 shadow-sm" title="Yönetici Paneli">
+                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                Yönetim
+                            </button>
                             <!-- Stats Button -->
                             <button onclick="window.showStatsModal()" class="flex-1 md:flex-none md:w-auto px-4 py-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg font-bold hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm">
                                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
@@ -384,6 +395,114 @@ html_content = r'''<!DOCTYPE html>
         </main>
     </div>
     
+    <!-- SUGGESTION MODAL -->
+    <div id="suggestion-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-gray-200 dark:border-slate-700">
+            <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center bg-fuchsia-50 dark:bg-fuchsia-900/20">
+                <h2 class="text-lg font-bold text-fuchsia-800 dark:text-fuchsia-300 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Uygulama İçin Öneriniz
+                </h2>
+                <button onclick="window.closeSuggestionModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-5">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">TarihApp'i geliştirmemiz için fikirlerinizi veya bulduğunuz hataları bizimle paylaşın.</p>
+                <textarea id="suggestion-text" rows="4" class="w-full border border-gray-300 dark:border-slate-600 rounded-lg p-3 bg-gray-50 dark:bg-slate-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-fuchsia-500 outline-none resize-none" placeholder="Harika fikirlerinizi buraya yazabilirsiniz..."></textarea>
+                <button id="submit-suggestion-btn" onclick="window.submitSuggestion()" class="mt-4 w-full bg-fuchsia-600 text-white font-bold py-2.5 rounded-lg hover:bg-fuchsia-700 transition-colors shadow-sm">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity opacity-0">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300 border border-gray-200 dark:border-slate-700">
+            <div class="p-5 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center bg-gray-50 dark:bg-slate-800/80">
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Profil ve Ayarlar
+                </h2>
+                <button onclick="window.closeProfileModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <!-- Stats Section -->
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="bg-blue-50 dark:bg-slate-700/50 p-3 rounded-lg text-center border border-blue-100 dark:border-slate-600">
+                        <div class="text-xl font-bold text-blue-600 dark:text-blue-400" id="profile-stat-total">0</div>
+                        <div class="text-xs font-semibold text-gray-600 dark:text-gray-400 mt-1">Çözülen Soru</div>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-slate-700/50 p-3 rounded-lg text-center border border-emerald-100 dark:border-slate-600">
+                        <div class="text-xl font-bold text-emerald-600 dark:text-emerald-400" id="profile-stat-correct">0</div>
+                        <div class="text-xs font-semibold text-gray-600 dark:text-gray-400 mt-1">Doğru Sayısı</div>
+                    </div>
+                    <div class="bg-rose-50 dark:bg-slate-700/50 p-3 rounded-lg text-center border border-rose-100 dark:border-slate-600">
+                        <div class="text-xl font-bold text-rose-600 dark:text-rose-400" id="profile-stat-wrong">0</div>
+                        <div class="text-xs font-semibold text-gray-600 dark:text-gray-400 mt-1">Yanlış Sayısı</div>
+                    </div>
+                </div>
+                
+                <!-- Form Section -->
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">E-posta Adresi</label>
+                        <input type="text" id="profile-email" disabled class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-gray-100 dark:bg-slate-900 text-gray-500 dark:text-gray-400 outline-none cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Kullanıcı Adı</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="profile-username" class="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-white outline-none transition-colors">
+                            <button onclick="window.updateUsername()" id="profile-update-btn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm whitespace-nowrap">Güncelle</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Danger Zone -->
+                <div class="border-t border-red-200 dark:border-red-900/30 pt-5 mt-2">
+                    <h3 class="text-sm font-bold text-red-600 dark:text-red-400 mb-2">Tehlikeli Bölge</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Hesabınızı ve tüm verilerinizi (yanlışlar, favoriler, istatistikler) kalıcı olarak silmek istiyorsanız bu butonu kullanın. KVKK gereği bu işlem geri alınamaz.</p>
+                    <button onclick="window.deleteAccount()" class="w-full px-4 py-2.5 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        Hesabımı Tamamen Sil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM UI MODAL -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity opacity-0">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300 border border-gray-200 dark:border-slate-700">
+            <div class="p-6 text-center">
+                <div id="custom-modal-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full mb-4">
+                    <!-- Icon injected via JS -->
+                </div>
+                <h3 id="custom-modal-title" class="text-xl font-bold text-gray-900 dark:text-white mb-2">Başlık</h3>
+                <p id="custom-modal-text" class="text-sm text-gray-600 dark:text-gray-400 mb-6">Mesaj detayı buraya gelecek.</p>
+                <div id="custom-modal-buttons" class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <!-- Buttons injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="admin-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-4xl max-h-[80vh] flex flex-col overflow-hidden border-2 border-red-500">
+            <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center bg-red-50 dark:bg-red-900/30">
+                <h2 class="text-xl font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Yönetici Paneli - Gelen Öneriler
+                </h2>
+                <button onclick="window.closeAdminPanel()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar bg-slate-50 dark:bg-slate-900" id="admin-suggestions-list">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+
     <!-- STATS MODAL -->
     <div id="stats-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity opacity-0 p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden transform scale-95 transition-transform duration-300">
@@ -433,8 +552,8 @@ html_content = r'''<!DOCTYPE html>
     <script src="data.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -710,6 +829,14 @@ html_content = r'''<!DOCTYPE html>
                 document.getElementById('app-screen').classList.remove('hidden');
                 document.getElementById('app-screen').classList.add('flex');
                 
+                // ADMIN ROLE CHECK
+                const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
+                if(ADMIN_EMAILS.includes(currentUser.email)) {
+                    document.getElementById('admin-panel-btn').classList.remove('hidden');
+                } else {
+                    document.getElementById('admin-panel-btn').classList.add('hidden');
+                }
+                
                 let displayName = user.displayName || user.email.split('@')[0];
                 document.getElementById('welcome-text').textContent = `Hoş geldin, ${displayName}`;
                 err.textContent = '';
@@ -902,8 +1029,15 @@ html_content = r'''<!DOCTYPE html>
                 updateTimerUI();
                 if(timeRemaining <= 0) {
                     stopTimer();
-                    alert("Süreniz doldu! Test otomatik olarak bitiriliyor.");
-                    window.submitCurrentTest(true); 
+                    window.showModal({
+                        type: 'warning',
+                        title: 'Süre Doldu!',
+                        text: 'Test süreniz sona erdi. Test otomatik olarak bitiriliyor.',
+                        confirmText: 'Sonucu Gör',
+                        onConfirm: () => {
+                            window.submitCurrentTest(true);
+                        }
+                    });
                 }
             }, 1000);
         }
@@ -1380,7 +1514,7 @@ html_content = r'''<!DOCTYPE html>
             
             const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
             if (!selectedOption) {
-                alert("Lütfen önce bir şık işaretleyin.");
+                window.showModal({ type: 'info', title: 'Uyarı', text: 'Çözümü görmek için lütfen önce bir şık işaretleyin.', confirmText: 'Tamam' });
                 return;
             }
             
@@ -1653,6 +1787,244 @@ html_content = r'''<!DOCTYPE html>
             });
         }
 
+        window.openSuggestionModal = function() {
+            document.getElementById('suggestion-modal').classList.remove('hidden');
+        }
+        window.closeSuggestionModal = function() {
+            document.getElementById('suggestion-modal').classList.add('hidden');
+            document.getElementById('suggestion-text').value = '';
+        }
+        
+        window.submitSuggestion = async function() {
+            const text = document.getElementById('suggestion-text').value.trim();
+            if(!text) return;
+            
+
+            
+            try {
+                const btn = document.getElementById('submit-suggestion-btn');
+                btn.textContent = 'Gönderiliyor...';
+                btn.disabled = true;
+                
+                await addDoc(collection(db, 'suggestions'), {
+                    uid: currentUser.uid,
+                    displayName: currentUser.displayName || currentUser.email,
+                    text: text,
+                    timestamp: new Date().toISOString()
+                });
+                
+                window.showModal({ type: 'success', title: 'Başarılı', text: 'Öneriniz başarıyla alındı! Geri bildiriminiz için teşekkür ederiz.', confirmText: 'Tamam' });
+                window.closeSuggestionModal();
+                btn.textContent = 'Gönder';
+                btn.disabled = false;
+            } catch (e) {
+                console.error(e);
+                window.showModal({ type: 'error', title: 'Hata', text: 'Bir hata oluştu. Lütfen bağlantınızı kontrol edin.', confirmText: 'Tamam' });
+                document.getElementById('submit-suggestion-btn').textContent = 'Tekrar Dene';
+                document.getElementById('submit-suggestion-btn').disabled = false;
+            }
+        }
+
+        window.openAdminPanel = async function() {
+            const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
+            if(!currentUser || !ADMIN_EMAILS.includes(currentUser.email)) {
+                window.showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
+                return;
+            }
+            document.getElementById('admin-modal').classList.remove('hidden');
+            const list = document.getElementById('admin-suggestions-list');
+            list.innerHTML = '<div class="text-center py-10 text-gray-500">Veritabanından öneriler çekiliyor...</div>';
+            
+            try {
+                const q = query(collection(db, "suggestions"));
+                const querySnapshot = await getDocs(q);
+                let items = [];
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data());
+                });
+                
+                items.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                let html = '';
+                items.forEach(item => {
+                    const dateStr = new Date(item.timestamp).toLocaleString('tr-TR');
+                    html += `
+                        <div class="bg-white dark:bg-slate-800 p-4 mb-4 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+                            <div class="flex justify-between items-center mb-2 border-b border-gray-100 dark:border-slate-700 pb-2">
+                                <span class="font-bold text-blue-600 dark:text-blue-400">${window.escapeHTML(item.displayName)}</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">${dateStr}</span>
+                            </div>
+                            <div class="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">${window.escapeHTML(item.text)}</div>
+                        </div>
+                    `;
+                });
+                
+                if(items.length === 0) {
+                    html = '<div class="text-center py-10 text-gray-500 font-medium">Henüz kimse bir öneri göndermemiş.</div>';
+                }
+                list.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                list.innerHTML = '<div class="text-center text-red-500 py-10 font-bold">Veriler çekilemedi! Firebase Rules (Kurallar) izin vermiyor olabilir.</div>';
+            }
+        }
+
+        window.openProfileModal = function() {
+            if(!currentUser) return;
+            const modal = document.getElementById('profile-modal');
+            
+            document.getElementById('profile-email').value = currentUser.email;
+            document.getElementById('profile-username').value = currentUser.displayName || currentUser.email.split('@')[0];
+            
+            let totalQ = 0;
+            let correctQ = 0;
+            if(userData.testProgress) {
+                Object.keys(userData.testProgress).forEach(tIdx => {
+                    const prog = userData.testProgress[tIdx];
+                    if(prog && prog.finished) {
+                        const test = testData[tIdx];
+                        totalQ += test.questions.length;
+                        correctQ += prog.score;
+                    }
+                });
+            }
+            
+            document.getElementById('profile-stat-total').textContent = totalQ;
+            document.getElementById('profile-stat-correct').textContent = correctQ;
+            document.getElementById('profile-stat-wrong').textContent = totalQ - correctQ;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 10);
+        }
+
+        window.closeProfileModal = function() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.add('scale-95');
+            modal.firstElementChild.classList.remove('scale-100');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        window.updateUsername = async function() {
+            const newName = document.getElementById('profile-username').value.trim();
+            if(!newName) return;
+            
+            const btn = document.getElementById('profile-update-btn');
+            btn.textContent = '...';
+            btn.disabled = true;
+            
+            try {
+                await updateProfile(currentUser, { displayName: newName });
+                document.getElementById('welcome-text').textContent = `Hoş geldin, ${newName}`;
+                
+                window.showModal({ type: 'success', title: 'Başarılı', text: 'Kullanıcı adınız başarıyla güncellendi.', confirmText: 'Tamam' });
+            } catch(e) {
+                console.error(e);
+                window.showModal({ type: 'error', title: 'Hata', text: 'Kullanıcı adı güncellenirken bir hata oluştu.', confirmText: 'Tamam' });
+            }
+            btn.textContent = 'Güncelle';
+            btn.disabled = false;
+        }
+
+        window.deleteAccount = function() {
+            window.showModal({
+                type: 'warning',
+                title: 'Dikkat!',
+                text: 'Hesabınızı ve çözdüğünüz tüm soruları kalıcı olarak silmek üzeresiniz. Bu işlem kesinlikle geri alınamaz. Onaylıyor musunuz?',
+                confirmText: 'Evet, Hesabımı Sil',
+                cancelText: 'İptal Et',
+                onConfirm: async () => {
+                    try {
+                        await deleteDoc(doc(db, "users", currentUser.uid));
+                        await deleteUser(currentUser);
+                        
+                        window.closeProfileModal();
+                        window.showModal({ type: 'info', title: 'Hesap Silindi', text: 'Hesabınız ve tüm verileriniz kalıcı olarak silindi. Hoşçakalın!', confirmText: 'Tamam' });
+                        setTimeout(() => window.location.reload(), 2000);
+                        
+                    } catch(error) {
+                        console.error(error);
+                        if (error.code === 'auth/requires-recent-login') {
+                            window.showModal({ type: 'error', title: 'Güvenlik Doğrulaması', text: 'Güvenlik nedeniyle hesabınızı silebilmemiz için yakın zamanda giriş yapmış olmanız gerekiyor. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra bu işlemi tekrarlayın.', confirmText: 'Tamam' });
+                        } else {
+                            window.showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluştu: ' + error.message, confirmText: 'Tamam' });
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- CUSTOM MODAL SYSTEM ---
+        window.showModal = function(options) {
+            const modal = document.getElementById('custom-modal');
+            const iconContainer = document.getElementById('custom-modal-icon');
+            const titleEl = document.getElementById('custom-modal-title');
+            const textEl = document.getElementById('custom-modal-text');
+            const btnContainer = document.getElementById('custom-modal-buttons');
+            
+            let iconHtml = '';
+            if(options.type === 'warning') {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-500 mb-4';
+                iconHtml = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+            } else if(options.type === 'success') {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-500 mb-4';
+                iconHtml = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            } else if(options.type === 'error') {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-500 mb-4';
+                iconHtml = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            } else {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-500 mb-4';
+                iconHtml = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+            }
+            
+            iconContainer.innerHTML = iconHtml;
+            titleEl.textContent = options.title;
+            textEl.textContent = options.text;
+            
+            btnContainer.innerHTML = '';
+            
+            window.closeCustomModal = function() {
+                modal.classList.add('opacity-0');
+                modal.firstElementChild.classList.add('scale-95');
+                modal.firstElementChild.classList.remove('scale-100');
+                setTimeout(() => { modal.classList.add('hidden'); }, 300);
+            }
+            
+            if (options.cancelText) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'w-full sm:w-auto px-6 py-2.5 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors shadow-sm';
+                cancelBtn.textContent = options.cancelText;
+                cancelBtn.onclick = window.closeCustomModal;
+                btnContainer.appendChild(cancelBtn);
+            }
+            
+            const confirmBtn = document.createElement('button');
+            let confirmColor = options.type === 'error' || options.type === 'warning' ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700';
+            if(options.type === 'success') confirmColor = 'bg-emerald-600 hover:bg-emerald-700';
+            confirmBtn.className = `w-full sm:w-auto px-6 py-2.5 ${confirmColor} text-white font-semibold rounded-lg transition-colors shadow-sm`;
+            confirmBtn.textContent = options.confirmText || 'Tamam';
+            confirmBtn.onclick = () => {
+                window.closeCustomModal();
+                if(options.onConfirm) setTimeout(options.onConfirm, 150);
+            };
+            btnContainer.appendChild(confirmBtn);
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 10);
+        }
+
+        window.closeAdminPanel = function() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
         window.resetTest = function() {
             if(currentMode === 'MISTAKES') {
                 generateMistakeTest();
@@ -1667,13 +2039,20 @@ html_content = r'''<!DOCTYPE html>
                 return;
             }
             
-            if(confirm("Testi sıfırlamak istediğinize emin misiniz? Bu işlem test sonucunuzu silecektir.")) {
-                userData.testProgress[currentTestIndex] = null;
-                saveUserDataCloud();
-                
-                window.showTest(currentTestIndex);
-                renderDropdown();
-            }
+            window.showModal({
+                type: 'warning',
+                title: 'Testi Sıfırla',
+                text: 'Testi sıfırlamak istediğinize emin misiniz? Bu işlem test sonucunuzu tamamen silecektir.',
+                confirmText: 'Sıfırla',
+                cancelText: 'İptal',
+                onConfirm: () => {
+                    userData.testProgress[currentTestIndex] = null;
+                    saveUserDataCloud();
+                    
+                    window.showTest(currentTestIndex);
+                    renderDropdown();
+                }
+            });
         }
     </script>
 </body>
