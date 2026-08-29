@@ -1,0 +1,622 @@
+﻿import codecs
+
+html_content = r'''<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPSS Tarih Soru Bankası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .question-block { display: none; }
+        .question-block.active { display: block; }
+        .correct-answer { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46 !important; font-weight: bold; }
+        .incorrect-answer { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; font-weight: bold; }
+        .option-label { transition: all 0.2s; }
+        .option-label:hover { background-color: #f1f5f9; }
+        input[type="radio"]:checked + .option-label { border-color: #3b82f6; background-color: #eff6ff; }
+        
+        /* Checkmark animations */
+        .correct-answer::after { content: ' ✓'; color: #10b981; }
+        .incorrect-answer::after { content: ' ✗'; color: #ef4444; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col" style="font-family: 'Inter', sans-serif;">
+    
+    <!-- AUTH SCREEN -->
+    <div id="auth-screen" class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">KPSS Tarih</h1>
+                <p class="text-gray-500">Çözümler, İstatistikler ve Hata Takibi</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kullanıcı Adı</label>
+                    <input type="text" id="auth-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" placeholder="Kullanıcı adınızı girin">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
+                    <input type="password" id="auth-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" placeholder="Şifrenizi girin">
+                </div>
+                
+                <div class="pt-4 flex gap-3">
+                    <button onclick="login()" class="flex-1 bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Giriş Yap</button>
+                    <button onclick="register()" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 rounded-lg hover:bg-emerald-700 transition-colors shadow-sm">Kayıt Ol</button>
+                </div>
+                <p id="auth-error" class="text-red-500 text-sm text-center font-medium h-5 mt-2"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP SCREEN -->
+    <div id="app-screen" class="hidden flex-col min-h-screen">
+        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 shadow-md sticky top-0 z-10 text-white">
+            <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex-1 min-w-0">
+                    <span class="text-sm font-medium text-blue-100 mb-1 block flex justify-between items-center">
+                        <span id="welcome-text">Hoş geldin, Kullanıcı</span>
+                        <button onclick="logout()" class="text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded transition-colors">Çıkış Yap</button>
+                    </span>
+                    <h1 class="text-xl font-bold text-white truncate" id="current-test-title">Yükleniyor...</h1>
+                </div>
+                <div class="ml-4 flex items-center space-x-3">
+                    <span id="test-status" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">Çözülüyor</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
+            
+            <div class="bg-white rounded-xl shadow-md border border-slate-200 p-4 mb-6">
+                <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
+                    <div class="w-full sm:w-1/2">
+                        <label for="test-dropdown" class="block text-sm font-medium text-gray-700 mb-1">Test Seçin</label>
+                        <select id="test-dropdown" class="w-full border border-slate-300 rounded-lg shadow-sm p-2.5 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none" onchange="showTest(this.value)">
+                            <!-- Options will be generated -->
+                        </select>
+                    </div>
+                    <div class="w-full sm:w-1/2 flex justify-end items-center">
+                        <label class="flex items-center cursor-pointer">
+                            <div class="relative">
+                                <input type="checkbox" id="instant-feedback" class="sr-only">
+                                <div class="block bg-gray-200 w-10 h-6 rounded-full"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"></div>
+                            </div>
+                            <div class="ml-3 text-sm font-medium text-gray-700">Anında Çözüm Göster</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-container" class="hidden bg-green-50 rounded-xl shadow-sm border border-green-200 p-6 mb-6 text-center">
+                <h2 class="text-2xl font-bold text-green-800 mb-2">Test Tamamlandı!</h2>
+                <p class="text-green-700 mb-4">Doğru Sayısı: <span id="score-text" class="font-bold text-xl"></span></p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="resetTest()" class="px-6 py-2 bg-white text-green-700 border border-green-300 rounded-lg hover:bg-green-50 font-medium transition-colors">Testi Sıfırla</button>
+                    <button onclick="showReviewMistakes()" id="review-mistakes-btn" class="hidden px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors">Yanlışlarımı İncele</button>
+                </div>
+            </div>
+
+            <div class="mb-4 flex justify-between items-center">
+                <span id="question-counter" class="text-sm font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">Soru 1 / 24</span>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div id="questions-container" class="mb-8">
+                <!-- Questions will be injected here -->
+            </div>
+
+            <div class="flex justify-between items-center mt-8 pb-12 gap-4">
+                <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 font-semibold shadow-sm transition-all border border-slate-300">
+                    Önceki Soru
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-sm transition-all">
+                    Sonraki Soru
+                </button>
+                <button id="submit-btn" onclick="submitCurrentTest()" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-sm transition-all">
+                    Testi Bitir
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #3b82f6;
+        }
+        input:checked + .block {
+            background-color: #bfdbfe;
+        }
+    </style>
+
+    <script src="data.js"></script>
+    <script>
+        // --- AUTH & STATE ---
+        let currentUser = null;
+        let userData = {}; // { mistakes: [], testProgress: {} }
+        
+        function getDb() {
+            const db = localStorage.getItem('kpss_db');
+            return db ? JSON.parse(db) : {};
+        }
+        
+        function saveDb(db) {
+            localStorage.setItem('kpss_db', JSON.stringify(db));
+        }
+
+        function login() {
+            const user = document.getElementById('auth-username').value.trim();
+            const pass = document.getElementById('auth-password').value;
+            const err = document.getElementById('auth-error');
+            
+            if(!user || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
+            
+            const db = getDb();
+            if(!db[user]) {
+                err.textContent = 'Kullanıcı bulunamadı. Lütfen kayıt olun.';
+                return;
+            }
+            if(db[user].password !== pass) {
+                err.textContent = 'Şifre hatalı.';
+                return;
+            }
+            
+            initSession(user, db[user]);
+        }
+
+        function register() {
+            const user = document.getElementById('auth-username').value.trim();
+            const pass = document.getElementById('auth-password').value;
+            const err = document.getElementById('auth-error');
+            
+            if(!user || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
+            if(user.length < 3) { err.textContent = 'Kullanıcı adı en az 3 karakter olmalı.'; return; }
+            
+            const db = getDb();
+            if(db[user]) {
+                err.textContent = 'Bu kullanıcı adı zaten alınmış.';
+                return;
+            }
+            
+            db[user] = {
+                password: pass,
+                mistakes: [], // array of { testIdx, qIdx }
+                testProgress: {} // { testIdx: { finished: boolean, score: number, answers: {} } }
+            };
+            saveDb(db);
+            initSession(user, db[user]);
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('app-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('auth-username').value = '';
+            document.getElementById('auth-password').value = '';
+        }
+
+        function initSession(username, data) {
+            currentUser = username;
+            userData = data;
+            
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+            document.getElementById('app-screen').classList.add('flex');
+            document.getElementById('welcome-text').textContent = 'Hoş geldin, ' + username;
+            
+            renderDropdown();
+            showTest(0); // Start at test 0
+        }
+        
+        function saveUserData() {
+            if(!currentUser) return;
+            const db = getDb();
+            db[currentUser] = userData;
+            saveDb(db);
+        }
+
+        // --- APP LOGIC ---
+        let currentTestIndex = 0;
+        let currentQuestionIndex = 0;
+        let isMistakeMode = false;
+        let mistakeTestQuestions = [];
+
+        function renderDropdown() {
+            const dropdown = document.getElementById('test-dropdown');
+            dropdown.innerHTML = '';
+            
+            // Add Mistake Mode option
+            const mistakeOpt = document.createElement('option');
+            mistakeOpt.value = 'MISTAKES';
+            mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Karışık Test)';
+            mistakeOpt.style.fontWeight = 'bold';
+            dropdown.appendChild(mistakeOpt);
+            
+            testData.forEach((test, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                const status = (userData.testProgress[index] && userData.testProgress[index].finished) ? ' (Çözüldü)' : '';
+                opt.textContent = test.title + status;
+                dropdown.appendChild(opt);
+            });
+        }
+
+        function generateMistakeTest() {
+            isMistakeMode = true;
+            mistakeTestQuestions = [];
+            
+            // Shuffle mistakes
+            const shuffled = [...userData.mistakes].sort(() => 0.5 - Math.random());
+            
+            // Take up to 24 questions
+            const selected = shuffled.slice(0, 24);
+            
+            selected.forEach(m => {
+                mistakeTestQuestions.push({
+                    originalTestIdx: m.testIdx,
+                    originalQIdx: m.qIdx,
+                    data: testData[m.testIdx].questions[m.qIdx]
+                });
+            });
+            
+            document.getElementById('current-test-title').textContent = mistakeTestQuestions.length > 0 
+                ? Yanlışlarım ( Soru) 
+                : 'Hiç yanlışınız yok! Tebrikler!';
+                
+            currentQuestionIndex = 0;
+            renderTestUI(mistakeTestQuestions);
+            updateUI();
+        }
+
+        function showTest(val) {
+            if(val === 'MISTAKES') {
+                generateMistakeTest();
+                return;
+            }
+            
+            isMistakeMode = false;
+            let index = parseInt(val);
+            currentTestIndex = index;
+            currentQuestionIndex = 0;
+            
+            document.getElementById('test-dropdown').value = index;
+            document.getElementById('current-test-title').textContent = testData[index].title;
+            
+            // Map test questions to expected format
+            const questions = testData[index].questions.map((q, idx) => ({
+                originalTestIdx: index,
+                originalQIdx: idx,
+                data: q
+            }));
+            
+            renderTestUI(questions);
+            updateUI();
+            
+            if (userData.testProgress[index] && userData.testProgress[index].finished) {
+                evaluateTest(index, questions);
+            }
+        }
+
+        function renderTestUI(questions) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            if(questions.length === 0) {
+                container.innerHTML = '<div class="text-center p-10 text-gray-500 font-medium">Gösterilecek soru bulunamadı.</div>';
+                document.getElementById('submit-btn').style.display = 'none';
+                return;
+            }
+
+            questions.forEach((qObj, index) => {
+                const q = qObj.data;
+                const questionEl = document.createElement('div');
+                questionEl.className = 'question-block bg-white rounded-xl shadow-md border border-slate-200 p-6 transition-all hover:shadow-lg';
+                questionEl.id = q-block-;
+                
+                let sourceBadge = '';
+                if(isMistakeMode) {
+                    sourceBadge = <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full mb-3 inline-block">Kaynak:  (Soru )</span>;
+                }
+
+                let optionsHtml = '';
+                q.options.forEach((opt, optIndex) => {
+                    const optLetter = String.fromCharCode(65 + optIndex);
+                    // Use a unique name for radio group so mistake mode doesn't clash
+                    const radioName = question--;
+                    
+                    optionsHtml += 
+                        <div class="mb-3 relative">
+                            <input type="radio" id="opt---" name="" value="" class="peer sr-only" onchange="handleOptionSelect()">
+                            <label for="opt---" class="option-label block w-full p-4 border border-gray-200 rounded-lg cursor-pointer text-gray-700">
+                                <span class="font-bold mr-2 text-blue-600">)</span> 
+                            </label>
+                        </div>
+                    ;
+                });
+
+                questionEl.innerHTML = 
+                    
+                    <h3 class="text-lg font-semibold mb-6 text-gray-800 leading-relaxed"><span class="text-blue-600 mr-2">.</span></h3>
+                    <div class="options-container mb-4">
+                        
+                    </div>
+                    
+                    <div id="check-btn-container-" class="mt-4 flex justify-end">
+                        <button onclick="evaluateSingleQuestion()" class="px-5 py-2 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 font-semibold transition-colors text-sm">Cevabı Kontrol Et</button>
+                    </div>
+
+                    <div id="solution-" class="hidden mt-6 p-5 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
+                        <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Çözüm ve Açıklama (Doğru Cevap: )
+                        </h4>
+                        <p class="text-yellow-900 leading-relaxed"></p>
+                    </div>
+                ;
+                container.appendChild(questionEl);
+            });
+        }
+
+        function updateUI() {
+            const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
+            const totalQ = questions.length;
+            
+            if(totalQ === 0) return;
+            
+            document.querySelectorAll('.question-block').forEach((el, idx) => {
+                if(idx === currentQuestionIndex) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            
+            document.getElementById('question-counter').textContent = Soru  / ;
+            const progressPct = ((currentQuestionIndex) / (totalQ - 1)) * 100 || 0;
+            document.getElementById('progress-bar').style.width = ${progressPct}%;
+            
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const resultContainer = document.getElementById('result-container');
+            
+            prevBtn.style.display = currentQuestionIndex > 0 ? 'flex' : 'none';
+            
+            const isFinished = isMistakeMode ? false : (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished);
+            
+            if (currentQuestionIndex === totalQ - 1) {
+                nextBtn.style.display = 'none';
+                if (!isFinished && !isMistakeMode) {
+                    submitBtn.style.display = 'inline-block';
+                } else {
+                    submitBtn.style.display = 'none';
+                }
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+            }
+            
+            const statusEl = document.getElementById('test-status');
+            if(isMistakeMode) {
+                statusEl.textContent = 'Hata Testi';
+                statusEl.className = 'px-3 py-1 rounded-full bg-red-100 text-red-800';
+                resultContainer.classList.add('hidden');
+            } else if(isFinished) {
+                statusEl.textContent = 'Tamamlandı';
+                statusEl.className = 'px-3 py-1 rounded-full bg-green-100 text-green-800';
+                resultContainer.classList.remove('hidden');
+            } else {
+                statusEl.textContent = 'Çözülüyor';
+                statusEl.className = 'px-3 py-1 rounded-full bg-yellow-100 text-yellow-800';
+                resultContainer.classList.add('hidden');
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        function nextQuestion() {
+            const total = isMistakeMode ? mistakeTestQuestions.length : testData[currentTestIndex].questions.length;
+            if (currentQuestionIndex < total - 1) {
+                currentQuestionIndex++;
+                updateUI();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                updateUI();
+            }
+        }
+        
+        function handleOptionSelect(qIndex) {
+            const isInstant = document.getElementById('instant-feedback').checked;
+            const isFinished = isMistakeMode ? false : (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished);
+            
+            if (isInstant && !isFinished) {
+                evaluateSingleQuestion(qIndex);
+            }
+        }
+        
+        function recordMistake(tIdx, qIdx, isMistake) {
+            // Find if exists
+            const existingIdx = userData.mistakes.findIndex(m => m.testIdx === tIdx && m.qIdx === qIdx);
+            
+            if(isMistake) {
+                if(existingIdx === -1) {
+                    userData.mistakes.push({ testIdx: tIdx, qIdx: qIdx });
+                }
+            } else {
+                if(existingIdx !== -1) {
+                    // Remove from mistakes if they answered correctly now
+                    userData.mistakes.splice(existingIdx, 1);
+                }
+            }
+            saveUserData();
+        }
+
+        function evaluateSingleQuestion(uiIndex) {
+            const qObj = isMistakeMode ? mistakeTestQuestions[uiIndex] : { originalTestIdx: currentTestIndex, originalQIdx: uiIndex, data: testData[currentTestIndex].questions[uiIndex] };
+            const q = qObj.data;
+            const radioName = question--;
+            
+            const selectedOption = document.querySelector(input[name=""]:checked);
+            if (!selectedOption) {
+                alert("Lütfen önce bir şık işaretleyin.");
+                return;
+            }
+            
+            const inputs = document.querySelectorAll(input[name=""]);
+            inputs.forEach(input => input.disabled = true);
+
+            const correctInput = document.querySelector(input[name=""][value=""]);
+            if(correctInput) {
+                correctInput.nextElementSibling.classList.add('correct-answer');
+            }
+
+            let isMistake = false;
+            if (selectedOption.value !== q.answer) {
+                selectedOption.nextElementSibling.classList.add('incorrect-answer');
+                isMistake = true;
+            }
+            
+            recordMistake(qObj.originalTestIdx, qObj.originalQIdx, isMistake);
+            
+            const solutionDiv = document.getElementById(solution-);
+            if(solutionDiv) solutionDiv.classList.remove('hidden');
+            
+            const btnContainer = document.getElementById(check-btn-container-);
+            if(btnContainer) btnContainer.classList.add('hidden');
+        }
+
+        function evaluateTest(index, mappedQuestions) {
+            let score = 0;
+            
+            mappedQuestions.forEach((qObj, uiIndex) => {
+                const q = qObj.data;
+                const radioName = question--;
+                
+                const selectedOption = document.querySelector(input[name=""]:checked);
+                const solutionDiv = document.getElementById(solution-);
+                
+                const inputs = document.querySelectorAll(input[name=""]);
+                inputs.forEach(input => input.disabled = true);
+
+                const correctInput = document.querySelector(input[name=""][value=""]);
+                if(correctInput) {
+                    correctInput.nextElementSibling.classList.add('correct-answer');
+                }
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        recordMistake(qObj.originalTestIdx, qObj.originalQIdx, false);
+                    } else {
+                        selectedOption.nextElementSibling.classList.add('incorrect-answer');
+                        recordMistake(qObj.originalTestIdx, qObj.originalQIdx, true);
+                    }
+                } else {
+                    // Unanswered is considered a mistake for tracking
+                    recordMistake(qObj.originalTestIdx, qObj.originalQIdx, true);
+                }
+                
+                if(solutionDiv) solutionDiv.classList.remove('hidden');
+                
+                const btnContainer = document.getElementById(check-btn-container-);
+                if(btnContainer) btnContainer.classList.add('hidden');
+            });
+            
+            return score;
+        }
+
+        function submitCurrentTest() {
+            if(isMistakeMode) return;
+            
+            const test = testData[currentTestIndex];
+            
+            let answeredCount = 0;
+            test.questions.forEach((q, uiIndex) => {
+                if(document.querySelector(input[name="question--"]:checked)) {
+                    answeredCount++;
+                }
+            });
+            
+            if(answeredCount < test.questions.length) {
+                if(!confirm(Henüz  soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?)) {
+                    return;
+                }
+            }
+            
+            // Re-map for evaluator
+            const questions = test.questions.map((q, idx) => ({
+                originalTestIdx: currentTestIndex,
+                originalQIdx: idx,
+                data: q
+            }));
+
+            const score = evaluateTest(currentTestIndex, questions);
+            
+            userData.testProgress[currentTestIndex] = {
+                finished: true,
+                score: score
+            };
+            saveUserData();
+            
+            const scoreText = document.getElementById('score-text');
+            scoreText.innerHTML = ${score} / ;
+            
+            const reviewBtn = document.getElementById('review-mistakes-btn');
+            if (score < test.questions.length) {
+                reviewBtn.classList.remove('hidden');
+            } else {
+                reviewBtn.classList.add('hidden');
+            }
+            
+            currentQuestionIndex = 0;
+            updateUI();
+            renderDropdown(); // refresh dropdown labels
+        }
+        
+        function showReviewMistakes() {
+            // Jump to the first incorrectly answered question in the current UI
+            const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
+            for(let i=0; i<questions.length; i++) {
+                const radioName = question--;
+                const selectedOption = document.querySelector(input[name=""]:checked);
+                const q = isMistakeMode ? mistakeTestQuestions[i].data : questions[i];
+                
+                if (!selectedOption || selectedOption.value !== q.answer) {
+                    currentQuestionIndex = i;
+                    updateUI();
+                    return;
+                }
+            }
+        }
+
+        function resetTest() {
+            if(isMistakeMode) {
+                generateMistakeTest();
+                return;
+            }
+            
+            if(confirm("Testi sıfırlamak istediğinize emin misiniz? Bu işlem test sonucunuzu silecektir.")) {
+                userData.testProgress[currentTestIndex] = null;
+                saveUserData();
+                showTest(currentTestIndex);
+                renderDropdown();
+            }
+        }
+    </script>
+</body>
+</html>
+'''
+
+with codecs.open('index.html', 'w', 'utf-8') as f:
+    f.write(html_content)
