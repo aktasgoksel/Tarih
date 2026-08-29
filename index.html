@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPSS Tarih Soru Bankası</title>
+    <title>TarihApp - Akıllı KPSS Asistanı</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1d4ed8">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/192/3253/3253112.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -47,16 +53,18 @@
     
     <!-- AUTH SCREEN -->
     <div id="auth-screen" class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 dark:from-slate-800 dark:to-slate-950 p-4 transition-colors duration-200">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transition-colors duration-200 border border-transparent dark:border-slate-700">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transition-colors duration-200 border border-transparent dark:border-slate-700 overflow-hidden">
             
-            <!-- Dark Mode Toggle Auth -->
             <button onclick="window.toggleDarkMode()" class="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-slate-700 dark:hover:text-gray-200 transition-colors" title="Temayı Değiştir">
                 <svg id="theme-icon-auth" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
             </button>
 
             <div class="text-center mb-8 mt-2">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">KPSS Tarih</h1>
-                <p class="text-gray-500 dark:text-gray-400">Çözümler, İstatistikler ve Hata Takibi</p>
+                <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 mb-2 tracking-tight flex items-center justify-center gap-2">
+    <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+    TarihApp
+</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium tracking-wide mt-1">Akıllı KPSS Tarih Asistanı</p>
             </div>
             
             <!-- LOGIN FORM -->
@@ -68,8 +76,16 @@
                         <input type="email" id="login-username" onkeypress="window.handleEnter(event, 'login')" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm" placeholder="E-posta adresiniz">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Şifre</label>
-                        <input type="password" id="login-password" onkeypress="window.handleEnter(event, 'login')" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm" placeholder="Şifreniz">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Şifre</label>
+                            <button tabindex="-1" onclick="window.switchAuth('forgot')" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline focus:outline-none">Şifremi Unuttum?</button>
+                        </div>
+                        <div class="relative">
+                            <input type="password" id="login-password" onkeypress="window.handleEnter(event, 'login')" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm pr-10" placeholder="Şifreniz">
+                            <button type="button" tabindex="-1" onclick="window.togglePassword('login-password', this)" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     <button onclick="window.login()" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-md mt-2">Giriş Yap</button>
                 </div>
@@ -105,33 +121,51 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Şifre</label>
-                        <input type="password" id="register-password" onkeypress="window.handleEnter(event, 'register')" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm" placeholder="En az 6 karakterli şifre">
+                        <div class="relative">
+                            <input type="password" id="register-password" onkeypress="window.handleEnter(event, 'register')" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm pr-10" placeholder="En az 6 karakterli şifre">
+                            <button type="button" tabindex="-1" onclick="window.togglePassword('register-password', this)" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     <button onclick="window.register()" class="w-full bg-emerald-600 text-white font-semibold py-2.5 rounded-lg hover:bg-emerald-700 transition-colors shadow-md mt-2">Kayıt Ol</button>
                 </div>
                 
-                <div class="relative flex py-4 items-center mt-2">
-                    <div class="flex-grow border-t border-gray-300 dark:border-slate-600"></div>
-                    <span class="flex-shrink-0 mx-4 text-gray-400 dark:text-gray-500 text-sm">veya</span>
-                    <div class="flex-grow border-t border-gray-300 dark:border-slate-600"></div>
-                </div>
-                
-                <button onclick="window.loginWithGoogle()" class="w-full bg-white dark:bg-slate-700 text-gray-700 dark:text-white border border-gray-300 dark:border-slate-600 font-semibold py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors shadow-sm flex items-center justify-center gap-3">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    Google ile Devam Et
-                </button>
-
                 <p class="text-center mt-5 text-sm text-gray-600 dark:text-gray-400">
                     Zaten hesabınız var mı? <button onclick="window.switchAuth('login')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Giriş Yap</button>
                 </p>
             </div>
             
-            <p id="auth-error" class="text-red-500 dark:text-red-400 text-sm text-center font-medium h-5 mt-3 empty:hidden"></p>
+            <!-- FORGOT PASSWORD FORM -->
+            <div id="forgot-form" class="auth-form hidden-form w-full">
+                <h2 class="text-xl font-semibold mb-2 dark:text-white">Şifre Sıfırlama</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Hesabınıza kayıtlı e-posta adresinizi girin. Size yeni bir şifre belirlemeniz için güvenli bir bağlantı göndereceğiz.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">E-posta</label>
+                        <input type="email" id="forgot-email" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors shadow-sm" placeholder="Kayıtlı e-posta adresiniz">
+                    </div>
+                    <button onclick="window.sendResetEmail()" class="w-full bg-indigo-600 text-white font-semibold py-2.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-md mt-2">Bağlantı Gönder</button>
+                </div>
+                <p class="text-center mt-5 text-sm text-gray-600 dark:text-gray-400">
+                    Hatırladınız mı? <button onclick="window.switchAuth('login')" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Giriş Yap'a Dön</button>
+                </p>
+            </div>
+
+            <p id="auth-error" class="text-sm text-center font-medium h-5 mt-3 empty:hidden text-red-500 dark:text-red-400"></p>
+        </div>
+    </div>
+    
+    <!-- VERIFICATION SCREEN -->
+    <div id="verify-screen" class="hidden flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 dark:from-slate-800 dark:to-slate-950 p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-8 text-center border border-transparent dark:border-slate-700">
+            <svg class="w-16 h-16 mx-auto text-blue-500 dark:text-blue-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">E-posta Doğrulaması</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm" id="verify-email-text">Güvenliğiniz için kayıt olduğunuz e-posta adresine bir doğrulama bağlantısı gönderdik.</p>
+            <button onclick="window.checkVerification()" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm mb-3">Doğruladım, Devam Et</button>
+            <button onclick="window.resendVerification()" class="w-full bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors shadow-sm mb-4">Bağlantıyı Tekrar Gönder</button>
+            <button onclick="window.logout()" class="w-full text-rose-500 dark:text-rose-400 font-semibold py-2 hover:underline">Çıkış Yap / Başka Hesap Dene</button>
+            <p id="verify-msg" class="text-sm font-medium mt-4 empty:hidden"></p>
         </div>
     </div>
 
@@ -141,7 +175,10 @@
             <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
                 <div class="flex-1 min-w-0">
                     <div class="text-sm font-medium text-blue-100 dark:text-gray-300 mb-1 flex justify-between items-center gap-2">
-                        <span id="welcome-text" class="truncate">Hoş geldin</span>
+                        <div class="flex items-center">
+                            <span id="welcome-text" class="truncate">Hoş geldin</span>
+                            <span id="user-level" class="hidden ml-2 px-2.5 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold rounded-full shadow-sm shadow-yellow-500/30">Çömez</span>
+                        </div>
                         <div class="flex items-center gap-2 shrink-0">
                             <button onclick="window.toggleDarkMode()" class="text-xs bg-white/10 hover:bg-white/20 p-1.5 rounded transition-colors" title="Karanlık/Aydınlık Mod">
                                 <svg id="theme-icon-app" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
@@ -151,9 +188,18 @@
                     </div>
                     <h1 class="text-lg md:text-xl font-bold text-white truncate" id="current-test-title">Yükleniyor...</h1>
                 </div>
-                <div class="hidden sm:flex items-center shrink-0">
+                <div class="hidden sm:flex items-center shrink-0 gap-3">
+                    <div id="timer-container" class="hidden flex items-center bg-black/20 rounded-lg px-3 py-1 border border-white/10">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timer-text" class="text-sm font-bold font-mono tracking-wider">24:00</span>
+                    </div>
                     <span id="test-status" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200">Çözülüyor</span>
                 </div>
+            </div>
+            
+            <div id="mobile-timer-container" class="sm:hidden flex items-center justify-center bg-black/20 py-1.5 border-t border-white/10 hidden">
+                <svg class="w-4 h-4 mr-2 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span id="mobile-timer-text" class="text-sm font-bold font-mono tracking-wider text-white">24:00</span>
             </div>
         </header>
 
@@ -170,10 +216,16 @@
                     </div>
                     
                     <div class="w-full md:w-1/2 flex flex-col items-end gap-3">
-                        <div class="flex gap-2 w-full md:w-auto">
-                            <button onclick="window.showTest('MISTAKES')" id="dashboard-mistake-btn" class="flex-1 md:flex-none md:w-auto px-5 py-2.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg font-bold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                        <div class="flex flex-wrap justify-end gap-2 w-full md:w-auto">
+                            <!-- Favorites Button -->
+                            <button onclick="window.showTest('FAVORITES')" id="dashboard-favorite-btn" class="flex-1 md:flex-none md:w-auto px-4 py-2.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 rounded-lg font-bold hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                Favoriler <span id="favorite-badge" class="bg-amber-500 text-white text-xs px-2.5 py-0.5 rounded-full ml-1">0</span>
+                            </button>
+                            <!-- Mistakes Button -->
+                            <button onclick="window.showTest('MISTAKES')" id="dashboard-mistake-btn" class="flex-1 md:flex-none md:w-auto px-4 py-2.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg font-bold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm">
                                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
-                                Yanlışlarımı Çöz <span id="mistake-badge" class="bg-rose-600 text-white text-xs px-2.5 py-0.5 rounded-full ml-1">0</span>
+                                Yanlışlar <span id="mistake-badge" class="bg-rose-600 text-white text-xs px-2.5 py-0.5 rounded-full ml-1">0</span>
                             </button>
                             
                             <button onclick="window.clearAllMistakes()" id="clear-mistakes-btn" class="px-3 py-2.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-slate-600 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors flex items-center justify-center shadow-sm" title="Tüm Yanlış Kayıtlarını Sıfırla">
@@ -194,12 +246,23 @@
             </div>
 
             <!-- Results Banner -->
-            <div id="result-container" class="hidden bg-emerald-50 dark:bg-emerald-900/20 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-800/50 p-6 mb-6 text-center transition-colors">
+            <div id="result-container" class="hidden bg-emerald-50 dark:bg-emerald-900/20 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-800/50 p-6 mb-6 text-center transition-colors relative overflow-hidden">
                 <h2 class="text-2xl font-bold text-emerald-800 dark:text-emerald-400 mb-2">Test Tamamlandı!</h2>
                 <p class="text-emerald-700 dark:text-emerald-500 mb-5">Doğru Sayısı: <span id="score-text" class="font-bold text-2xl ml-2"></span></p>
-                <div class="flex flex-col sm:flex-row justify-center gap-3">
-                    <button onclick="window.resetTest()" class="w-full sm:w-auto px-6 py-2.5 bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-700 font-semibold transition-colors shadow-sm">Testi Sıfırla</button>
+                <div class="flex flex-col sm:flex-row justify-center gap-3 relative z-10">
+                    <button onclick="window.resetTest()" class="w-full sm:w-auto px-6 py-2.5 bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-700 font-semibold transition-colors shadow-sm">Testi Sıfırla / Tekrar Çöz</button>
                     <button onclick="window.showReviewMistakes()" id="review-mistakes-btn" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-500 font-semibold transition-colors shadow-sm">Yanlışlarımı İncele</button>
+                </div>
+            </div>
+
+            <!-- Question Grid (Optik Form) -->
+            <div id="grid-container" class="hidden mb-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 transition-colors duration-200">
+                <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-3 flex items-center justify-between">
+                    <span>Soru Navigasyonu (Optik Form)</span>
+                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-1 rounded">Aktif</span>
+                </div>
+                <div id="question-grid" class="flex flex-wrap gap-2">
+                    <!-- Grid buttons injected here -->
                 </div>
             </div>
 
@@ -251,8 +314,13 @@
     <script src="data.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.error("SW Registration failed:", err));
+        }
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -318,33 +386,58 @@
 
         // --- STATE ---
         let currentUser = null;
-        let userData = { mistakes: [], testProgress: {} }; 
+        let userData = { mistakes: [], favorites: [], testProgress: {} }; 
+        
+        let currentMode = 'NORMAL'; // NORMAL, MISTAKES, FAVORITES, RANDOM
         let currentTestIndex = 0;
         let currentQuestionIndex = 0;
-        let isMistakeMode = false;
-        let mistakeTestQuestions = [];
+        let currentTestQuestions = []; // The array of question objects currently being rendered
+        
+        // --- TIMER STATE ---
+        let timerInterval = null;
+        let timeRemaining = 0;
         
         window.handleEnter = function(e, action) {
             if (e.key === 'Enter') {
                 if(action === 'login') window.login();
-                else window.register();
+                else if(action === 'register') window.register();
+                else if(action === 'forgot') window.sendResetEmail();
             }
         }
         
         window.switchAuth = function(type) {
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
+            const forgotForm = document.getElementById('forgot-form');
             const errorText = document.getElementById('auth-error');
+            
             errorText.textContent = '';
+            errorText.className = 'text-sm text-center font-medium h-5 mt-3 empty:hidden text-red-500 dark:text-red-400';
+            
+            loginForm.classList.add('hidden-form');
+            registerForm.classList.add('hidden-form');
+            forgotForm.classList.add('hidden-form');
             
             if(type === 'register') {
-                loginForm.classList.add('hidden-form');
                 registerForm.classList.remove('hidden-form');
                 document.getElementById('register-username').focus();
+            } else if(type === 'forgot') {
+                forgotForm.classList.remove('hidden-form');
+                document.getElementById('forgot-email').focus();
             } else {
-                registerForm.classList.add('hidden-form');
                 loginForm.classList.remove('hidden-form');
                 document.getElementById('login-username').focus();
+            }
+        }
+        
+        window.togglePassword = function(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>`;
+            } else {
+                input.type = "password";
+                btn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>`;
             }
         }
 
@@ -374,24 +467,57 @@
             if(!email || !pass) { err.textContent = 'Lütfen e-posta ve şifrenizi girin.'; return; }
             if(pass.length < 6) { err.textContent = 'Şifre en az 6 karakter olmalı.'; return; }
             
-            err.textContent = 'Kayıt olunuyor...';
+            err.textContent = 'Kayıt olunuyor... Lütfen bekleyin.';
             try {
-                await createUserWithEmailAndPassword(auth, email, pass);
+                const userCred = await createUserWithEmailAndPassword(auth, email, pass);
+                await sendEmailVerification(userCred.user);
             } catch(error) {
                 console.error(error);
-                err.textContent = 'Kayıt başarısız. Bu e-posta zaten kullanımda olabilir.';
+                if(error.code === 'auth/email-already-in-use') {
+                    err.textContent = 'Bu e-posta adresi zaten kullanımda.';
+                } else if(error.code === 'auth/invalid-email') {
+                    err.textContent = 'Geçersiz e-posta adresi.';
+                } else {
+                    err.textContent = 'Kayıt olurken bir hata oluştu: ' + error.message;
+                }
+            }
+        }
+        
+        window.sendResetEmail = async function() {
+            const email = document.getElementById('forgot-email').value.trim();
+            const err = document.getElementById('auth-error');
+            
+            if(!email) { err.textContent = "Lütfen e-posta adresinizi girin."; return; }
+            
+            err.className = "text-sm text-center font-medium h-5 mt-3 text-blue-600 dark:text-blue-400";
+            err.textContent = "Bağlantı gönderiliyor...";
+            
+            try {
+                await sendPasswordResetEmail(auth, email);
+                err.className = "text-sm text-center font-medium h-5 mt-3 text-emerald-600 dark:text-emerald-400";
+                err.textContent = "Şifre sıfırlama bağlantısı e-postanıza gönderildi!";
+                setTimeout(() => window.switchAuth('login'), 3500);
+            } catch(error) {
+                err.className = "text-sm text-center font-medium h-5 mt-3 text-red-500 dark:text-red-400";
+                if(error.code === 'auth/user-not-found') {
+                    err.textContent = "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.";
+                } else if(error.code === 'auth/invalid-email') {
+                    err.textContent = "Geçersiz e-posta formatı.";
+                } else {
+                    err.textContent = "Hata: " + error.message;
+                }
             }
         }
 
         window.loginWithGoogle = async function() {
             const provider = new GoogleAuthProvider();
             const err = document.getElementById('auth-error');
-            err.textContent = 'Google bekleniyor...';
+            err.textContent = 'Google ekranı bekleniyor...';
             try {
                 await signInWithPopup(auth, provider);
             } catch(error) {
                 console.error(error);
-                err.textContent = 'Google ile giriş yapılamadı.';
+                err.textContent = 'Hata: ' + (error.message || 'Bilinmeyen Hata');
             }
         }
 
@@ -403,12 +529,61 @@
             }
         }
 
+        window.checkVerification = async function() {
+            if(auth.currentUser) {
+                const msg = document.getElementById('verify-msg');
+                msg.className = "text-sm font-medium mt-3 text-blue-500";
+                msg.textContent = "Kontrol ediliyor...";
+                await auth.currentUser.reload();
+                if(auth.currentUser.emailVerified) {
+                    window.location.reload();
+                } else {
+                    msg.className = "text-sm font-medium mt-3 text-rose-500";
+                    msg.textContent = "Hesabınız henüz doğrulanmamış. Lütfen e-postanızı kontrol edin.";
+                }
+            }
+        }
+        
+        window.resendVerification = async function() {
+            if(auth.currentUser) {
+                const msg = document.getElementById('verify-msg');
+                msg.className = "text-sm font-medium mt-3 text-blue-500";
+                msg.textContent = "Gönderiliyor...";
+                try {
+                    await sendEmailVerification(auth.currentUser);
+                    msg.className = "text-sm font-medium mt-3 text-emerald-600";
+                    msg.textContent = "Doğrulama e-postası tekrar gönderildi. Lütfen gelen kutunuzu (ve Spam klasörünü) kontrol edin.";
+                } catch (error) {
+                    msg.className = "text-sm font-medium mt-3 text-rose-500";
+                    if(error.code === 'auth/too-many-requests') {
+                        msg.textContent = "Çok fazla istek attınız, lütfen daha sonra tekrar deneyin.";
+                    } else {
+                        msg.textContent = "E-posta gönderilirken hata oluştu.";
+                    }
+                }
+            }
+        }
+
         // AUTH LISTENER
         onAuthStateChanged(auth, async (user) => {
             const err = document.getElementById('auth-error');
             
             if (user) {
-                // Logged in
+                // VERIFICATION CHECK
+                if (!user.emailVerified) {
+                    document.getElementById('auth-screen').classList.add('hidden');
+                    document.getElementById('app-screen').classList.add('hidden');
+                    document.getElementById('verify-screen').classList.remove('hidden');
+                    document.getElementById('verify-screen').classList.add('flex');
+                    document.getElementById('verify-email-text').textContent = `${user.email} adresinize bir doğrulama bağlantısı gönderdik. Devam etmek için lütfen gelen kutunuzu kontrol edin.`;
+                    return;
+                }
+                
+                // Hide Verification Screen
+                document.getElementById('verify-screen').classList.add('hidden');
+                document.getElementById('verify-screen').classList.remove('flex');
+                
+                // Logged in & Verified
                 currentUser = user;
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('app-screen').classList.remove('hidden');
@@ -426,26 +601,33 @@
                     if (docSnap.exists()) {
                         userData = docSnap.data();
                         if(!userData.mistakes) userData.mistakes = [];
+                        if(!userData.favorites) userData.favorites = [];
                         if(!userData.testProgress) userData.testProgress = {};
                     } else {
-                        // New user, push local data if exists or empty
-                        userData = { mistakes: [], testProgress: {} };
+                        // New user
+                        userData = { mistakes: [], favorites: [], testProgress: {} };
                         await setDoc(docRef, userData);
                     }
                 } catch(e) {
                     console.error("Veri çekilemedi, geçici (boş) profille başlandı", e);
-                    userData = { mistakes: [], testProgress: {} };
+                    userData = { mistakes: [], favorites: [], testProgress: {} };
                 }
                 
                 cleanStaleMistakes();
                 updateMistakeBadge();
+                updateFavoritesBadge();
+                updateUserLevel();
                 renderDropdown();
                 window.showTest(0); // Start at test 0
                 
             } else {
                 // Logged out
+                stopTimer();
                 currentUser = null;
-                userData = { mistakes: [], testProgress: {} };
+                userData = { mistakes: [], favorites: [], testProgress: {} };
+                
+                document.getElementById('verify-screen').classList.add('hidden');
+                document.getElementById('verify-screen').classList.remove('flex');
                 document.getElementById('app-screen').classList.add('hidden');
                 document.getElementById('auth-screen').classList.remove('hidden');
                 
@@ -453,10 +635,26 @@
                 document.getElementById('login-password').value = '';
                 document.getElementById('register-username').value = '';
                 document.getElementById('register-password').value = '';
+                document.getElementById('forgot-email').value = '';
                 err.textContent = '';
                 window.switchAuth('login');
             }
         });
+        
+        function updateUserLevel() {
+            const levelEl = document.getElementById('user-level');
+            if(!userData.testProgress) return;
+            
+            let finishedCount = Object.values(userData.testProgress).filter(p => p && p.finished).length;
+            
+            let levelName = "Çömez";
+            if(finishedCount >= 1) levelName = "Tarih Meraklısı";
+            if(finishedCount >= 2) levelName = "Tarih Kurdu";
+            if(finishedCount >= 3) levelName = "Tarih Profesörü"; // since there are only 3 tests right now
+            
+            levelEl.textContent = levelName;
+            levelEl.classList.remove('hidden');
+        }
         
         function cleanStaleMistakes() {
             if (!userData.mistakes) return;
@@ -472,6 +670,8 @@
         async function saveUserDataCloud() {
             if(!currentUser) return;
             updateMistakeBadge();
+            updateFavoritesBadge();
+            updateUserLevel();
             try {
                 await setDoc(doc(db, "users", currentUser.uid), userData);
             } catch(e) {
@@ -496,14 +696,141 @@
             }
         }
 
+        function updateFavoritesBadge() {
+            const badge = document.getElementById('favorite-badge');
+            const favCount = userData.favorites ? userData.favorites.length : 0;
+            badge.textContent = favCount;
+            
+            const btn = document.getElementById('dashboard-favorite-btn');
+            if(favCount === 0) {
+                btn.classList.add('opacity-50', 'pointer-events-none', 'grayscale');
+            } else {
+                btn.classList.remove('opacity-50', 'pointer-events-none', 'grayscale');
+            }
+        }
+
         window.clearAllMistakes = function() {
             if(userData.mistakes && userData.mistakes.length > 0) {
                 if(confirm("Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz?")) {
                     userData.mistakes = [];
                     saveUserDataCloud();
-                    if(isMistakeMode) {
+                    if(currentMode === 'MISTAKES') {
                         window.showTest(0);
                     }
+                }
+            }
+        }
+
+        // --- FAVORITES LOGIC ---
+        window.toggleFavorite = function(uiIndex) {
+            const qObj = currentTestQuestions[uiIndex];
+            if(!userData.favorites) userData.favorites = [];
+            
+            const idx = userData.favorites.findIndex(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
+            if(idx === -1) {
+                userData.favorites.push({ testIdx: qObj.originalTestIdx, qIdx: qObj.originalQIdx });
+            } else {
+                userData.favorites.splice(idx, 1);
+            }
+            saveUserDataCloud();
+            
+            // Re-render button
+            const btn = document.getElementById(`star-btn-${uiIndex}`);
+            if(btn) {
+                const isFav = idx === -1; // -1 means we just added it
+                btn.innerHTML = isFav 
+                    ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
+                    : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
+            }
+        }
+
+        // --- TIMER LOGIC ---
+        function startTimer(totalQuestions) {
+            stopTimer();
+            document.getElementById('timer-container').classList.remove('hidden');
+            document.getElementById('timer-container').classList.add('flex');
+            document.getElementById('mobile-timer-container').classList.remove('hidden');
+            
+            timeRemaining = totalQuestions * 60; // 1 min per question
+            updateTimerUI();
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerUI();
+                if(timeRemaining <= 0) {
+                    stopTimer();
+                    alert("Süreniz doldu! Test otomatik olarak bitiriliyor.");
+                    window.submitCurrentTest(true); 
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timer-container').classList.add('hidden');
+            document.getElementById('timer-container').classList.remove('flex');
+            document.getElementById('mobile-timer-container').classList.add('hidden');
+        }
+
+        function updateTimerUI() {
+            const m = Math.floor(timeRemaining / 60);
+            const s = timeRemaining % 60;
+            const text = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            
+            const el = document.getElementById('timer-text');
+            const mobEl = document.getElementById('mobile-timer-text');
+            
+            el.textContent = text;
+            mobEl.textContent = text;
+            
+            if(timeRemaining < 60) {
+                el.classList.add('text-red-400');
+                mobEl.classList.add('text-red-400');
+                mobEl.classList.remove('text-white');
+            } else {
+                el.classList.remove('text-red-400');
+                mobEl.classList.remove('text-red-400');
+                mobEl.classList.add('text-white');
+            }
+        }
+
+        // --- OPTIK FORM (GRID) LOGIC ---
+        function renderGrid(totalQ) {
+            const container = document.getElementById('grid-container');
+            container.classList.remove('hidden');
+            
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            
+            for(let i=0; i<totalQ; i++) {
+                const btn = document.createElement('button');
+                btn.id = `grid-btn-${i}`;
+                btn.textContent = i + 1;
+                btn.className = "w-10 h-10 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none";
+                btn.onclick = () => {
+                    currentQuestionIndex = i;
+                    updateUI();
+                };
+                grid.appendChild(btn);
+            }
+        }
+
+        function updateGridUI() {
+            const totalQ = currentTestQuestions.length;
+            for(let i=0; i<totalQ; i++) {
+                const btn = document.getElementById(`grid-btn-${i}`);
+                if(!btn) continue;
+                
+                btn.className = "w-10 h-10 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none cursor-pointer ";
+                
+                const isAnswered = document.querySelector(`input[name="question-${i}"]:checked`);
+                
+                if (i === currentQuestionIndex) {
+                    btn.className += ' border-blue-500 bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 ring-2 ring-blue-300 dark:ring-blue-700';
+                } else if (isAnswered) {
+                    btn.className += ' border-gray-300 bg-gray-200 text-gray-700 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-300 opacity-80';
+                } else {
+                    btn.className += ' border-gray-200 bg-white text-gray-500 dark:border-slate-700 dark:bg-slate-800 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700';
                 }
             }
         }
@@ -514,11 +841,26 @@
             const dropdown = document.getElementById('test-dropdown');
             dropdown.innerHTML = '';
             
+            // Random Trial Option
+            const randomOpt = document.createElement('option');
+            randomOpt.value = 'RANDOM_27';
+            randomOpt.textContent = '🎲 Gerçek KPSS Denemesi (Rastgele 27 Soru)';
+            randomOpt.className = 'font-bold text-indigo-600 dark:text-indigo-400';
+            dropdown.appendChild(randomOpt);
+            
+            // Mistake Option
             const mistakeOpt = document.createElement('option');
             mistakeOpt.value = 'MISTAKES';
             mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Özel Test)';
             mistakeOpt.className = 'font-bold text-rose-600 dark:text-rose-400';
             dropdown.appendChild(mistakeOpt);
+            
+            // Favorite Option
+            const favOpt = document.createElement('option');
+            favOpt.value = 'FAVORITES';
+            favOpt.textContent = '⭐ Favori Sorularım (Kaydedilenler)';
+            favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
+            dropdown.appendChild(favOpt);
             
             testData.forEach((test, index) => {
                 const opt = document.createElement('option');
@@ -536,16 +878,16 @@
         }
 
         function generateMistakeTest() {
-            isMistakeMode = true;
-            mistakeTestQuestions = [];
+            currentMode = 'MISTAKES';
+            currentTestQuestions = [];
             
             const shuffled = [...userData.mistakes].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 24);
+            const selected = shuffled.slice(0, 30); // up to 30 mistake questions
             
             selected.forEach(m => {
                 const test = testData[m.testIdx];
                 if(test && test.questions && test.questions[m.qIdx]) {
-                    mistakeTestQuestions.push({
+                    currentTestQuestions.push({
                         originalTestIdx: m.testIdx,
                         originalQIdx: m.qIdx,
                         data: test.questions[m.qIdx]
@@ -553,12 +895,83 @@
                 }
             });
             
-            document.getElementById('current-test-title').textContent = mistakeTestQuestions.length > 0 
-                ? `Yanlışlarım (${mistakeTestQuestions.length} Soru)` 
+            document.getElementById('current-test-title').textContent = currentTestQuestions.length > 0 
+                ? `🔥 Yanlışlarım (${currentTestQuestions.length} Soru)` 
                 : 'Hiç yanlışınız yok! Tebrikler!';
                 
             currentQuestionIndex = 0;
-            renderTestUI(mistakeTestQuestions);
+            renderTestUI(currentTestQuestions);
+            renderGrid(currentTestQuestions.length);
+            
+            if(currentTestQuestions.length > 0) {
+                startTimer(currentTestQuestions.length);
+            } else {
+                stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
+            updateUI();
+        }
+        
+        function generateFavoritesTest() {
+            currentMode = 'FAVORITES';
+            currentTestQuestions = [];
+            
+            const shuffled = [...userData.favorites].sort(() => 0.5 - Math.random());
+            
+            shuffled.forEach(m => {
+                const test = testData[m.testIdx];
+                if(test && test.questions && test.questions[m.qIdx]) {
+                    currentTestQuestions.push({
+                        originalTestIdx: m.testIdx,
+                        originalQIdx: m.qIdx,
+                        data: test.questions[m.qIdx]
+                    });
+                }
+            });
+            
+            document.getElementById('current-test-title').textContent = currentTestQuestions.length > 0 
+                ? `⭐ Favori Sorularım (${currentTestQuestions.length} Soru)` 
+                : 'Henüz favori sorunuz yok.';
+                
+            currentQuestionIndex = 0;
+            renderTestUI(currentTestQuestions);
+            renderGrid(currentTestQuestions.length);
+            
+            if(currentTestQuestions.length > 0) {
+                startTimer(currentTestQuestions.length);
+            } else {
+                stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
+            updateUI();
+        }
+
+        function generateRandomTest() {
+            currentMode = 'RANDOM_27';
+            currentTestQuestions = [];
+            
+            let allQ = [];
+            testData.forEach((test, tIdx) => {
+                test.questions.forEach((q, qIdx) => {
+                    allQ.push({ originalTestIdx: tIdx, originalQIdx: qIdx, data: q });
+                });
+            });
+            
+            allQ.sort(() => 0.5 - Math.random());
+            currentTestQuestions = allQ.slice(0, 27);
+            
+            document.getElementById('current-test-title').textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
+            currentQuestionIndex = 0;
+            
+            renderTestUI(currentTestQuestions);
+            renderGrid(currentTestQuestions.length);
+            
+            if(currentTestQuestions.length > 0) {
+                startTimer(currentTestQuestions.length);
+            } else {
+                stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
             updateUI();
         }
 
@@ -568,8 +981,18 @@
                 generateMistakeTest();
                 return;
             }
+            if(val === 'FAVORITES') {
+                document.getElementById('test-dropdown').value = 'FAVORITES';
+                generateFavoritesTest();
+                return;
+            }
+            if(val === 'RANDOM_27') {
+                document.getElementById('test-dropdown').value = 'RANDOM_27';
+                generateRandomTest();
+                return;
+            }
             
-            isMistakeMode = false;
+            currentMode = 'NORMAL';
             let index = parseInt(val);
             currentTestIndex = index;
             currentQuestionIndex = 0;
@@ -577,18 +1000,25 @@
             document.getElementById('test-dropdown').value = index;
             document.getElementById('current-test-title').textContent = testData[index].title;
             
-            const questions = testData[index].questions.map((q, idx) => ({
+            currentTestQuestions = testData[index].questions.map((q, idx) => ({
                 originalTestIdx: index,
                 originalQIdx: idx,
                 data: q
             }));
             
-            renderTestUI(questions);
-            updateUI();
+            renderTestUI(currentTestQuestions);
+            renderGrid(currentTestQuestions.length);
             
-            if (userData.testProgress[index] && userData.testProgress[index].finished) {
-                evaluateTest(index, questions);
+            const isFinished = userData.testProgress[index] && userData.testProgress[index].finished;
+            
+            if (isFinished) {
+                stopTimer();
+                evaluateTest(currentTestQuestions);
+            } else {
+                startTimer(currentTestQuestions.length);
             }
+            
+            updateUI();
         }
 
         function renderTestUI(questions) {
@@ -596,7 +1026,7 @@
             container.innerHTML = '';
             
             if(questions.length === 0) {
-                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">Gösterilecek soru bulunamadı. Tüm yanlışlarınızı düzelttiniz!</span></div>';
+                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">Gösterilecek soru bulunamadı.</span></div>';
                 document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
@@ -604,13 +1034,20 @@
             questions.forEach((qObj, index) => {
                 const q = qObj.data;
                 const questionEl = document.createElement('div');
-                questionEl.className = 'question-block bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-5 md:p-8 transition-colors duration-200';
+                questionEl.className = 'question-block relative bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-5 md:p-8 transition-colors duration-200';
                 questionEl.id = `q-block-${index}`;
                 
                 let sourceBadge = '';
-                if(isMistakeMode) {
-                    sourceBadge = `<span class="text-xs bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-rose-200 dark:border-rose-800/50 shadow-sm">Kaynak: ${window.escapeHTML(testData[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
+                if(currentMode !== 'NORMAL') {
+                    sourceBadge = `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-indigo-200 dark:border-indigo-800/50 shadow-sm">Kaynak: ${window.escapeHTML(testData[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
                 }
+                
+                let isFav = userData.favorites && userData.favorites.find(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
+                let starSvg = isFav 
+                    ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
+                    : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
+
+                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-5 right-5 p-1 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110" title="Favorilere Ekle/Çıkar">${starSvg}</button>`;
 
                 let optionsHtml = '';
                 Object.keys(q.options).forEach((optKey, optIndex) => {
@@ -621,8 +1058,8 @@
                     
                     optionsHtml += 
                         `<div class="mb-3 relative group">
-                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index})">
-                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50">
+                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); window.updateGridUI();">
+                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50 pr-10">
                                 <span class="font-bold mr-2 text-blue-600 dark:text-blue-400">${optKey})</span> <span class="inline-block align-top">${optText}</span>
                             </label>
                         </div>`
@@ -633,8 +1070,9 @@
                 if(typeof qText === 'string') qText = qText.replace(/\n/g, '<br>');
 
                 questionEl.innerHTML = 
-                    `${sourceBadge}
-                    <h3 class="text-lg md:text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100 leading-relaxed"><span class="text-blue-600 dark:text-blue-400 mr-2">${index + 1}.</span>${qText}</h3>
+                    `${favButton}
+                    ${sourceBadge}
+                    <h3 class="text-lg md:text-xl font-semibold mb-6 pr-8 text-gray-800 dark:text-gray-100 leading-relaxed"><span class="text-blue-600 dark:text-blue-400 mr-2">${index + 1}.</span>${qText}</h3>
                     <div class="options-container mb-4">
                         ${optionsHtml}
                     </div>
@@ -658,10 +1096,10 @@
             });
         }
 
+        window.updateGridUI = updateGridUI;
+
         function updateUI() {
-            const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
-            const totalQ = questions.length;
-            
+            const totalQ = currentTestQuestions.length;
             if(totalQ === 0) return;
             
             document.querySelectorAll('.question-block').forEach((el, idx) => {
@@ -685,11 +1123,15 @@
             
             prevBtn.style.display = currentQuestionIndex > 0 ? 'flex' : 'none';
             
-            const isFinished = isMistakeMode ? false : (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished);
+            const isFinished = (currentMode === 'NORMAL') ? (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished) : false;
+            // For special modes, they are never "finished" formally in DB, they just hide the submit button if they end. 
+            // Actually, we can submit RANDOM tests to show results. Let's allow submit for RANDOM mode!
+            
+            const canSubmit = (currentMode === 'NORMAL' && !isFinished) || (currentMode === 'RANDOM_27');
             
             if (currentQuestionIndex === totalQ - 1) {
                 nextBtn.style.display = 'none';
-                if (!isFinished && !isMistakeMode) {
+                if (canSubmit) {
                     submitBtn.style.display = 'inline-block';
                     submitBtn.classList.add('flex');
                     submitBtn.classList.remove('hidden');
@@ -709,21 +1151,25 @@
             const mobStatusEl = document.getElementById('mobile-test-status');
             let statusText = '', statusClass = '', mobStatusClass = '';
 
-            if(isMistakeMode) {
-                statusText = 'Hata Testi';
+            if(currentMode === 'MISTAKES' || currentMode === 'FAVORITES') {
+                statusText = (currentMode === 'MISTAKES') ? 'Hata Testi' : 'Favoriler';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200 border border-transparent dark:border-rose-800/50';
-                mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-rose-100 text-rose-800 border-rose-200 dark:bg-rose-900/50 dark:text-rose-200 dark:border-rose-800/50';
+                if(currentMode === 'FAVORITES') statusClass = statusClass.replace(/rose/g, 'amber');
+                mobStatusClass = statusClass.replace('px-3 py-1', 'sm:hidden px-3 py-1.5 text-xs border shadow-sm');
                 resultContainer.classList.add('hidden');
+            } else if(currentMode === 'RANDOM_27' && !document.getElementById('result-container').classList.contains('hidden')) {
+                // if random test is submitted, it will show result-container. We shouldn't force hide it here unless it's resetting.
+                // It will be handled in evaluateTest / submitCurrentTest
             } else if(isFinished) {
                 statusText = 'Tamamlandı';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 border border-transparent dark:border-emerald-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800/50';
                 resultContainer.classList.remove('hidden');
+                stopTimer();
             } else {
                 statusText = 'Çözülüyor';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200 border border-transparent dark:border-yellow-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/50 dark:text-yellow-200 dark:border-yellow-800/50';
-                resultContainer.classList.add('hidden');
             }
             
             statusEl.textContent = statusText;
@@ -733,11 +1179,12 @@
                 mobStatusEl.className = mobStatusClass;
             }
             
+            updateGridUI();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.nextQuestion = function() {
-            const total = isMistakeMode ? mistakeTestQuestions.length : testData[currentTestIndex].questions.length;
+            const total = currentTestQuestions.length;
             if (currentQuestionIndex < total - 1) {
                 currentQuestionIndex++;
                 updateUI();
@@ -753,9 +1200,9 @@
         
         window.handleOptionSelect = function(qIndex) {
             const isInstant = document.getElementById('instant-feedback').checked;
-            const isFinished = isMistakeMode ? false : (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished);
+            const isFinished = (currentMode === 'NORMAL') ? (userData.testProgress[currentTestIndex] && userData.testProgress[currentTestIndex].finished) : false;
             
-            if (isInstant && !isFinished) {
+            if (isInstant && !isFinished && currentMode !== 'RANDOM_27') {
                 window.evaluateSingleQuestion(qIndex);
             }
         }
@@ -776,7 +1223,7 @@
         }
 
         window.evaluateSingleQuestion = function(uiIndex) {
-            const qObj = isMistakeMode ? mistakeTestQuestions[uiIndex] : { originalTestIdx: currentTestIndex, originalQIdx: uiIndex, data: testData[currentTestIndex].questions[uiIndex] };
+            const qObj = currentTestQuestions[uiIndex];
             const q = qObj.data;
             const radioName = `question-${uiIndex}`;
             
@@ -809,7 +1256,7 @@
             if(btnContainer) btnContainer.classList.add('hidden');
         }
 
-        function evaluateTest(index, mappedQuestions) {
+        function evaluateTest(mappedQuestions) {
             let score = 0;
             
             mappedQuestions.forEach((qObj, uiIndex) => {
@@ -848,43 +1295,42 @@
             return score;
         }
 
-        window.submitCurrentTest = function() {
-            if(isMistakeMode) return;
-            
-            const test = testData[currentTestIndex];
+        window.submitCurrentTest = function(forceSubmit = false) {
+            if(currentMode === 'MISTAKES' || currentMode === 'FAVORITES') return;
             
             let answeredCount = 0;
-            test.questions.forEach((q, uiIndex) => {
+            currentTestQuestions.forEach((q, uiIndex) => {
                 if(document.querySelector(`input[name="question-${uiIndex}"]:checked`)) {
                     answeredCount++;
                 }
             });
             
-            if(answeredCount < test.questions.length) {
-                if(!confirm(`Henüz ${test.questions.length - answeredCount} soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?`)) {
+            if(!forceSubmit && answeredCount < currentTestQuestions.length) {
+                if(!confirm(`Henüz ${currentTestQuestions.length - answeredCount} soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?`)) {
                     return;
                 }
             }
             
-            const questions = test.questions.map((q, idx) => ({
-                originalTestIdx: currentTestIndex,
-                originalQIdx: idx,
-                data: q
-            }));
-
-            const score = evaluateTest(currentTestIndex, questions);
+            stopTimer(); 
             
-            userData.testProgress[currentTestIndex] = {
-                finished: true,
-                score: score
-            };
-            saveUserDataCloud();
+            const score = evaluateTest(currentTestQuestions);
+            
+            if (currentMode === 'NORMAL') {
+                userData.testProgress[currentTestIndex] = {
+                    finished: true,
+                    score: score
+                };
+                saveUserDataCloud();
+            }
+            
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.classList.remove('hidden');
             
             const scoreText = document.getElementById('score-text');
-            scoreText.innerHTML = `${score} / ${test.questions.length}`;
+            scoreText.innerHTML = `${score} / ${currentTestQuestions.length}`;
             
             const reviewBtn = document.getElementById('review-mistakes-btn');
-            if (score < test.questions.length) {
+            if (score < currentTestQuestions.length) {
                 reviewBtn.classList.remove('hidden');
                 reviewBtn.classList.add('flex');
             } else {
@@ -892,17 +1338,26 @@
                 reviewBtn.classList.remove('flex');
             }
             
+            // CONFETTI ANIMATION IF FULL SCORE
+            if (score === currentTestQuestions.length && typeof confetti === 'function') {
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.5 },
+                    colors: ['#10b981', '#34d399', '#fbbf24', '#f59e0b', '#3b82f6']
+                });
+            }
+            
             currentQuestionIndex = 0;
             updateUI();
-            renderDropdown();
+            if(currentMode === 'NORMAL') renderDropdown();
         }
         
         window.showReviewMistakes = function() {
-            const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
-            for(let i=0; i<questions.length; i++) {
+            for(let i=0; i<currentTestQuestions.length; i++) {
                 const radioName = `question-${i}`;
                 const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
-                const q = isMistakeMode ? mistakeTestQuestions[i].data : questions[i];
+                const q = currentTestQuestions[i].data;
                 
                 if (!selectedOption || selectedOption.value !== q.answer) {
                     currentQuestionIndex = i;
@@ -913,8 +1368,16 @@
         }
 
         window.resetTest = function() {
-            if(isMistakeMode) {
+            if(currentMode === 'MISTAKES') {
                 generateMistakeTest();
+                return;
+            }
+            if(currentMode === 'FAVORITES') {
+                generateFavoritesTest();
+                return;
+            }
+            if(currentMode === 'RANDOM_27') {
+                generateRandomTest();
                 return;
             }
             
@@ -922,15 +1385,6 @@
                 userData.testProgress[currentTestIndex] = null;
                 saveUserDataCloud();
                 
-                const inputs = document.querySelectorAll(`input[type="radio"]`);
-                inputs.forEach(input => {
-                    input.checked = false;
-                    input.disabled = false;
-                    if(input.nextElementSibling) {
-                        input.nextElementSibling.classList.remove('correct-answer', 'incorrect-answer');
-                    }
-                });
-
                 window.showTest(currentTestIndex);
                 renderDropdown();
             }
