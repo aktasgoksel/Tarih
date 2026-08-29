@@ -1,4 +1,4 @@
-﻿import codecs
+import codecs
 
 html_content = r'''<!DOCTYPE html>
 <html lang="tr">
@@ -18,8 +18,8 @@ html_content = r'''<!DOCTYPE html>
         input[type="radio"]:checked + .option-label { border-color: #3b82f6; background-color: #eff6ff; }
         
         /* Checkmark animations */
-        .correct-answer::after { content: ' ✓'; color: #10b981; }
-        .incorrect-answer::after { content: ' ✗'; color: #ef4444; }
+        .correct-answer::after { content: ' \2713'; color: #10b981; }
+        .incorrect-answer::after { content: ' \2717'; color: #ef4444; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col" style="font-family: 'Inter', sans-serif;">
@@ -70,11 +70,11 @@ html_content = r'''<!DOCTYPE html>
 
         <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
             
-            <div class="bg-white rounded-xl shadow-md border border-slate-200 p-4 mb-6">
+            <div class="bg-white rounded-xl shadow-md border border-slate-200 p-4 mb-6 transition-all hover:shadow-lg">
                 <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
                     <div class="w-full sm:w-1/2">
                         <label for="test-dropdown" class="block text-sm font-medium text-gray-700 mb-1">Test Seçin</label>
-                        <select id="test-dropdown" class="w-full border border-slate-300 rounded-lg shadow-sm p-2.5 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none" onchange="showTest(this.value)">
+                        <select id="test-dropdown" class="w-full border border-blue-400 rounded-md shadow-sm p-2 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none" onchange="showTest(this.value)">
                             <!-- Options will be generated -->
                         </select>
                     </div>
@@ -113,13 +113,13 @@ html_content = r'''<!DOCTYPE html>
             </div>
 
             <div class="flex justify-between items-center mt-8 pb-12 gap-4">
-                <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 font-semibold shadow-sm transition-all border border-slate-300">
+                <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 font-semibold shadow-sm transition-all border border-slate-300 flex items-center gap-2">
                     Önceki Soru
                 </button>
-                <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-sm transition-all">
+                <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-sm transition-all flex items-center gap-2 hover:shadow-md">
                     Sonraki Soru
                 </button>
-                <button id="submit-btn" onclick="submitCurrentTest()" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-sm transition-all">
+                <button id="submit-btn" onclick="submitCurrentTest()" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-sm transition-all flex items-center gap-2 hover:shadow-md">
                     Testi Bitir
                 </button>
             </div>
@@ -235,7 +235,7 @@ html_content = r'''<!DOCTYPE html>
             // Add Mistake Mode option
             const mistakeOpt = document.createElement('option');
             mistakeOpt.value = 'MISTAKES';
-            mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Karışık Test)';
+            mistakeOpt.textContent = '\uD83D\uDD25 Yanlış Yaptığım Sorular (Karışık Test)';
             mistakeOpt.style.fontWeight = 'bold';
             dropdown.appendChild(mistakeOpt);
             
@@ -267,7 +267,7 @@ html_content = r'''<!DOCTYPE html>
             });
             
             document.getElementById('current-test-title').textContent = mistakeTestQuestions.length > 0 
-                ? Yanlışlarım ( Soru) 
+                ? `Yanlışlarım (${mistakeTestQuestions.length} Soru)` 
                 : 'Hiç yanlışınız yok! Tebrikler!';
                 
             currentQuestionIndex = 0;
@@ -318,47 +318,47 @@ html_content = r'''<!DOCTYPE html>
                 const q = qObj.data;
                 const questionEl = document.createElement('div');
                 questionEl.className = 'question-block bg-white rounded-xl shadow-md border border-slate-200 p-6 transition-all hover:shadow-lg';
-                questionEl.id = q-block-;
+                questionEl.id = `q-block-${index}`;
                 
                 let sourceBadge = '';
                 if(isMistakeMode) {
-                    sourceBadge = <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full mb-3 inline-block">Kaynak:  (Soru )</span>;
+                    sourceBadge = `<span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full mb-3 inline-block">Kaynak: ${testData[qObj.originalTestIdx].title} (Soru ${q.qNum})</span>`;
                 }
 
                 let optionsHtml = '';
-                q.options.forEach((opt, optIndex) => {
-                    const optLetter = String.fromCharCode(65 + optIndex);
+                Object.keys(q.options).forEach((optKey, optIndex) => {
+                    const opt = q.options[optKey];
                     // Use a unique name for radio group so mistake mode doesn't clash
-                    const radioName = question--;
+                    const radioName = `question-${index}`;
                     
                     optionsHtml += 
-                        <div class="mb-3 relative">
-                            <input type="radio" id="opt---" name="" value="" class="peer sr-only" onchange="handleOptionSelect()">
-                            <label for="opt---" class="option-label block w-full p-4 border border-gray-200 rounded-lg cursor-pointer text-gray-700">
-                                <span class="font-bold mr-2 text-blue-600">)</span> 
+                        `<div class="mb-3 relative">
+                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="handleOptionSelect(${index})">
+                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 rounded-lg cursor-pointer text-gray-700">
+                                <span class="font-bold mr-2 text-blue-600">${optKey})</span> ${opt}
                             </label>
-                        </div>
+                        </div>`
                     ;
                 });
 
                 questionEl.innerHTML = 
-                    
-                    <h3 class="text-lg font-semibold mb-6 text-gray-800 leading-relaxed"><span class="text-blue-600 mr-2">.</span></h3>
+                    `${sourceBadge}
+                    <h3 class="text-lg font-semibold mb-6 text-gray-800 leading-relaxed"><span class="text-blue-600 mr-2">${index + 1}.</span>${q.question ? q.question.replace(/\n/g, '<br>') : ''}</h3>
                     <div class="options-container mb-4">
-                        
+                        ${optionsHtml}
                     </div>
                     
-                    <div id="check-btn-container-" class="mt-4 flex justify-end">
-                        <button onclick="evaluateSingleQuestion()" class="px-5 py-2 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 font-semibold transition-colors text-sm">Cevabı Kontrol Et</button>
+                    <div id="check-btn-container-${index}" class="mt-4 flex justify-end">
+                        <button onclick="evaluateSingleQuestion(${index})" class="px-5 py-2 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 font-semibold transition-colors text-sm">Cevabı Kontrol Et</button>
                     </div>
 
-                    <div id="solution-" class="hidden mt-6 p-5 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
+                    <div id="solution-${index}" class="hidden mt-6 p-5 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
                         <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Çözüm ve Açıklama (Doğru Cevap: )
+                            Çözüm ve Açıklama (Doğru Cevap: ${q.answer})
                         </h4>
-                        <p class="text-yellow-900 leading-relaxed"></p>
-                    </div>
+                        <p class="text-yellow-900 leading-relaxed">${q.solution ? q.solution.replace(/\n/g, '<br>') : ''}</p>
+                    </div>`
                 ;
                 container.appendChild(questionEl);
             });
@@ -378,9 +378,9 @@ html_content = r'''<!DOCTYPE html>
                 }
             });
             
-            document.getElementById('question-counter').textContent = Soru  / ;
+            document.getElementById('question-counter').textContent = `Soru ${currentQuestionIndex + 1} / ${totalQ}`;
             const progressPct = ((currentQuestionIndex) / (totalQ - 1)) * 100 || 0;
-            document.getElementById('progress-bar').style.width = ${progressPct}%;
+            document.getElementById('progress-bar').style.width = `${progressPct}%`;
             
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -395,12 +395,18 @@ html_content = r'''<!DOCTYPE html>
                 nextBtn.style.display = 'none';
                 if (!isFinished && !isMistakeMode) {
                     submitBtn.style.display = 'inline-block';
+                    submitBtn.classList.add('flex');
+                    submitBtn.classList.remove('hidden');
                 } else {
                     submitBtn.style.display = 'none';
+                    submitBtn.classList.remove('flex');
+                    submitBtn.classList.add('hidden');
                 }
             } else {
                 nextBtn.style.display = 'flex';
                 submitBtn.style.display = 'none';
+                submitBtn.classList.remove('flex');
+                submitBtn.classList.add('hidden');
             }
             
             const statusEl = document.getElementById('test-status');
@@ -465,18 +471,18 @@ html_content = r'''<!DOCTYPE html>
         function evaluateSingleQuestion(uiIndex) {
             const qObj = isMistakeMode ? mistakeTestQuestions[uiIndex] : { originalTestIdx: currentTestIndex, originalQIdx: uiIndex, data: testData[currentTestIndex].questions[uiIndex] };
             const q = qObj.data;
-            const radioName = question--;
+            const radioName = `question-${uiIndex}`;
             
-            const selectedOption = document.querySelector(input[name=""]:checked);
+            const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
             if (!selectedOption) {
                 alert("Lütfen önce bir şık işaretleyin.");
                 return;
             }
             
-            const inputs = document.querySelectorAll(input[name=""]);
+            const inputs = document.querySelectorAll(`input[name="${radioName}"]`);
             inputs.forEach(input => input.disabled = true);
 
-            const correctInput = document.querySelector(input[name=""][value=""]);
+            const correctInput = document.querySelector(`input[name="${radioName}"][value="${q.answer}"]`);
             if(correctInput) {
                 correctInput.nextElementSibling.classList.add('correct-answer');
             }
@@ -489,10 +495,10 @@ html_content = r'''<!DOCTYPE html>
             
             recordMistake(qObj.originalTestIdx, qObj.originalQIdx, isMistake);
             
-            const solutionDiv = document.getElementById(solution-);
+            const solutionDiv = document.getElementById(`solution-${uiIndex}`);
             if(solutionDiv) solutionDiv.classList.remove('hidden');
             
-            const btnContainer = document.getElementById(check-btn-container-);
+            const btnContainer = document.getElementById(`check-btn-container-${uiIndex}`);
             if(btnContainer) btnContainer.classList.add('hidden');
         }
 
@@ -501,15 +507,15 @@ html_content = r'''<!DOCTYPE html>
             
             mappedQuestions.forEach((qObj, uiIndex) => {
                 const q = qObj.data;
-                const radioName = question--;
+                const radioName = `question-${uiIndex}`;
                 
-                const selectedOption = document.querySelector(input[name=""]:checked);
-                const solutionDiv = document.getElementById(solution-);
+                const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
+                const solutionDiv = document.getElementById(`solution-${uiIndex}`);
                 
-                const inputs = document.querySelectorAll(input[name=""]);
+                const inputs = document.querySelectorAll(`input[name="${radioName}"]`);
                 inputs.forEach(input => input.disabled = true);
 
-                const correctInput = document.querySelector(input[name=""][value=""]);
+                const correctInput = document.querySelector(`input[name="${radioName}"][value="${q.answer}"]`);
                 if(correctInput) {
                     correctInput.nextElementSibling.classList.add('correct-answer');
                 }
@@ -529,7 +535,7 @@ html_content = r'''<!DOCTYPE html>
                 
                 if(solutionDiv) solutionDiv.classList.remove('hidden');
                 
-                const btnContainer = document.getElementById(check-btn-container-);
+                const btnContainer = document.getElementById(`check-btn-container-${uiIndex}`);
                 if(btnContainer) btnContainer.classList.add('hidden');
             });
             
@@ -543,13 +549,13 @@ html_content = r'''<!DOCTYPE html>
             
             let answeredCount = 0;
             test.questions.forEach((q, uiIndex) => {
-                if(document.querySelector(input[name="question--"]:checked)) {
+                if(document.querySelector(`input[name="question-${uiIndex}"]:checked`)) {
                     answeredCount++;
                 }
             });
             
             if(answeredCount < test.questions.length) {
-                if(!confirm(Henüz  soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?)) {
+                if(!confirm(`Henüz ${test.questions.length - answeredCount} soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?`)) {
                     return;
                 }
             }
@@ -570,7 +576,7 @@ html_content = r'''<!DOCTYPE html>
             saveUserData();
             
             const scoreText = document.getElementById('score-text');
-            scoreText.innerHTML = ${score} / ;
+            scoreText.innerHTML = `${score} / ${test.questions.length}`;
             
             const reviewBtn = document.getElementById('review-mistakes-btn');
             if (score < test.questions.length) {
@@ -588,8 +594,8 @@ html_content = r'''<!DOCTYPE html>
             // Jump to the first incorrectly answered question in the current UI
             const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
             for(let i=0; i<questions.length; i++) {
-                const radioName = question--;
-                const selectedOption = document.querySelector(input[name=""]:checked);
+                const radioName = `question-${i}`;
+                const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
                 const q = isMistakeMode ? mistakeTestQuestions[i].data : questions[i];
                 
                 if (!selectedOption || selectedOption.value !== q.answer) {
