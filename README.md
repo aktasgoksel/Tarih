@@ -1,46 +1,22 @@
-# KPSS Tarih Soru Bankası
+# KPSS Tarih Soru Bankası 📚
 
-Tamamen tarayıcı üzerinde çalışan, sunucusuz (serverless) ve interaktif bir KPSS Tarih Soru Bankası web uygulamasıdır. 
+Bu proje, KPSS Tarih müfredatına hazırlanan adaylar için özel olarak geliştirilmiş, tamamen ücretsiz ve interaktif bir soru çözme platformudur.
 
-## 🌟 Özellikler
+Kullanıcıların internet kotasını harcamadan, hızlı ve pratik bir şekilde bol soru çözebilmesi, eksiklerini görebilmesi ve sınav hazırlığını en verimli şekilde yönetebilmesi amacıyla tasarlanmıştır.
 
-- **İnternetsiz / Sunucusuz Çalışma:** Veritabanı veya arka uç (backend) sunucusuna ihtiyaç duymaz. Tüm kayıtlar tarayıcının yerel depolama alanında (`localStorage`) tutulur.
-- **Kişiselleştirilmiş Kullanıcı Hesapları:** Her kullanıcı kendi cihazında hesap oluşturabilir. Hangi testlerin çözüldüğü ve doğru/yanlış sayıları hesap bazında kaydedilir.
-- **Akıllı Hata Takibi (Yanlışlarımı Çöz):** Testlerde yanlış yapılan veya boş bırakılan sorular otomatik olarak kaydedilir. "🔥 Yanlışlarımı Çöz" butonu ile sadece yanlış yapılan sorulardan oluşan özel testler oluşturulabilir. Soruyu doğru cevapladığınızda hata havuzundan silinir.
-- **Anında Geri Bildirim:** İsteğe bağlı olarak "Anında Çözüm Göster" modu açılarak, soruyu cevaplar cevaplamaz doğru yanıtı ve çözüm açıklamasını görebilirsiniz.
-- **Karanlık / Aydınlık Mod:** Göz yormayan tasarım, sistem temanıza göre otomatik ayarlanır veya menüdeki butondan manuel olarak değiştirilebilir.
-- **Mobil Uyumlu (Responsive):** Tailwind CSS sayesinde telefon, tablet ve bilgisayar ekranlarına tam uyumludur.
+## 🌟 Neler İçerir?
 
-## 🚀 Kurulum ve Çalıştırma
+Platformumuz, tarih dersindeki başarı oranınızı artırmak için şu harika özelliklerle donatılmıştır:
 
-Projede sunucu olmadığı için kurulum çok basittir:
+*   **Geniş Kapsamlı Testler:** İslamiyet Öncesi Türk Tarihi'nden Çağdaş Türk ve Dünya Tarihi'ne kadar KPSS müfredatındaki tüm konuları kapsayan, özenle hazırlanmış testler.
+*   **Akıllı Hata Takip Sistemi:** Sınavda en çok net getiren şey yanlışlardan ders çıkarmaktır. Sistem, yanlış yaptığınız veya boş bıraktığınız tüm soruları otomatik olarak hafızasına alır. Ana ekrandaki **"🔥 Yanlışlarımı Çöz"** butonu sayesinde sadece eksik olduğunuz soruları içeren özel testler oluşturabilirsiniz. Bir soruyu doğru çözdüğünüzde o soru hata havuzunuzdan kalıcı olarak silinir.
+*   **Anında Çözüm Gösterimi:** Her sorunun detaylı bir çözümü ve açıklaması bulunur. "Anında Çözüm Göster" modunu aktif ederseniz, şıkkı işaretlediğiniz saniye cevabın doğruluk durumunu ve detaylı tarihsel açıklamasını görebilirsiniz.
+*   **Kişiselleştirilmiş İlerleme:** Herhangi bir şifre veya e-posta aktivasyonu gerekmeden sadece bir kullanıcı adı ile saniyeler içinde hesabınızı oluşturabilirsiniz. Tüm doğru/yanlış sayılarınız ve hangi testleri bitirdiğiniz cihazınıza özel olarak kaydedilir.
+*   **Gece / Gündüz Modu (Dark Mode):** Uzun süreli soru çözümlerinde gözünüzün yorulmaması için tasarlanmış karanlık mod desteği. Menüdeki tek bir tuşla dilediğiniz temaya geçiş yapabilirsiniz.
+*   **Mobil Uyumluluk:** Otobüste, metroda veya yatakta... Ekran boyutunuz ne olursa olsun (telefon, tablet veya bilgisayar) sistem arayüzü cihazınıza kusursuz uyum sağlar.
 
-1. Bu projeyi bilgisayarınıza indirin veya `git clone` ile çekin.
-2. Klasör içindeki `index.html` dosyasına çift tıklayarak herhangi bir modern tarayıcıda açın.
-3. Çalışmaya başlayın!
+## 🎯 Amacımız
 
-### Yeni Soru Ekleme / Arayüzü Güncelleme
-Proje kaynak kodlarını güncellemek isterseniz:
-1. `data.js` dosyasını açıp JSON formatındaki test verilerine yeni sorular ekleyebilirsiniz.
-2. Arayüz yapısını değiştirmek için `build_html.py` dosyasını düzenleyin. 
-3. Yaptığınız değişikliklerin HTML dosyasına yansıması için terminalden şu komutu çalıştırın:
-   ```bash
-   python build_html.py
-   ```
-   Bu komut, en güncel `index.html` dosyasını sizin için otomatik oluşturacaktır.
+KPSS hazırlık süreci uzun ve yorucu bir maratondur. Bu platform, piyasadaki kalın soru bankalarını taşımak yerine, binlerce soruya ve onların açıklayıcı çözümlerine saniyeler içinde her yerden ulaşabilmeniz için geliştirilmiştir. 
 
-## 🌐 GitHub Pages Üzerinde Yayınlama
-
-Bu projeyi herkese açık bir web sitesi olarak internette ücretsiz yayınlamak için:
-
-1. Deponuzu (Repository) GitHub'a yükleyin ve görünürlüğünü **Public** (Herkese Açık) yapın.
-2. GitHub'da projenizin **Settings (Ayarlar)** sekmesine gidin.
-3. Sol menüden **Pages** seçeneğine tıklayın.
-4. "Source" kısmını `Deploy from a branch` olarak ayarlayın.
-5. "Branch" kısmından `main` dalını seçin ve "Save" diyerek kaydedin.
-6. Yaklaşık 1 dakika sonra siteniz `https://[kullanici-adiniz].github.io/Tarih` adresinde yayında olacaktır!
-
-## 🛠️ Teknolojiler
-- HTML5, CSS3, JavaScript (ES6)
-- **Tailwind CSS** (Tasarım kütüphanesi - CDN üzerinden)
-- **Python** (Statik site oluşturucu betik olarak)
+Hepinize iyi çalışmalar ve KPSS'de sonsuz başarılar dileriz! 🏆
