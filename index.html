@@ -233,9 +233,14 @@
                 <div class="flex flex-col md:flex-row gap-5 justify-between items-center">
                     <div class="w-full md:w-1/2">
                         <label for="test-dropdown" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Test Seçin</label>
-                        <select id="test-dropdown" class="w-full border border-blue-400 dark:border-slate-600 rounded-lg shadow-sm p-3 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors cursor-pointer" onchange="window.showTest(this.value)">
-                            <!-- Options will be generated -->
-                        </select>
+                        <div class="flex gap-2">
+                            <select id="test-dropdown" class="w-full border border-blue-400 dark:border-slate-600 rounded-lg shadow-sm p-3 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors cursor-pointer" onchange="window.showTest(this.value)">
+                                <!-- Options will be generated -->
+                            </select>
+                            <button id="reshuffle-random-btn" onclick="window.generateRandomTest()" class="hidden shrink-0 px-4 py-2 bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 rounded-lg border border-purple-300 dark:border-purple-800 hover:bg-purple-200 dark:hover:bg-purple-900/60 transition-colors shadow-sm" title="Yeni Sorular Üret">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="w-full md:w-1/2 flex flex-col items-end gap-3">
@@ -1037,7 +1042,7 @@
             updateUI();
         }
 
-        function generateRandomTest() {
+        window.generateRandomTest = function() {
             currentMode = 'RANDOM_27';
             currentTestQuestions = [];
             
@@ -1079,7 +1084,7 @@
             }
             if(val === 'RANDOM_27') {
                 document.getElementById('test-dropdown').value = 'RANDOM_27';
-                generateRandomTest();
+                window.generateRandomTest();
                 return;
             }
             
@@ -1603,7 +1608,7 @@
                 return;
             }
             if(currentMode === 'RANDOM_27') {
-                generateRandomTest();
+                window.generateRandomTest();
                 return;
             }
             
