@@ -248,6 +248,20 @@ html_content = r'''<!DOCTYPE html>
                         
                     </button>
                     <div class="flex items-center gap-2 shrink-0">
+                        <!-- Admin Panel Button -->
+                        <button id="admin-panel-btn" onclick="window.openAdminPanel()" class="hidden text-xs bg-red-500/20 hover:bg-red-500/40 text-red-100 border border-red-400/30 px-2 py-1.5 rounded transition-colors flex items-center gap-1.5" title="Yönetici Paneli">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <span class="hidden sm:inline">Yönetim</span>
+                        </button>
+                        <!-- Suggestion Button -->
+                        <button onclick="window.openSuggestionModal()" class="text-xs bg-fuchsia-500/20 hover:bg-fuchsia-500/40 text-fuchsia-100 border border-fuchsia-400/30 px-2 py-1.5 rounded transition-colors flex items-center gap-1.5" title="Bize Öneri veya Hata Bildirin">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            <span class="hidden sm:inline">Öneri</span>
+                        </button>
+                        
+                        <div class="w-px h-4 bg-white/20 mx-0.5"></div>
+                        
+                        <!-- Theme & Logout -->
                         <button onclick="window.toggleDarkMode()" class="text-xs bg-white/10 hover:bg-white/20 p-1.5 rounded transition-colors" title="Karanlık/Aydınlık Mod">
                             <svg id="theme-icon-app" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
                         </button>
@@ -316,19 +330,7 @@ html_content = r'''<!DOCTYPE html>
                     </div>
                     
                     <div class="w-full md:w-auto flex flex-col gap-3 md:ml-auto">
-                        <!-- Top Row: Admin & Suggestion -->
-                        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2">
-                            <button id="admin-panel-btn" onclick="window.openAdminPanel()" class="hidden px-4 py-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg font-bold hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm" title="Yönetici Paneli">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                                Yönetim
-                            </button>
-                            <button onclick="window.openSuggestionModal()" class="px-4 py-2 bg-fuchsia-50 dark:bg-fuchsia-900/30 text-fuchsia-600 dark:text-fuchsia-400 border border-fuchsia-200 dark:border-fuchsia-800 rounded-lg font-bold hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm" title="Bize Öneri veya Hata Bildirin">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                                Öneri Gönder
-                            </button>
-                        </div>
-                        
-                        <!-- Middle Row: Stats & Favorites -->
+                        <!-- Primary Row: Stats & Favorites -->
                         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2">
                             <button onclick="window.showStatsModal()" class="flex-1 md:flex-none px-4 py-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg font-bold hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors flex items-center justify-center gap-2 shadow-sm">
                                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
@@ -414,6 +416,23 @@ html_content = r'''<!DOCTYPE html>
                 </button>
             </div>
         </main>
+        
+        <!-- FOOTER -->
+        <footer class="mt-auto py-6 border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400 text-xs">
+            <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-8">
+                <div class="flex items-center gap-2 font-medium">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors cursor-pointer" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+                    <span>&copy; 2026 TarihApp - Göksel Aktaş. Tüm hakları saklıdır.</span>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 font-medium">
+                    <button onclick="window.showLegalModal('terms')" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Kullanım Koşulları</button>
+                    <button onclick="window.showLegalModal('privacy')" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Gizlilik Politikası</button>
+                    <button onclick="window.openSuggestionModal()" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">İletişim</button>
+                    <span class="text-gray-300 dark:text-gray-700 hidden lg:inline">|</span>
+                    <span class="text-gray-400 dark:text-gray-600">v1.0.0</span>
+                </div>
+            </div>
+        </footer>
     </div>
     
     <!-- SUGGESTION MODAL -->
@@ -491,6 +510,27 @@ html_content = r'''<!DOCTYPE html>
                         Hesabımı Kalıcı Olarak Sil
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEGAL MODAL -->
+    <div id="legal-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity opacity-0">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[85vh] border border-gray-200 dark:border-slate-700 transform scale-95 transition-transform duration-300">
+            <div class="p-5 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center bg-gray-50 dark:bg-slate-800/80 shrink-0">
+                <h2 id="legal-title" class="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Başlık
+                </h2>
+                <button onclick="window.closeLegalModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="legal-content" class="p-6 overflow-y-auto text-sm text-gray-700 dark:text-gray-300 space-y-4 leading-relaxed">
+                <!-- Dynamic content -->
+            </div>
+            <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/80 flex justify-end shrink-0">
+                <button onclick="window.closeLegalModal()" class="px-6 py-2.5 bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-800 dark:text-white font-semibold rounded-lg transition-colors shadow-sm">Kapat</button>
             </div>
         </div>
     </div>
@@ -1201,7 +1241,7 @@ html_content = r'''<!DOCTYPE html>
                     const score = userData.testProgress[index].score;
                     scoreText = ` \u2713 (Çözüldü - ${score}/${test.questions.length})`;
                 }
-                opt.textContent = `${index + 1}. ${test.title}${scoreText}`;
+                opt.textContent = `${test.title}${scoreText}`;
                 dropdown.appendChild(opt);
             });
         }
@@ -2027,6 +2067,69 @@ html_content = r'''<!DOCTYPE html>
         }
 
         // --- CUSTOM MODAL SYSTEM ---
+
+        const legalTexts = {
+            'terms': {
+                title: 'Kullanım Koşulları',
+                content: `
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">1. Hizmetin Kapsamı</h3>
+                    <p class="mb-4">TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrencilere yönelik tamamen ücretsiz bir eğitim asistanıdır. Sistemdeki sorular ve denemeler eğitim amacıyla sunulmaktadır. Geliştirici, soruların kesin doğruluğunu taahhüt etmez.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Hesap ve Veri Güvenliği</h3>
+                    <p class="mb-4">Uygulamamızı kullanırken oluşturduğunuz hesap bilgileri Google Firebase altyapısı ile şifrelenerek korunmaktadır. Kullanıcı, kendi hesabının güvenliğinden sorumludur.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. Kötüye Kullanım</h3>
+                    <p class="mb-4">Sistemin işleyişini bozacak, veri trafiğini manipüle edecek her türlü otomasyon aracının (bot vb.) kullanılması yasaktır. Bu tür durumlar tespit edildiğinde hesabınız kalıcı olarak silinebilir.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. Değişiklik Hakları</h3>
+                    <p>Yönetim, uygulama içerisindeki özellikleri, soru tiplerini veya kullanım koşullarını önceden haber vermeksizin değiştirme hakkını saklı tutar.</p>
+                `
+            },
+            'privacy': {
+                title: 'Gizlilik Politikası',
+                content: `
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">1. Toplanan Veriler</h3>
+                    <p class="mb-4">Sizlere daha iyi bir deneyim sunabilmek için şu verileri depolarız: E-posta adresiniz, belirlediğiniz kullanıcı adı, çözdüğünüz testlerin istatistikleri, yanlış yaptığınız ve favoriye aldığınız sorular.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Verilerin Kullanımı</h3>
+                    <p class="mb-4">Toplanan istatistiksel veriler (çözülen sorular, hatalar vs.) tamamen size özel kişiselleştirilmiş "Yanlışlarım" veya "İstatistikler" ekranlarını oluşturmak için kullanılır. Verileriniz hiçbir şekilde üçüncü şahıs veya reklam şirketleriyle paylaşılmaz, satılmaz.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. Çerezler (Cookies) ve Yerel Depolama</h3>
+                    <p class="mb-4">Uygulama, "Karanlık Mod/Aydınlık Mod" tercihlerinizi ve aktif oturum bilgilerinizi hatırlamak için tarayıcınızın yerel depolama (Local Storage) özelliğini kullanır. İzleme (Tracking) veya reklam çerezleri kullanılmamaktadır.</p>
+                    
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. KVKK ve Unutulma Hakkı</h3>
+                    <p>Kullanıcılar istedikleri zaman "Profil ve Ayarlar" paneli üzerinden hesaplarını ve ilişkili tüm verilerini (yanlışlar, favoriler, çözülen testler) sistemden kalıcı olarak silebilirler. Bu işlem geri alınamaz.</p>
+                `
+            }
+        };
+
+        window.showLegalModal = function(type) {
+            const modal = document.getElementById('legal-modal');
+            const inner = modal.querySelector('div');
+            
+            document.getElementById('legal-title').innerHTML = `
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                ${legalTexts[type].title}
+            `;
+            document.getElementById('legal-content').innerHTML = legalTexts[type].content;
+            
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            inner.classList.remove('scale-95');
+        };
+
+        window.closeLegalModal = function() {
+            const modal = document.getElementById('legal-modal');
+            const inner = modal.querySelector('div');
+            modal.classList.add('opacity-0');
+            inner.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        };
+        
         window.showModal = function(options) {
             const modal = document.getElementById('custom-modal');
             const iconContainer = document.getElementById('custom-modal-icon');
