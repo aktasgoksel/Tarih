@@ -2,9 +2,24 @@
 <html lang="tr" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Responsive & Mobile Optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    
+    <!-- Security Headers (Anti-XSS, Anti-Clickjacking, Privacy) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    
     <title>TarihApp - Akıllı KPSS Asistanı</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3253/3253112.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+    
+    <!-- Preconnect for Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    
     <!-- SEO Meta Tags -->
     <meta name="description" content="KPSS Tarih akıllı soru bankası. Yanlışlarınızı takip edin, istatistiklerinizi görün ve netlerinizi artırın.">
     <meta property="og:title" content="TarihApp - KPSS Asistanı">
@@ -261,7 +276,7 @@
             
             <!-- Dashboard Controls -->
             <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-5 mb-6 transition-colors duration-200">
-                <div class="flex flex-col md:flex-row gap-5 justify-between items-center">
+                <div class="flex flex-col md:flex-row gap-5 justify-between items-start">
                     <div class="w-full md:w-1/2">
                         <label for="test-dropdown" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Test Seçin</label>
                         <div class="flex gap-2">

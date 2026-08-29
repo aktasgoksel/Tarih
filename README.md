@@ -1,24 +1,42 @@
-# KPSS Tarih Soru Bankası 📚
+# TarihApp - Eğitim ve Sınav Asistanı
 
-Bu proje, KPSS Tarih müfredatına hazırlanan adaylar için özel olarak geliştirilmiş, tamamen ücretsiz ve interaktif bir soru çözme platformudur.
+TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrenciler için geliştirilmiş, ilerleme takibi ve analiz yetenekleriyle donatılmış dijital bir eğitim platformudur. Bu doküman, uygulamanın sunduğu özellikleri ve temel kullanım prensiplerini içermektedir.
 
-Kullanıcıların internet kotasını harcamadan, hızlı ve pratik bir şekilde bol soru çözebilmesi, eksiklerini görebilmesi ve sınav hazırlığını en verimli şekilde yönetebilmesi amacıyla tasarlanmıştır.
+## Temel Özellikler
 
-🔗 **Canlı Siteyi Ziyaret Edin:** [aktasgoksel.github.io/Tarih](https://aktasgoksel.github.io/Tarih)
+*   **Kişiselleştirilmiş İlerleme Takibi:** Çözülen tüm testler, başarı oranları ve zaman metrikleri bulut tabanlı (Firebase) olarak güvenle saklanır.
+*   **Akıllı Algoritmalar (Favoriler & Yanlışlar):** Karşılaşılan sorular favorilere eklenebilir veya hatalı işaretlenen sorular sistem tarafından otomatik olarak kaydedilerek "Yanlışlarım" adı altında özel bir teste dönüştürülür.
+*   **Gerçek Sınav Simülasyonu:** Rastgele seçilen 27 soru ile tüm konulardan bağımsız tam kapsamlı deneme sınavları oluşturulabilir.
+*   **Gelişmiş İstatistik Paneli:** Doğru, yanlış ve boş sayıları ile başarı yüzdeleri detaylı grafikler (Donut ve Çizgi grafikleri) eşliğinde incelenebilir.
+*   **Karanlık/Aydınlık Mod & PWA:** Kullanıcı deneyimini artıran dinamik tema seçeneği ve uygulamayı bir masaüstü/mobil uygulama gibi cihaza yükleme (Progressive Web App) desteği mevcuttur.
+*   **KVKK Uyumlu Hesap Yönetimi:** Kullanıcılar diledikleri zaman hesaplarını ve tüm kişisel verilerini kalıcı olarak sistemden silebilirler.
 
-## 🌟 Neler İçerir?
+## Kullanım Rehberi
 
-Platformumuz, tarih dersindeki başarı oranınızı artırmak için şu harika özelliklerle donatılmıştır:
+### 1. Hesap Oluşturma ve Giriş
+Sistemi tam kapsamlı kullanabilmek için geçerli bir e-posta adresi ile kayıt olunması veya Google hesabı ile giriş yapılması gerekmektedir. Yeni kayıtlarda veri güvenliği için e-posta doğrulama (Verification) adımı zorunludur.
 
-*   **Geniş Kapsamlı Testler:** İslamiyet Öncesi Türk Tarihi'nden Çağdaş Türk ve Dünya Tarihi'ne kadar KPSS müfredatındaki tüm konuları kapsayan, özenle hazırlanmış testler.
-*   **Akıllı Hata Takip Sistemi:** Sınavda en çok net getiren şey yanlışlardan ders çıkarmaktır. Sistem, yanlış yaptığınız veya boş bıraktığınız tüm soruları otomatik olarak hafızasına alır. Ana ekrandaki **"🔥 Yanlışlarımı Çöz"** butonu sayesinde sadece eksik olduğunuz soruları içeren özel testler oluşturabilirsiniz. Bir soruyu doğru çözdüğünüzde o soru hata havuzunuzdan kalıcı olarak silinir.
-*   **Anında Çözüm Gösterimi:** Her sorunun detaylı bir çözümü ve açıklaması bulunur. "Anında Çözüm Göster" modunu aktif ederseniz, şıkkı işaretlediğiniz saniye cevabın doğruluk durumunu ve detaylı tarihsel açıklamasını görebilirsiniz.
-*   **Bulut Tabanlı İlerleme:** İster "Google ile Devam Et" diyerek tek tıkla, isterseniz e-posta adresinizle güvenle giriş yapabilirsiniz. Tüm doğru/yanlış istatistikleriniz ve hangi testleri bitirdiğiniz buluta kaydedilir. Böylece telefondan veya bilgisayardan girdiğinizde her zaman kaldığınız yerden devam edebilirsiniz.
-*   **Gece / Gündüz Modu (Dark Mode):** Uzun süreli soru çözümlerinde gözünüzün yorulmaması için tasarlanmış karanlık mod desteği. Menüdeki tek bir tuşla dilediğiniz temaya geçiş yapabilirsiniz.
-*   **Mobil Uyumluluk:** Otobüste, metroda veya yatakta... Ekran boyutunuz ne olursa olsun (telefon, tablet veya bilgisayar) sistem arayüzü cihazınıza kusursuz uyum sağlar.
+### 2. Test Çözümü ve Anında Geri Bildirim
+*   **Test Seçimi:** Ekrandaki "Test Seçin" açılır menüsünden istenilen tarih konusu seçilerek doğrudan teste başlanabilir.
+*   **Anında Çözüm Göster:** Kontrol panelindeki bu anahtar (toggle) aktif edildiğinde, işaretlenen şıkkın doğruluğu ve sorunun detaylı çözümü anında ekrana yansır. Aktif edilmediğinde sonuçlar test bitimine bırakılır.
+*   **Zamanlayıcı (Timer):** Sağ üst köşede bulunan "Süreyi Başlat" butonu ile her test için kendinizi zamanla yarışarak sınayabilir, dilediğinizde süreyi duraklatabilir veya sıfırlayabilirsiniz.
 
-## 🎯 Amacımız
+### 3. Özel Test Modları (Favoriler ve Yanlışlar)
+*   Test esnasında yıldız (⭐) ikonuna basılarak önemli görülen sorular **Favoriler** listesine eklenir.
+*   Yanlış işaretlenen sorular otomatik olarak depolanır.
+*   Kontrol panelindeki **"Favoriler"** veya **"Yanlışlar"** butonlarına tıklayarak, sadece bu sorulardan oluşan kişiselleştirilmiş testler çözülebilir. Yanlışlar havuzunu sıfırlamak için butonun yanındaki çöp kutusu ikonu kullanılabilir.
 
-KPSS hazırlık süreci uzun ve yorucu bir maratondur. Bu platform, piyasadaki kalın soru bankalarını taşımak yerine, binlerce soruya ve onların açıklayıcı çözümlerine saniyeler içinde her yerden ulaşabilmeniz için geliştirilmiştir. 
+### 4. Gerçek KPSS Denemesi
+Açılır menüden **"Gerçek KPSS Denemesi (Rastgele 27 Soru)"** modunu seçtiğinizde, sistem mevcut tüm testlerin içinden karma bir deneme oluşturur. Yeni bir rastgele denemeye geçmek için açılır menünün yanındaki "Yeni Sorular Üret" butonuna (Zar ikonu) tıklamanız yeterlidir.
 
-Hepinize iyi çalışmalar ve KPSS'de sonsuz başarılar dileriz! 🏆
+### 5. İstatistikleri İnceleme
+Kontrol panelinde yer alan **"İstatistikler"** butonuna tıklandığında, çözülen toplam soru sayısı, doğru/yanlış grafikleri ve tarihsel ilerleme eğriniz görsel raporlar eşliğinde sunulur. Bu raporlar zayıf olduğunuz konuları tespit etmenize yardımcı olur.
+
+### 6. Profil ve Veri Yönetimi
+Sağ üst köşedeki kullanıcı adınıza (Profil simgesi) tıklayarak ayarlar paneline erişebilirsiniz. Bu panel üzerinden:
+*   Kullanıcı adınızı değiştirebilir,
+*   E-posta adresinizi güvenli bir şekilde güncelleyebilir,
+*   Hesabınızı ve size ait tüm verileri kalıcı olarak (KVKK standartlarına uygun şekilde) silebilirsiniz.
+
+### 7. Yasal Bildirimler ve İletişim
+Sayfanın en altında bulunan alt çubuk (Footer) üzerinden uygulamanın Gizlilik Politikası ve Kullanım Koşulları metinlerine ulaşabilirsiniz. Uygulama ile ilgili bir tavsiyede bulunmak veya hata bildirmek isterseniz, üst panelde yer alan **"Öneri Gönder"** butonunu kullanabilirsiniz.
