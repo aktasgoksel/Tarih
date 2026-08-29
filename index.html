@@ -1,110 +1,172 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KPSS Tarih Soru Bankası</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <style>
         .question-block { display: none; }
         .question-block.active { display: block; }
         .correct-answer { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46 !important; font-weight: bold; }
         .incorrect-answer { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; font-weight: bold; }
+        .dark .correct-answer { background-color: rgba(16, 185, 129, 0.2) !important; border-color: #10b981 !important; color: #34d399 !important; }
+        .dark .incorrect-answer { background-color: rgba(239, 68, 68, 0.2) !important; border-color: #ef4444 !important; color: #f87171 !important; }
         .option-label { transition: all 0.2s; }
         .option-label:hover { background-color: #f1f5f9; }
+        .dark .option-label:hover { background-color: #334155; }
         input[type="radio"]:checked + .option-label { border-color: #3b82f6; background-color: #eff6ff; }
+        .dark input[type="radio"]:checked + .option-label { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.2); }
         
         /* Checkmark animations */
         .correct-answer::after { content: ' \2713'; color: #10b981; }
         .incorrect-answer::after { content: ' \2717'; color: #ef4444; }
+        
+        /* Custom toggle animation */
+        .auth-form { transition: all 0.3s ease; opacity: 1; transform: translateX(0); }
+        .auth-form.hidden-form { opacity: 0; transform: translateX(20px); pointer-events: none; position: absolute; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col" style="font-family: 'Inter', sans-serif;">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
     
     <!-- AUTH SCREEN -->
-    <div id="auth-screen" class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">KPSS Tarih</h1>
-                <p class="text-gray-500">Çözümler, İstatistikler ve Hata Takibi</p>
+    <div id="auth-screen" class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 dark:from-slate-800 dark:to-slate-950 p-4 transition-colors duration-200">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-8 relative overflow-hidden transition-colors duration-200 border border-transparent dark:border-slate-700">
+            
+            <!-- Dark Mode Toggle Auth -->
+            <button onclick="toggleDarkMode()" class="absolute top-4 right-4 p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700 transition-colors">
+                <svg id="theme-icon-auth" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+            </button>
+
+            <div class="text-center mb-8 mt-2">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">KPSS Tarih</h1>
+                <p class="text-gray-500 dark:text-gray-400">Çözümler, İstatistikler ve Hata Takibi</p>
             </div>
             
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kullanıcı Adı</label>
-                    <input type="text" id="auth-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" placeholder="Kullanıcı adınızı girin">
+            <div class="relative min-h-[220px]">
+                <!-- LOGIN FORM -->
+                <div id="login-form" class="auth-form w-full left-0 top-0">
+                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Giriş Yap</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kullanıcı Adı</label>
+                            <input type="text" id="login-username" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors" placeholder="Kullanıcı adınız">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Şifre</label>
+                            <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors" placeholder="Şifreniz">
+                        </div>
+                        <button onclick="login()" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm mt-2">Giriş Yap</button>
+                    </div>
+                    <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+                        Hesabınız yok mu? <button onclick="switchAuth('register')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Kayıt Ol</button>
+                    </p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
-                    <input type="password" id="auth-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" placeholder="Şifrenizi girin">
+
+                <!-- REGISTER FORM -->
+                <div id="register-form" class="auth-form hidden-form w-full left-0 top-0">
+                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Yeni Kayıt</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kullanıcı Adı</label>
+                            <input type="text" id="register-username" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors" placeholder="Kullanıcı adınızı belirleyin">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Şifre</label>
+                            <input type="password" id="register-password" class="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 dark:text-white outline-none transition-colors" placeholder="Şifrenizi belirleyin">
+                        </div>
+                        <button onclick="register()" class="w-full bg-emerald-600 text-white font-semibold py-2.5 rounded-lg hover:bg-emerald-700 transition-colors shadow-sm mt-2">Kayıt Ol</button>
+                    </div>
+                    <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+                        Zaten hesabınız var mı? <button onclick="switchAuth('login')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Giriş Yap</button>
+                    </p>
                 </div>
-                
-                <div class="pt-4 flex gap-3">
-                    <button onclick="login()" class="flex-1 bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Giriş Yap</button>
-                    <button onclick="register()" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 rounded-lg hover:bg-emerald-700 transition-colors shadow-sm">Kayıt Ol</button>
-                </div>
-                <p id="auth-error" class="text-red-500 text-sm text-center font-medium h-5 mt-2"></p>
             </div>
+            <p id="auth-error" class="text-red-500 dark:text-red-400 text-sm text-center font-medium h-5 mt-4"></p>
         </div>
     </div>
 
     <!-- APP SCREEN -->
     <div id="app-screen" class="hidden flex-col min-h-screen">
-        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 shadow-md sticky top-0 z-10 text-white">
+        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 dark:from-slate-800 dark:to-slate-900 shadow-md sticky top-0 z-10 text-white transition-colors duration-200 border-b border-transparent dark:border-slate-700">
             <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
                 <div class="flex-1 min-w-0">
-                    <span class="text-sm font-medium text-blue-100 mb-1 block flex justify-between items-center">
+                    <span class="text-sm font-medium text-blue-100 dark:text-gray-300 mb-1 block flex justify-between items-center">
                         <span id="welcome-text">Hoş geldin, Kullanıcı</span>
-                        <button onclick="logout()" class="text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded transition-colors">Çıkış Yap</button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleDarkMode()" class="text-xs bg-white/10 hover:bg-white/20 p-1.5 rounded transition-colors" title="Karanlık/Aydınlık Mod">
+                                <svg id="theme-icon-app" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+                            </button>
+                            <button onclick="logout()" class="text-xs bg-white/20 hover:bg-white/30 px-2 py-1.5 rounded transition-colors">Çıkış Yap</button>
+                        </div>
                     </span>
                     <h1 class="text-xl font-bold text-white truncate" id="current-test-title">Yükleniyor...</h1>
                 </div>
-                <div class="ml-4 flex items-center space-x-3">
-                    <span id="test-status" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">Çözülüyor</span>
+                <div class="ml-4 flex items-center space-x-3 hidden sm:flex">
+                    <span id="test-status" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200">Çözülüyor</span>
                 </div>
             </div>
         </header>
 
         <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
             
-            <div class="bg-white rounded-xl shadow-md border border-slate-200 p-4 mb-6 transition-all hover:shadow-lg">
-                <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
-                    <div class="w-full sm:w-1/2">
-                        <label for="test-dropdown" class="block text-sm font-medium text-gray-700 mb-1">Test Seçin</label>
-                        <select id="test-dropdown" class="w-full border border-blue-400 rounded-md shadow-sm p-2 bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 outline-none" onchange="showTest(this.value)">
+            <!-- Dashboard Controls -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-5 mb-6 transition-all hover:shadow-lg">
+                <div class="flex flex-col md:flex-row gap-5 justify-between items-center">
+                    <div class="w-full md:w-1/2">
+                        <label for="test-dropdown" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Test Seçin</label>
+                        <select id="test-dropdown" class="w-full border border-blue-400 dark:border-slate-600 rounded-lg shadow-sm p-3 bg-white dark:bg-slate-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors" onchange="showTest(this.value)">
                             <!-- Options will be generated -->
                         </select>
                     </div>
-                    <div class="w-full sm:w-1/2 flex justify-end items-center">
-                        <label class="flex items-center cursor-pointer">
+                    
+                    <div class="w-full md:w-1/2 flex flex-col items-end gap-3">
+                        <button onclick="showTest('MISTAKES')" id="dashboard-mistake-btn" class="w-full md:w-auto px-4 py-2.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg font-semibold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
+                            Yanlışlarımı Çöz <span id="mistake-badge" class="bg-rose-600 text-white text-xs px-2 py-0.5 rounded-full ml-1">0</span>
+                        </button>
+                        
+                        <label class="flex items-center cursor-pointer mt-1">
                             <div class="relative">
                                 <input type="checkbox" id="instant-feedback" class="sr-only">
-                                <div class="block bg-gray-200 w-10 h-6 rounded-full"></div>
+                                <div class="block bg-gray-200 dark:bg-slate-600 w-10 h-6 rounded-full transition-colors"></div>
                                 <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"></div>
                             </div>
-                            <div class="ml-3 text-sm font-medium text-gray-700">Anında Çözüm Göster</div>
+                            <div class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">Anında Çözüm Göster</div>
                         </label>
                     </div>
                 </div>
             </div>
 
-            <div id="result-container" class="hidden bg-green-50 rounded-xl shadow-sm border border-green-200 p-6 mb-6 text-center">
-                <h2 class="text-2xl font-bold text-green-800 mb-2">Test Tamamlandı!</h2>
-                <p class="text-green-700 mb-4">Doğru Sayısı: <span id="score-text" class="font-bold text-xl"></span></p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="resetTest()" class="px-6 py-2 bg-white text-green-700 border border-green-300 rounded-lg hover:bg-green-50 font-medium transition-colors">Testi Sıfırla</button>
-                    <button onclick="showReviewMistakes()" id="review-mistakes-btn" class="hidden px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors">Yanlışlarımı İncele</button>
+            <!-- Results Banner -->
+            <div id="result-container" class="hidden bg-emerald-50 dark:bg-emerald-900/20 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-800/50 p-6 mb-6 text-center transition-colors">
+                <h2 class="text-2xl font-bold text-emerald-800 dark:text-emerald-400 mb-2">Test Tamamlandı!</h2>
+                <p class="text-emerald-700 dark:text-emerald-500 mb-4">Doğru Sayısı: <span id="score-text" class="font-bold text-xl"></span></p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="resetTest()" class="px-6 py-2 bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-700 font-medium transition-colors">Testi Sıfırla</button>
+                    <button onclick="showReviewMistakes()" id="review-mistakes-btn" class="hidden px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-500 font-medium transition-colors">Yanlışlarımı İncele</button>
                 </div>
             </div>
 
             <div class="mb-4 flex justify-between items-center">
-                <span id="question-counter" class="text-sm font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">Soru 1 / 24</span>
+                <span id="question-counter" class="text-sm font-bold text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-slate-800 px-3 py-1 rounded-full border border-gray-300 dark:border-slate-700">Soru 1 / 24</span>
             </div>
             
-            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-6">
-                <div id="progress-bar" class="bg-blue-600 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5 mb-6 overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 dark:bg-blue-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
 
             <div id="questions-container" class="mb-8">
@@ -112,13 +174,16 @@
             </div>
 
             <div class="flex justify-between items-center mt-8 pb-12 gap-4">
-                <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 font-semibold shadow-sm transition-all border border-slate-300 flex items-center gap-2">
-                    Önceki Soru
+                <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold shadow-sm transition-all border border-slate-300 dark:border-slate-600 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Önceki
                 </button>
-                <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-sm transition-all flex items-center gap-2 hover:shadow-md">
-                    Sonraki Soru
+                <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 font-semibold shadow-sm transition-all flex items-center justify-center gap-2 hover:shadow-md">
+                    Sonraki
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
-                <button id="submit-btn" onclick="submitCurrentTest()" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold shadow-sm transition-all flex items-center gap-2 hover:shadow-md">
+                <button id="submit-btn" onclick="submitCurrentTest()" class="hidden w-full sm:w-auto px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-500 font-semibold shadow-sm transition-all items-center justify-center gap-2 hover:shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     Testi Bitir
                 </button>
             </div>
@@ -133,14 +198,68 @@
         input:checked + .block {
             background-color: #bfdbfe;
         }
+        .dark input:checked + .block {
+            background-color: #1e3a8a;
+        }
     </style>
 
     <script src="data.js"></script>
     <script>
+        // --- THEME LOGIC ---
+        function applyTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                setThemeIcons('moon');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                setThemeIcons('sun');
+            }
+        }
+        
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(!isDark);
+        }
+
+        function setThemeIcons(mode) {
+            const sunIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+            const moonIcon = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            
+            const iconContent = mode === 'dark' ? sunIcon : moonIcon;
+            const appIcon = document.getElementById('theme-icon-app');
+            const authIcon = document.getElementById('theme-icon-auth');
+            if(appIcon) appIcon.innerHTML = iconContent;
+            if(authIcon) authIcon.innerHTML = iconContent;
+        }
+
+        // Init theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            applyTheme(true);
+        } else {
+            applyTheme(false);
+        }
+
         // --- AUTH & STATE ---
         let currentUser = null;
         let userData = {}; // { mistakes: [], testProgress: {} }
         
+        function switchAuth(type) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const errorText = document.getElementById('auth-error');
+            errorText.textContent = '';
+            
+            if(type === 'register') {
+                loginForm.classList.add('hidden-form');
+                registerForm.classList.remove('hidden-form');
+            } else {
+                registerForm.classList.add('hidden-form');
+                loginForm.classList.remove('hidden-form');
+            }
+        }
+
         function getDb() {
             const db = localStorage.getItem('kpss_db');
             return db ? JSON.parse(db) : {};
@@ -151,8 +270,8 @@
         }
 
         function login() {
-            const user = document.getElementById('auth-username').value.trim();
-            const pass = document.getElementById('auth-password').value;
+            const user = document.getElementById('login-username').value.trim();
+            const pass = document.getElementById('login-password').value;
             const err = document.getElementById('auth-error');
             
             if(!user || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
@@ -171,8 +290,8 @@
         }
 
         function register() {
-            const user = document.getElementById('auth-username').value.trim();
-            const pass = document.getElementById('auth-password').value;
+            const user = document.getElementById('register-username').value.trim();
+            const pass = document.getElementById('register-password').value;
             const err = document.getElementById('auth-error');
             
             if(!user || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
@@ -197,8 +316,11 @@
             currentUser = null;
             document.getElementById('app-screen').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
-            document.getElementById('auth-username').value = '';
-            document.getElementById('auth-password').value = '';
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+            switchAuth('login');
         }
 
         function initSession(username, data) {
@@ -210,6 +332,7 @@
             document.getElementById('app-screen').classList.add('flex');
             document.getElementById('welcome-text').textContent = 'Hoş geldin, ' + username;
             
+            updateMistakeBadge();
             renderDropdown();
             showTest(0); // Start at test 0
         }
@@ -219,6 +342,20 @@
             const db = getDb();
             db[currentUser] = userData;
             saveDb(db);
+            updateMistakeBadge();
+        }
+
+        function updateMistakeBadge() {
+            const badge = document.getElementById('mistake-badge');
+            const mistakeCount = userData.mistakes ? userData.mistakes.length : 0;
+            badge.textContent = mistakeCount;
+            
+            const btn = document.getElementById('dashboard-mistake-btn');
+            if(mistakeCount === 0) {
+                btn.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                btn.classList.remove('opacity-50', 'pointer-events-none');
+            }
         }
 
         // --- APP LOGIC ---
@@ -231,17 +368,10 @@
             const dropdown = document.getElementById('test-dropdown');
             dropdown.innerHTML = '';
             
-            // Add Mistake Mode option
-            const mistakeOpt = document.createElement('option');
-            mistakeOpt.value = 'MISTAKES';
-            mistakeOpt.textContent = '\uD83D\uDD25 Yanlış Yaptığım Sorular (Karışık Test)';
-            mistakeOpt.style.fontWeight = 'bold';
-            dropdown.appendChild(mistakeOpt);
-            
             testData.forEach((test, index) => {
                 const opt = document.createElement('option');
                 opt.value = index;
-                const status = (userData.testProgress[index] && userData.testProgress[index].finished) ? ' (Çözüldü)' : '';
+                const status = (userData.testProgress[index] && userData.testProgress[index].finished) ? ' \u2713 (Çözüldü)' : '';
                 opt.textContent = test.title + status;
                 dropdown.appendChild(opt);
             });
@@ -276,6 +406,7 @@
 
         function showTest(val) {
             if(val === 'MISTAKES') {
+                document.getElementById('test-dropdown').value = '0'; // reset dropdown visual
                 generateMistakeTest();
                 return;
             }
@@ -308,7 +439,7 @@
             container.innerHTML = '';
             
             if(questions.length === 0) {
-                container.innerHTML = '<div class="text-center p-10 text-gray-500 font-medium">Gösterilecek soru bulunamadı.</div>';
+                container.innerHTML = '<div class="text-center p-10 text-gray-500 dark:text-gray-400 font-medium">Gösterilecek soru bulunamadı.</div>';
                 document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
@@ -316,25 +447,24 @@
             questions.forEach((qObj, index) => {
                 const q = qObj.data;
                 const questionEl = document.createElement('div');
-                questionEl.className = 'question-block bg-white rounded-xl shadow-md border border-slate-200 p-6 transition-all hover:shadow-lg';
+                questionEl.className = 'question-block bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-6 transition-all hover:shadow-lg';
                 questionEl.id = `q-block-${index}`;
                 
                 let sourceBadge = '';
                 if(isMistakeMode) {
-                    sourceBadge = `<span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full mb-3 inline-block">Kaynak: ${testData[qObj.originalTestIdx].title} (Soru ${q.qNum})</span>`;
+                    sourceBadge = `<span class="text-xs bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-300 px-2.5 py-1 rounded-full mb-4 inline-block font-medium border border-rose-200 dark:border-rose-800/50">Kaynak: ${testData[qObj.originalTestIdx].title} (Soru ${q.qNum})</span>`;
                 }
 
                 let optionsHtml = '';
                 Object.keys(q.options).forEach((optKey, optIndex) => {
                     const opt = q.options[optKey];
-                    // Use a unique name for radio group so mistake mode doesn't clash
                     const radioName = `question-${index}`;
                     
                     optionsHtml += 
                         `<div class="mb-3 relative">
                             <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="handleOptionSelect(${index})">
-                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 rounded-lg cursor-pointer text-gray-700">
-                                <span class="font-bold mr-2 text-blue-600">${optKey})</span> ${opt}
+                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200">
+                                <span class="font-bold mr-2 text-blue-600 dark:text-blue-400">${optKey})</span> ${opt}
                             </label>
                         </div>`
                     ;
@@ -342,21 +472,21 @@
 
                 questionEl.innerHTML = 
                     `${sourceBadge}
-                    <h3 class="text-lg font-semibold mb-6 text-gray-800 leading-relaxed"><span class="text-blue-600 mr-2">${index + 1}.</span>${q.question ? q.question.replace(/\n/g, '<br>') : ''}</h3>
+                    <h3 class="text-lg font-semibold mb-6 text-gray-800 dark:text-gray-100 leading-relaxed"><span class="text-blue-600 dark:text-blue-400 mr-2">${index + 1}.</span>${q.question ? q.question.replace(/\n/g, '<br>') : ''}</h3>
                     <div class="options-container mb-4">
                         ${optionsHtml}
                     </div>
                     
                     <div id="check-btn-container-${index}" class="mt-4 flex justify-end">
-                        <button onclick="evaluateSingleQuestion(${index})" class="px-5 py-2 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 font-semibold transition-colors text-sm">Cevabı Kontrol Et</button>
+                        <button onclick="evaluateSingleQuestion(${index})" class="px-5 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/50 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/50 font-semibold transition-colors text-sm shadow-sm">Cevabı Kontrol Et</button>
                     </div>
 
-                    <div id="solution-${index}" class="hidden mt-6 p-5 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
-                        <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
+                    <div id="solution-${index}" class="hidden mt-6 p-5 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg">
+                        <h4 class="font-bold text-amber-800 dark:text-amber-400 mb-2 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Çözüm ve Açıklama (Doğru Cevap: ${q.answer})
                         </h4>
-                        <p class="text-yellow-900 leading-relaxed">${q.solution ? q.solution.replace(/\n/g, '<br>') : ''}</p>
+                        <p class="text-amber-900 dark:text-amber-200/80 leading-relaxed">${q.solution ? q.solution.replace(/\n/g, '<br>') : ''}</p>
                     </div>`
                 ;
                 container.appendChild(questionEl);
@@ -411,15 +541,15 @@
             const statusEl = document.getElementById('test-status');
             if(isMistakeMode) {
                 statusEl.textContent = 'Hata Testi';
-                statusEl.className = 'px-3 py-1 rounded-full bg-red-100 text-red-800';
+                statusEl.className = 'px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200';
                 resultContainer.classList.add('hidden');
             } else if(isFinished) {
                 statusEl.textContent = 'Tamamlandı';
-                statusEl.className = 'px-3 py-1 rounded-full bg-green-100 text-green-800';
+                statusEl.className = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200';
                 resultContainer.classList.remove('hidden');
             } else {
                 statusEl.textContent = 'Çözülüyor';
-                statusEl.className = 'px-3 py-1 rounded-full bg-yellow-100 text-yellow-800';
+                statusEl.className = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200';
                 resultContainer.classList.add('hidden');
             }
             
@@ -451,7 +581,6 @@
         }
         
         function recordMistake(tIdx, qIdx, isMistake) {
-            // Find if exists
             const existingIdx = userData.mistakes.findIndex(m => m.testIdx === tIdx && m.qIdx === qIdx);
             
             if(isMistake) {
@@ -460,7 +589,6 @@
                 }
             } else {
                 if(existingIdx !== -1) {
-                    // Remove from mistakes if they answered correctly now
                     userData.mistakes.splice(existingIdx, 1);
                 }
             }
@@ -528,7 +656,6 @@
                         recordMistake(qObj.originalTestIdx, qObj.originalQIdx, true);
                     }
                 } else {
-                    // Unanswered is considered a mistake for tracking
                     recordMistake(qObj.originalTestIdx, qObj.originalQIdx, true);
                 }
                 
@@ -559,7 +686,6 @@
                 }
             }
             
-            // Re-map for evaluator
             const questions = test.questions.map((q, idx) => ({
                 originalTestIdx: currentTestIndex,
                 originalQIdx: idx,
@@ -586,11 +712,10 @@
             
             currentQuestionIndex = 0;
             updateUI();
-            renderDropdown(); // refresh dropdown labels
+            renderDropdown();
         }
         
         function showReviewMistakes() {
-            // Jump to the first incorrectly answered question in the current UI
             const questions = isMistakeMode ? mistakeTestQuestions : testData[currentTestIndex].questions;
             for(let i=0; i<questions.length; i++) {
                 const radioName = `question-${i}`;
