@@ -27,20 +27,28 @@ npm run test:e2e
 ```
 
 ### Admin Paneli Testini Çalıştırma (Opsiyonel)
-Yönetici paneli (Admin) akışını da test paketine dahil etmek istiyorsanız, terminalinizde `ADMIN_PASSWORD` çevre değişkenini tanımlayarak komutu çalıştırmalısınız:
+Yönetici paneli (Admin) akışını da test paketine dahil etmek istiyorsanız, şifreyi iki şekilde tanımlayabilirsiniz:
 
+#### Yöntem A: `.env` Dosyası Kullanımı (Önerilen ve Güvenli)
+Projenin kök dizininde `.env` adında bir dosya oluşturun ve şifreyi buraya yazın:
+```env
+ADMIN_PASSWORD=sizin_gercek_admin_sifreniz
+```
+*Not: `.env` dosyası `.gitignore` listesinde yer aldığı için asla git geçmişine sızmaz ve GitHub'a yüklenmez.*
+
+#### Yöntem B: Terminal Ortam Değişkeni Kullanımı
 **Windows PowerShell:**
 ```powershell
-$env:ADMIN_PASSWORD="admin_sifreniz"
+$env:ADMIN_PASSWORD="sizin_gercek_admin_sifreniz"
 npm run test:e2e
 ```
 
 **Linux / macOS:**
 ```bash
-ADMIN_PASSWORD="admin_sifreniz" npm run test:e2e
+ADMIN_PASSWORD="sizin_gercek_admin_sifreniz" npm run test:e2e
 ```
 
-*Not: Eğer `ADMIN_PASSWORD` çevre değişkeni tanımlı değilse, admin testi güvenlik amacıyla kendisini otomatik olarak atlar (skip) ve diğer genel akış testleri çalışmaya devam eder.*
+*Not: Eğer `ADMIN_PASSWORD` çevre değişkeni (.env dosyası veya terminal aracılığıyla) tanımlı değilse, admin testi güvenlik amacıyla kendisini otomatik olarak atlar (skip) ve diğer genel akış testleri çalışmaya devam eder.*
 
 ---
 
