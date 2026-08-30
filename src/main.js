@@ -52,6 +52,8 @@ async function loadTestsFromFirestore() {
         
     } catch (error) {
         console.error("Failed to fetch tests:", error);
+        document.getElementById('current-test-title').textContent = "Hata: " + error.message;
+        document.getElementById('current-test-title').classList.add('text-red-500');
     }
 }
 
