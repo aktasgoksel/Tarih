@@ -1,17 +1,18 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // --- TIMER LOGIC ---
-        window.isTimerRunning = false;
-        window.isTimerPaused = false;
-        window.testTotalQuestionsForTimer = 0;
+        
+        
+        
         
         window.prepareTimer = function prepareTimer(totalQuestions) {
             window.stopTimer();
-            window.testTotalQuestionsForTimer = totalQuestions;
-            window.timeRemaining = totalQuestions * 60; // 1 min per question
+            State.setTestTotalQuestionsForTimer(totalQuestions);
+            State.setTimeRemaining(totalQuestions * 60); // 1 min per question
             updateTimerUI();
             
             document.getElementById('start-timer-btn').classList.remove('hidden');
@@ -25,9 +26,9 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
         
         window.startTimerManually = function() {
-            if(window.isTimerRunning) return;
+            if(State.getIsTimerRunning()) return;
             
-            window.isTimerPaused = false;
+            
             updatePauseIcons();
             
             document.getElementById('start-timer-btn').classList.add('hidden');
@@ -38,12 +39,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             document.getElementById('mobile-timer-container').classList.remove('hidden');
             document.getElementById('mobile-timer-container').classList.add('flex');
             
-            window.isTimerRunning = true;
-            window.timerInterval = setInterval(() => {
-                if(!window.isTimerPaused) {
-                    window.timeRemaining--;
+            State.setIsTimerRunning(true);
+            State.setTimerInterval(setInterval(() => {
+                if(!State.getIsTimerPaused()) {
+                    State.setTimeRemaining(State.getTimeRemaining() - 1);
                     updateTimerUI();
-                    if(window.timeRemaining <= 0) {
+                    if(State.getTimeRemaining() <= 0) {
                         window.stopTimer();
                         window.showModal({
                             type: 'warning',
@@ -60,7 +61,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
         
         window.pauseTimer = function() {
-            window.isTimerPaused = !window.isTimerPaused;
+            State.setIsTimerPaused(!State.getIsTimerPaused());
             updatePauseIcons();
         }
         
@@ -70,8 +71,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const pauseIcon = `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>`;
             
             btns.forEach(btn => {
-                btn.innerHTML = window.isTimerPaused ? playIcon : pauseIcon;
-                if(window.isTimerPaused) {
+                btn.innerHTML = State.getIsTimerPaused() ? playIcon : pauseIcon;
+                if(State.getIsTimerPaused()) {
                     btn.classList.add('text-yellow-400');
                     btn.classList.add('animate-pulse');
                 } else {
@@ -83,12 +84,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         
         window.resetTimerManually = function() {
             window.stopTimer();
-            window.prepareTimer(window.testTotalQuestionsForTimer);
+            window.prepareTimer(State.getTestTotalQuestionsForTimer());
         }
 
         window.stopTimer = function stopTimer() {
-            clearInterval(window.timerInterval);
-            window.isTimerRunning = false;
+            clearInterval(State.getTimerInterval());
+            State.setIsTimerRunning(false);
             
             document.getElementById('timer-container').classList.add('hidden');
             document.getElementById('timer-container').classList.remove('flex');
@@ -101,8 +102,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         function updateTimerUI() {
-            const m = Math.floor(window.timeRemaining / 60);
-            const s = window.timeRemaining % 60;
+            const m = Math.floor(State.getTimeRemaining() / 60);
+            const s = State.getTimeRemaining() % 60;
             const text = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             
             const el = document.getElementById('timer-text');
@@ -111,7 +112,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             el.textContent = text;
             mobEl.textContent = text;
             
-            if(window.timeRemaining < 60) {
+            if(State.getTimeRemaining() < 60) {
                 el.classList.add('text-red-400');
                 mobEl.classList.add('text-red-400');
                 mobEl.classList.remove('text-white');
