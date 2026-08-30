@@ -630,7 +630,7 @@ import { showModal } from "../ui/modal.js";
                 detailsEl.innerHTML += `
                     <div class="mb-4">
                         <div class="flex justify-between text-xs mb-1 font-bold text-gray-700 dark:text-gray-300">
-                            <span class="truncate pr-2">${l}</span>
+                            <span class="truncate pr-2">${window.escapeHTML(l)}</span>
                             <span class="shrink-0">%${pct} (${catData[l].correct}/${catData[l].total})</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
