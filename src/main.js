@@ -27,7 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
         
 const db = getFirestore(app);
 
-window.testsData = [];
+window.testData = [];
 
 // Load tests from Firestore
 async function loadTestsFromFirestore() {
@@ -41,13 +41,13 @@ async function loadTestsFromFirestore() {
         
         // Sort by order
         fetchedTests.sort((a, b) => a.order - b.order);
-        window.testsData = fetchedTests;
+        window.testData = fetchedTests;
         
         // Re-render UI now that data is available
         window.renderDropdown();
         // Trigger first test if it's currently empty
-        if (window.testsData.length > 0 && typeof currentTestIndex === 'undefined') {
-            window.showTest(0);
+        if (window.testData.length > 0) {
+            window.showTest(currentTestIndex || 0);
         }
         
     } catch (error) {
