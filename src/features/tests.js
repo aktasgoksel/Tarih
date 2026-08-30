@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
 // --- APP LOGIC ---
 
-        function renderDropdown() {
+        window.renderDropdown = function renderDropdown() {
             const dropdown = document.getElementById('test-dropdown');
             dropdown.innerHTML = '';
             
@@ -72,12 +72,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(window.currentTestQuestions.length);
             
             if(window.currentTestQuestions.length > 0) {
-                prepareTimer(window.currentTestQuestions.length);
+                window.prepareTimer(window.currentTestQuestions.length);
             } else {
-                stopTimer();
+                window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
-            updateUI();
+            window.updateUI();
         }
         
         function generateFavoritesTest() {
@@ -106,12 +106,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(window.currentTestQuestions.length);
             
             if(window.currentTestQuestions.length > 0) {
-                prepareTimer(window.currentTestQuestions.length);
+                window.prepareTimer(window.currentTestQuestions.length);
             } else {
-                stopTimer();
+                window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
-            updateUI();
+            window.updateUI();
         }
 
         window.generateRandomTest = function() {
@@ -135,12 +135,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(window.currentTestQuestions.length);
             
             if(window.currentTestQuestions.length > 0) {
-                prepareTimer(window.currentTestQuestions.length);
+                window.prepareTimer(window.currentTestQuestions.length);
             } else {
-                stopTimer();
+                window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
-            updateUI();
+            window.updateUI();
         }
 
         window.showTest = function(val) {
@@ -180,13 +180,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const isFinished = window.userData.testProgress[index] && window.userData.testProgress[index].finished;
             
             if (isFinished) {
-                stopTimer();
+                window.stopTimer();
                 evaluateTest(window.currentTestQuestions);
             } else {
-                prepareTimer(window.currentTestQuestions.length);
+                window.prepareTimer(window.currentTestQuestions.length);
             }
             
-            updateUI();
+            window.updateUI();
         }
 
         function renderTestUI(questions) {
@@ -227,7 +227,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     optionsHtml += 
                         `<div class="mb-3 relative group">
                             <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); window.updateGridUI();">
-                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50 pr-10">
+                            <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50 pr-10 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:border-blue-400 dark:peer-checked:bg-blue-900/30">
                                 <span class="font-bold mr-2 text-blue-600 dark:text-blue-400">${optKey})</span> <span class="inline-block align-top">${optText}</span>
                             </label>
                         </div>`
@@ -264,9 +264,9 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             });
         }
 
-        window.updateGridUI = updateGridUI;
+        
 
-        function updateUI() {
+        window.updateUI = function() {
             const totalQ = window.currentTestQuestions.length;
             if(totalQ === 0) return;
             
@@ -331,15 +331,17 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 border border-transparent dark:border-emerald-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800/50';
                 resultContainer.classList.remove('hidden');
-                stopTimer();
+                window.stopTimer();
             } else {
                 statusText = 'Çözülüyor';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200 border border-transparent dark:border-yellow-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/50 dark:text-yellow-200 dark:border-yellow-800/50';
             }
             
-            statusEl.textContent = statusText;
-            statusEl.className = statusClass;
+            if(statusEl) {
+                statusEl.textContent = statusText;
+                statusEl.className = statusClass;
+            }
             if (mobStatusEl) {
                 mobStatusEl.textContent = statusText;
                 mobStatusEl.className = mobStatusClass;
@@ -353,14 +355,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const total = window.currentTestQuestions.length;
             if (window.currentQuestionIndex < total - 1) {
                 window.currentQuestionIndex++;
-                updateUI();
+                window.updateUI();
             }
         }
 
         window.prevQuestion = function() {
             if (window.currentQuestionIndex > 0) {
                 window.currentQuestionIndex--;
-                updateUI();
+                window.updateUI();
             }
         }
         
@@ -385,7 +387,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     window.userData.mistakes.splice(existingIdx, 1);
                 }
             }
-            saveUserDataCloud();
+            window.saveUserDataCloud();
         }
 
         window.evaluateSingleQuestion = function(uiIndex) {
@@ -477,7 +479,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             }
             
-            stopTimer(); 
+            window.stopTimer(); 
             
             const score = evaluateTest(window.currentTestQuestions);
             
@@ -486,7 +488,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     finished: true,
                     score: score
                 };
-                saveUserDataCloud();
+                window.saveUserDataCloud();
             }
             
             const resultContainer = document.getElementById('result-container');
@@ -515,7 +517,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }
             
             window.currentQuestionIndex = 0;
-            updateUI();
+            window.updateUI();
             if(window.currentMode === 'NORMAL') renderDropdown();
         }
         
@@ -527,7 +529,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 
                 if (!selectedOption || selectedOption.value !== q.answer) {
                     window.currentQuestionIndex = i;
-                    updateUI();
+                    window.updateUI();
                     return;
                 }
             }
@@ -557,13 +559,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }, 300);
         }
         
-        function getCategoryName(title) {
+        window.getCategoryName = function getCategoryName(title) {
             if(!title.includes(':')) return "Genel";
             const part = title.split(':')[1];
             return part.split('-')[0].trim();
         }
 
-        function renderStats() {
+        window.renderStats = function renderStats() {
             let catData = {};
             let hasData = false;
             

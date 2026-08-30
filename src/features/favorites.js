@@ -14,7 +14,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             } else {
                 window.userData.favorites.splice(idx, 1);
             }
-            saveUserDataCloud();
+            window.saveUserDataCloud();
             
             // Re-render button
             const btn = document.getElementById(`star-btn-${uiIndex}`);

@@ -18,7 +18,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 btn.className = "w-10 h-10 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none";
                 btn.onclick = () => {
                     window.currentQuestionIndex = i;
-                    updateUI();
+                    window.updateUI();
                 };
                 grid.appendChild(btn);
             }
@@ -45,3 +45,5 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         
+window.renderGrid = renderGrid;
+window.updateGridUI = updateGridUI;

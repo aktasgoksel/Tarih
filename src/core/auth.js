@@ -228,11 +228,11 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 return window.testData[m.testIdx] && window.testData[m.testIdx].questions && window.testData[m.testIdx].questions[m.qIdx];
             });
             if (originalLength !== window.userData.mistakes.length) {
-                saveUserDataCloud();
+                window.saveUserDataCloud();
             }
         }
         
-        async function saveUserDataCloud() {
+        window.saveUserDataCloud = async function window.saveUserDataCloud() {
             if(!window.currentUser) return;
             updateMistakeBadge();
             updateFavoritesBadge();
@@ -278,7 +278,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             if(window.userData.mistakes && window.userData.mistakes.length > 0) {
                 if(confirm("Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz?")) {
                     window.userData.mistakes = [];
-                    saveUserDataCloud();
+                    window.saveUserDataCloud();
                     if(window.currentMode === 'MISTAKES') {
                         window.showTest(0);
                     }

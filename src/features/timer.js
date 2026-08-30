@@ -8,7 +8,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         window.isTimerPaused = false;
         window.testTotalQuestionsForTimer = 0;
         
-        function prepareTimer(totalQuestions) {
+        window.prepareTimer = function prepareTimer(totalQuestions) {
             stopTimer();
             window.testTotalQuestionsForTimer = totalQuestions;
             window.timeRemaining = totalQuestions * 60; // 1 min per question
@@ -86,7 +86,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             prepareTimer(window.testTotalQuestionsForTimer);
         }
 
-        function stopTimer() {
+        window.stopTimer = function stopTimer() {
             clearInterval(window.timerInterval);
             window.isTimerRunning = false;
             

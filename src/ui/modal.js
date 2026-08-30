@@ -155,7 +155,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 cancelText: 'İptal',
                 onConfirm: () => {
                     window.userData.testProgress[window.currentTestIndex] = null;
-                    saveUserDataCloud();
+                    window.saveUserDataCloud();
                     
                     window.showTest(window.currentTestIndex);
                     renderDropdown();

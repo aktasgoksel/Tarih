@@ -40,8 +40,13 @@ async function loadTestsFromFirestore() {
         fetchedTests.sort((a, b) => a.order - b.order);
         window.testData = fetchedTests;
         
+        
+        // Force instant-feedback to be false on load to prevent browser caching
+        const instantToggle = document.getElementById('instant-feedback');
+        if (instantToggle) instantToggle.checked = false;
+
         // Re-render UI now that data is available
-        renderDropdown();
+        window.renderDropdown();
         // Trigger first test if it's currently empty
         if (window.testData.length > 0) {
             window.showTest(window.currentTestIndex || 0);
