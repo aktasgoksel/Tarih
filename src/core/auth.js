@@ -167,27 +167,30 @@ onAuthStateChanged(auth, async (user) => {
         const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `Hoş geldin, ${displayName}`;
         const err = document.getElementById('auth-error'); if(err) err.textContent = '';
         
-        // Fetch data from Firestore
+        // Fetch data from Firestore in parallel
         try {
-            try {
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                
-                if (docSnap.exists()) {
-                    State.setUserData(docSnap.data());
-                } else {
-                    // New user
-                    State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
-                    await setDoc(docRef, State.getUserData());
-                }
-            } catch(e) {
-                console.error("Veri çekilemedi, geçici (boş) profille başlandı", e);
-                State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
-            }
+            const docRef = doc(db, "users", user.uid);
             
-            // Only load tests if not already loaded in memory to prevent duplicate requests
-            if (State.getTestData().length === 0) {
-                await loadTestsFromFirestore();
+            const userPromise = getDoc(docRef).catch(e => {
+                console.error("Kullanıcı verisi çekilemedi, geçici profil kullanılacak:", e);
+                return null;
+            });
+            
+            const testsPromise = State.getTestData().length === 0 ? loadTestsFromFirestore() : Promise.resolve(null);
+            
+            const [docSnap, _] = await Promise.all([userPromise, testsPromise]);
+            
+            if (docSnap && docSnap.exists()) {
+                State.setUserData(docSnap.data());
+            } else {
+                State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
+                if (docSnap !== null) {
+                    try {
+                        await setDoc(docRef, State.getUserData());
+                    } catch(writeErr) {
+                        console.error("Yeni kullanıcı veritabanına kaydedilemedi:", writeErr);
+                    }
+                }
             }
             
             // Decoupled UI Render Calls

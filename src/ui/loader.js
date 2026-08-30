@@ -15,7 +15,7 @@ export function showLoader(msg = "Yükleniyor...") {
             clearTimeout(loaderTimeout);
         }
         
-        // Timeout after 15 seconds to prevent hanging loading screen
+        // Timeout after 30 seconds to prevent hanging loading screen
         loaderTimeout = setTimeout(() => {
             if (loader && !loader.classList.contains('hidden')) {
                 hideLoader();
@@ -26,7 +26,7 @@ export function showLoader(msg = "Yükleniyor...") {
                     alert(errorMsg);
                 }
             }
-        }, 15000);
+        }, 30000);
     }
 }
 
