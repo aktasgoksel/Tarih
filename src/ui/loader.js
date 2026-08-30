@@ -65,8 +65,3 @@ export async function loadTestsFromFirestore() {
         throw error;
     }
 }
-
-// Expose loader functions to window for any potential legacy non-module inline calls
-window.showLoader = showLoader;
-window.hideLoader = hideLoader;
-window.loadTestsFromFirestore = loadTestsFromFirestore;

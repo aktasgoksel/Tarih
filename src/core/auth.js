@@ -359,7 +359,6 @@ window.loginWithGoogle = loginWithGoogle;
 window.logout = logout;
 window.checkVerification = checkVerification;
 window.resendVerification = resendVerification;
-window.saveUserDataCloud = saveUserDataCloud;
 window.clearAllMistakes = clearAllMistakes;
 window.switchAuth = switchAuth;
 window.togglePassword = togglePassword;

@@ -41,6 +41,3 @@ export function updateGridUI() {
     }
 }
 
-// Expose functions to window for legacy inline calls in HTML
-window.renderGrid = renderGrid;
-window.updateGridUI = updateGridUI;

@@ -854,7 +854,6 @@ import { showModal } from "../ui/modal.js";
 
         
 // Expose functions to window for legacy inline calls in HTML
-window.renderDropdown = renderDropdown;
 window.showTest = showTest;
 window.updateUI = updateUI;
 window.nextQuestion = nextQuestion;
@@ -863,8 +862,6 @@ window.handleOptionSelect = handleOptionSelect;
 window.evaluateSingleQuestion = evaluateSingleQuestion;
 window.submitCurrentTest = submitCurrentTest;
 window.generateRandomTest = generateRandomTest;
-window.generateMistakeTest = generateMistakeTest;
-window.generateFavoritesTest = generateFavoritesTest;
 window.openSuggestionModal = openSuggestionModal;
 window.closeSuggestionModal = closeSuggestionModal;
 window.submitSuggestion = submitSuggestion;
