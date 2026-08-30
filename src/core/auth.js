@@ -248,6 +248,8 @@ function cleanStaleMistakes() {
     }
 }
 
+let hasShownSaveWarning = false;
+
 export async function saveUserDataCloud() {
     if(!State.getCurrentUser()) return;
     updateMistakeBadge();
@@ -257,6 +259,17 @@ export async function saveUserDataCloud() {
         await setDoc(doc(db, "users", State.getCurrentUser().uid), State.getUserData());
     } catch(e) {
         console.error("Veritabanına kaydedilemedi:", e);
+        if (!hasShownSaveWarning) {
+            hasShownSaveWarning = true;
+            showModal({
+                type: 'warning',
+                title: 'Bağlantı Hatası',
+                text: 'İlerlemeniz bulut veritabanına kaydedilemedi. İnternet bağlantınızı kontrol edin. İlerlemeniz geçici olarak tarayıcınızda saklanmaya devam edecektir.',
+                confirmText: 'Tamam'
+            });
+            // Reset warning flag after 5 minutes
+            setTimeout(() => { hasShownSaveWarning = false; }, 300000);
+        }
     }
 }
 
