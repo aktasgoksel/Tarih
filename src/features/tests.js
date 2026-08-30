@@ -324,10 +324,15 @@ import { showModal } from "../ui/modal.js";
             let statusText = '', statusClass = '', mobStatusClass = '';
 
             if(State.getCurrentMode() === 'MISTAKES' || State.getCurrentMode() === 'FAVORITES') {
-                statusText = (State.getCurrentMode() === 'MISTAKES') ? 'Hata Testi' : 'Favoriler';
-                statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200 border border-transparent dark:border-rose-800/50';
-                if(State.getCurrentMode() === 'FAVORITES') statusClass = statusClass.replace(/rose/g, 'amber');
-                mobStatusClass = statusClass.replace('px-3 py-1', 'sm:hidden px-3 py-1.5 text-xs border shadow-sm');
+                if (State.getCurrentMode() === 'MISTAKES') {
+                    statusText = 'Hata Testi';
+                    statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200 border border-transparent dark:border-rose-800/50';
+                    mobStatusClass = 'sm:hidden px-3 py-1.5 text-xs border shadow-sm rounded-full bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200 border-rose-200 dark:border-rose-800/50';
+                } else {
+                    statusText = 'Favoriler';
+                    statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200 border border-transparent dark:border-amber-800/50';
+                    mobStatusClass = 'sm:hidden px-3 py-1.5 text-xs border shadow-sm rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200 border-amber-200 dark:border-amber-800/50';
+                }
                 resultContainer.classList.add('hidden');
             } else if(State.getCurrentMode() === 'RANDOM_27' && !document.getElementById('result-container').classList.contains('hidden')) {
                 // if random test is submitted, it will show result-container. We shouldn't force hide it here unless it's resetting.
