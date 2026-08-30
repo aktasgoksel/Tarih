@@ -41,3 +41,5 @@ export function updateGridUI() {
     }
 }
 
+window.updateGridUI = updateGridUI;
+
