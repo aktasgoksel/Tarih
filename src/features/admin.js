@@ -1,6 +1,8 @@
-import codecs
 
-admin_js = """
+import { auth, db } from "../firebase.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
 // ==========================================
 // ADMIN PANEL LOGIC
 // ==========================================
@@ -101,7 +103,3 @@ window.saveAdminQuestion = async function() {
         btn.textContent = 'Soruyu Veritabanına Kaydet';
     }
 };
-"""
-
-with codecs.open('src/main.js', 'a', 'utf-8') as f:
-    f.write(admin_js)
