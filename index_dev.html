@@ -52,25 +52,34 @@
             background-color: rgba(59, 130, 246, 0.15) !important;
         }
         
-        /* Doğru / Yanlış Cevap Renklendirmeleri */
+        /* Doğru Cevap Renklendirmeleri — checked durumunu da override eder */
+        input[type="radio"]:checked + .option-label.correct-answer,
+        .peer:checked + .option-label.correct-answer,
         .correct-answer {
             background-color: #d1fae5 !important;
             border-color: #10b981 !important;
             color: #065f46 !important;
             font-weight: bold;
         }
+        .dark input[type="radio"]:checked + .option-label.correct-answer,
+        .dark .peer:checked + .option-label.correct-answer,
         .dark .correct-answer {
             background-color: rgba(16, 185, 129, 0.2) !important;
             border-color: #10b981 !important;
             color: #34d399 !important;
         }
         
+        /* Yanlış Cevap Renklendirmeleri — checked durumunu da override eder */
+        input[type="radio"]:checked + .option-label.incorrect-answer,
+        .peer:checked + .option-label.incorrect-answer,
         .incorrect-answer {
             background-color: #fee2e2 !important;
             border-color: #ef4444 !important;
             color: #991b1b !important;
             font-weight: bold;
         }
+        .dark input[type="radio"]:checked + .option-label.incorrect-answer,
+        .dark .peer:checked + .option-label.incorrect-answer,
         .dark .incorrect-answer {
             background-color: rgba(239, 68, 68, 0.2) !important;
             border-color: #ef4444 !important;
