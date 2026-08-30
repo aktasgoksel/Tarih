@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -30,14 +31,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
             dropdown.appendChild(favOpt);
             
-            window.testData.forEach((test, index) => {
+            State.getTestData().forEach((test, index) => {
                 const opt = document.createElement('option');
                 opt.value = index;
-                const isFinished = window.userData.testProgress[index] && window.userData.testProgress[index].finished;
+                const isFinished = State.getUserData().testProgress[index] && State.getUserData().testProgress[index].finished;
                 
                 let scoreText = '';
                 if(isFinished) {
-                    const score = window.userData.testProgress[index].score;
+                    const score = State.getUserData().testProgress[index].score;
                     scoreText = ` \u2713 (Çözüldü - ${score}/${test.questions.length})`;
                 }
                 opt.textContent = `${test.title}${scoreText}`;
@@ -46,16 +47,16 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         function generateMistakeTest() {
-            window.currentMode = 'MISTAKES';
-            window.currentTestQuestions = [];
+            State.setCurrentMode('MISTAKES');
+            State.setCurrentTestQuestions([]);
             
-            const shuffled = [...window.userData.mistakes].sort(() => 0.5 - Math.random());
+            const shuffled = [...State.getUserData().mistakes].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 30); // up to 30 mistake questions
             
             selected.forEach(m => {
-                const test = window.testData[m.testIdx];
+                const test = State.getTestData()[m.testIdx];
                 if(test && test.questions && test.questions[m.qIdx]) {
-                    window.currentTestQuestions.push({
+                    State.getCurrentTestQuestions().push({
                         originalTestIdx: m.testIdx,
                         originalQIdx: m.qIdx,
                         data: test.questions[m.qIdx]
@@ -63,16 +64,16 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             });
             
-            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = window.currentTestQuestions.length > 0 
-                ? `🔥 Yanlışlarım (${window.currentTestQuestions.length} Soru)` 
+            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
+                ? `🔥 Yanlışlarım (${State.getCurrentTestQuestions().length} Soru)` 
                 : 'Hiç yanlışınız yok! Tebrikler!';
                 
-            window.currentQuestionIndex = 0;
-            renderTestUI(window.currentTestQuestions);
-            renderGrid(window.currentTestQuestions.length);
+            State.setCurrentQuestionIndex(0);
+            renderTestUI(State.getCurrentTestQuestions());
+            renderGrid(State.getCurrentTestQuestions().length);
             
-            if(window.currentTestQuestions.length > 0) {
-                window.prepareTimer(window.currentTestQuestions.length);
+            if(State.getCurrentTestQuestions().length > 0) {
+                window.prepareTimer(State.getCurrentTestQuestions().length);
             } else {
                 window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
@@ -81,15 +82,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
         
         function generateFavoritesTest() {
-            window.currentMode = 'FAVORITES';
-            window.currentTestQuestions = [];
+            State.setCurrentMode('FAVORITES');
+            State.setCurrentTestQuestions([]);
             
-            const shuffled = [...window.userData.favorites].sort(() => 0.5 - Math.random());
+            const shuffled = [...State.getUserData().favorites].sort(() => 0.5 - Math.random());
             
             shuffled.forEach(m => {
-                const test = window.testData[m.testIdx];
+                const test = State.getTestData()[m.testIdx];
                 if(test && test.questions && test.questions[m.qIdx]) {
-                    window.currentTestQuestions.push({
+                    State.getCurrentTestQuestions().push({
                         originalTestIdx: m.testIdx,
                         originalQIdx: m.qIdx,
                         data: test.questions[m.qIdx]
@@ -97,16 +98,16 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             });
             
-            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = window.currentTestQuestions.length > 0 
-                ? `⭐ Favori Sorularım (${window.currentTestQuestions.length} Soru)` 
+            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
+                ? `⭐ Favori Sorularım (${State.getCurrentTestQuestions().length} Soru)` 
                 : 'Henüz favori sorunuz yok.';
                 
-            window.currentQuestionIndex = 0;
-            renderTestUI(window.currentTestQuestions);
-            renderGrid(window.currentTestQuestions.length);
+            State.setCurrentQuestionIndex(0);
+            renderTestUI(State.getCurrentTestQuestions());
+            renderGrid(State.getCurrentTestQuestions().length);
             
-            if(window.currentTestQuestions.length > 0) {
-                window.prepareTimer(window.currentTestQuestions.length);
+            if(State.getCurrentTestQuestions().length > 0) {
+                window.prepareTimer(State.getCurrentTestQuestions().length);
             } else {
                 window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
@@ -115,27 +116,27 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.generateRandomTest = function() {
-            window.currentMode = 'RANDOM_27';
-            window.currentTestQuestions = [];
+            State.setCurrentMode('RANDOM_27');
+            State.setCurrentTestQuestions([]);
             
             let allQ = [];
-            window.testData.forEach((test, tIdx) => {
+            State.getTestData().forEach((test, tIdx) => {
                 test.questions.forEach((q, qIdx) => {
                     allQ.push({ originalTestIdx: tIdx, originalQIdx: qIdx, data: q });
                 });
             });
             
             allQ.sort(() => 0.5 - Math.random());
-            window.currentTestQuestions = allQ.slice(0, 27);
+            State.setCurrentTestQuestions(allQ.slice(0, 27));
             
             const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
-            window.currentQuestionIndex = 0;
+            State.setCurrentQuestionIndex(0);
             
-            renderTestUI(window.currentTestQuestions);
-            renderGrid(window.currentTestQuestions.length);
+            renderTestUI(State.getCurrentTestQuestions());
+            renderGrid(State.getCurrentTestQuestions().length);
             
-            if(window.currentTestQuestions.length > 0) {
-                window.prepareTimer(window.currentTestQuestions.length);
+            if(State.getCurrentTestQuestions().length > 0) {
+                window.prepareTimer(State.getCurrentTestQuestions().length);
             } else {
                 window.stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
@@ -160,30 +161,30 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 return;
             }
             
-            window.currentMode = 'NORMAL';
+            State.setCurrentMode('NORMAL');
             let index = parseInt(val);
-            window.currentTestIndex = index;
-            window.currentQuestionIndex = 0;
+            State.setCurrentTestIndex(index);
+            State.setCurrentQuestionIndex(0);
             
             document.getElementById('test-dropdown').value = index;
-            const cTitle = document.getElementById('current-test-title'); if(cTitle) cTitle.textContent = window.testData[index].title;
+            const cTitle = document.getElementById('current-test-title'); if(cTitle) cTitle.textContent = State.getTestData()[index].title;
             
-            window.currentTestQuestions = window.testData[index].questions.map((q, idx) => ({
+            State.setCurrentTestQuestions(State.getTestData()[index].questions.map((q, idx) => ({
                 originalTestIdx: index,
                 originalQIdx: idx,
                 data: q
-            }));
+            })));
             
-            renderTestUI(window.currentTestQuestions);
-            renderGrid(window.currentTestQuestions.length);
+            renderTestUI(State.getCurrentTestQuestions());
+            renderGrid(State.getCurrentTestQuestions().length);
             
-            const isFinished = window.userData.testProgress[index] && window.userData.testProgress[index].finished;
+            const isFinished = State.getUserData().testProgress[index] && State.getUserData().testProgress[index].finished;
             
             if (isFinished) {
                 window.stopTimer();
-                evaluateTest(window.currentTestQuestions);
+                evaluateTest(State.getCurrentTestQuestions());
             } else {
-                window.prepareTimer(window.currentTestQuestions.length);
+                window.prepareTimer(State.getCurrentTestQuestions().length);
             }
             
             window.updateUI();
@@ -206,11 +207,11 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 questionEl.id = `q-block-${index}`;
                 
                 let sourceBadge = '';
-                if(window.currentMode !== 'NORMAL') {
-                    sourceBadge = `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-indigo-200 dark:border-indigo-800/50 shadow-sm">Kaynak: ${window.escapeHTML(window.testData[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
+                if(State.getCurrentMode() !== 'NORMAL') {
+                    sourceBadge = `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-indigo-200 dark:border-indigo-800/50 shadow-sm">Kaynak: ${window.escapeHTML(State.getTestData()[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
                 }
                 
-                let isFav = window.userData.favorites && window.userData.favorites.find(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
+                let isFav = State.getUserData().favorites && State.getUserData().favorites.find(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
                 let starSvg = isFav 
                     ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
                     : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
@@ -267,11 +268,11 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         
 
         window.updateUI = function() {
-            const totalQ = window.currentTestQuestions.length;
+            const totalQ = State.getCurrentTestQuestions().length;
             if(totalQ === 0) return;
             
             document.querySelectorAll('.question-block').forEach((el, idx) => {
-                if(idx === window.currentQuestionIndex) {
+                if(idx === State.getCurrentQuestionIndex()) {
                     el.classList.add('active');
                     window.updateGridUI();
         } else {
@@ -279,10 +280,10 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             });
             
-            const counterText = `Soru ${window.currentQuestionIndex + 1} / ${totalQ}`;
+            const counterText = `Soru ${State.getCurrentQuestionIndex() + 1} / ${totalQ}`;
             const qCounter = document.getElementById('question-counter'); if(qCounter) qCounter.textContent = counterText;
             
-            const progressPct = ((window.currentQuestionIndex) / (totalQ - 1)) * 100 || 0;
+            const progressPct = ((State.getCurrentQuestionIndex()) / (totalQ - 1)) * 100 || 0;
             document.getElementById('progress-bar').style.width = `${progressPct}%`;
             
             const prevBtn = document.getElementById('prev-btn');
@@ -290,15 +291,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const submitBtn = document.getElementById('submit-btn');
             const resultContainer = document.getElementById('result-container');
             
-            prevBtn.style.display = window.currentQuestionIndex > 0 ? 'flex' : 'none';
+            prevBtn.style.display = State.getCurrentQuestionIndex() > 0 ? 'flex' : 'none';
             
-            const isFinished = (window.currentMode === 'NORMAL') ? (window.userData.testProgress[window.currentTestIndex] && window.userData.testProgress[window.currentTestIndex].finished) : false;
+            const isFinished = (State.getCurrentMode() === 'NORMAL') ? (State.getUserData().testProgress[State.getCurrentTestIndex()] && State.getUserData().testProgress[State.getCurrentTestIndex()].finished) : false;
             // For special modes, they are never "finished" formally in DB, they just hide the submit button if they end. 
             // Actually, we can submit RANDOM tests to show results. Let's allow submit for RANDOM mode!
             
-            const canSubmit = (window.currentMode === 'NORMAL' && !isFinished) || (window.currentMode === 'RANDOM_27');
+            const canSubmit = (State.getCurrentMode() === 'NORMAL' && !isFinished) || (State.getCurrentMode() === 'RANDOM_27');
             
-            if (window.currentQuestionIndex === totalQ - 1) {
+            if (State.getCurrentQuestionIndex() === totalQ - 1) {
                 nextBtn.style.display = 'none';
                 if (canSubmit) {
                     submitBtn.classList.remove('hidden');
@@ -317,13 +318,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const mobStatusEl = document.getElementById('mobile-test-status');
             let statusText = '', statusClass = '', mobStatusClass = '';
 
-            if(window.currentMode === 'MISTAKES' || window.currentMode === 'FAVORITES') {
-                statusText = (window.currentMode === 'MISTAKES') ? 'Hata Testi' : 'Favoriler';
+            if(State.getCurrentMode() === 'MISTAKES' || State.getCurrentMode() === 'FAVORITES') {
+                statusText = (State.getCurrentMode() === 'MISTAKES') ? 'Hata Testi' : 'Favoriler';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200 border border-transparent dark:border-rose-800/50';
-                if(window.currentMode === 'FAVORITES') statusClass = statusClass.replace(/rose/g, 'amber');
+                if(State.getCurrentMode() === 'FAVORITES') statusClass = statusClass.replace(/rose/g, 'amber');
                 mobStatusClass = statusClass.replace('px-3 py-1', 'sm:hidden px-3 py-1.5 text-xs border shadow-sm');
                 resultContainer.classList.add('hidden');
-            } else if(window.currentMode === 'RANDOM_27' && !document.getElementById('result-container').classList.contains('hidden')) {
+            } else if(State.getCurrentMode() === 'RANDOM_27' && !document.getElementById('result-container').classList.contains('hidden')) {
                 // if random test is submitted, it will show result-container. We shouldn't force hide it here unless it's resetting.
                 // It will be handled in evaluateTest / submitCurrentTest
             } else if(isFinished) {
@@ -352,46 +353,46 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.nextQuestion = function() {
-            const total = window.currentTestQuestions.length;
-            if (window.currentQuestionIndex < total - 1) {
-                window.currentQuestionIndex++;
+            const total = State.getCurrentTestQuestions().length;
+            if (State.getCurrentQuestionIndex() < total - 1) {
+                State.setCurrentQuestionIndex(State.getCurrentQuestionIndex() + 1);
                 window.updateUI();
             }
         }
 
         window.prevQuestion = function() {
-            if (window.currentQuestionIndex > 0) {
-                window.currentQuestionIndex--;
+            if (State.getCurrentQuestionIndex() > 0) {
+                State.setCurrentQuestionIndex(State.getCurrentQuestionIndex() - 1);
                 window.updateUI();
             }
         }
         
         window.handleOptionSelect = function(qIndex) {
             const isInstant = document.getElementById('instant-feedback').checked;
-            const isFinished = (window.currentMode === 'NORMAL') ? (window.userData.testProgress[window.currentTestIndex] && window.userData.testProgress[window.currentTestIndex].finished) : false;
+            const isFinished = (State.getCurrentMode() === 'NORMAL') ? (State.getUserData().testProgress[State.getCurrentTestIndex()] && State.getUserData().testProgress[State.getCurrentTestIndex()].finished) : false;
             
-            if (isInstant && !isFinished && window.currentMode !== 'RANDOM_27') {
+            if (isInstant && !isFinished && State.getCurrentMode() !== 'RANDOM_27') {
                 window.evaluateSingleQuestion(qIndex);
             }
         }
         
         function recordMistake(tIdx, qIdx, isMistake) {
-            const existingIdx = window.userData.mistakes.findIndex(m => m.testIdx === tIdx && m.qIdx === qIdx);
+            const existingIdx = State.getUserData().mistakes.findIndex(m => m.testIdx === tIdx && m.qIdx === qIdx);
             
             if(isMistake) {
                 if(existingIdx === -1) {
-                    window.userData.mistakes.push({ testIdx: tIdx, qIdx: qIdx });
+                    State.getUserData().mistakes.push({ testIdx: tIdx, qIdx: qIdx });
                 }
             } else {
                 if(existingIdx !== -1) {
-                    window.userData.mistakes.splice(existingIdx, 1);
+                    State.getUserData().mistakes.splice(existingIdx, 1);
                 }
             }
             window.saveUserDataCloud();
         }
 
         window.evaluateSingleQuestion = function(uiIndex) {
-            const qObj = window.currentTestQuestions[uiIndex];
+            const qObj = State.getCurrentTestQuestions()[uiIndex];
             const q = qObj.data;
             const radioName = `question-${uiIndex}`;
             
@@ -464,17 +465,17 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.submitCurrentTest = function(forceSubmit = false) {
-            if(window.currentMode === 'MISTAKES' || window.currentMode === 'FAVORITES') return;
+            if(State.getCurrentMode() === 'MISTAKES' || State.getCurrentMode() === 'FAVORITES') return;
             
             let answeredCount = 0;
-            window.currentTestQuestions.forEach((q, uiIndex) => {
+            State.getCurrentTestQuestions().forEach((q, uiIndex) => {
                 if(document.querySelector(`input[name="question-${uiIndex}"]:checked`)) {
                     answeredCount++;
                 }
             });
             
-            if(!forceSubmit && answeredCount < window.currentTestQuestions.length) {
-                const emptyCount = window.currentTestQuestions.length - answeredCount;
+            if(!forceSubmit && answeredCount < State.getCurrentTestQuestions().length) {
+                const emptyCount = State.getCurrentTestQuestions().length - answeredCount;
                 window.showModal({
                     type: 'warning',
                     title: 'Eksik Sorular Var',
@@ -490,10 +491,10 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             
             window.stopTimer(); 
             
-            const score = evaluateTest(window.currentTestQuestions);
+            const score = evaluateTest(State.getCurrentTestQuestions());
             
-            if (window.currentMode === 'NORMAL') {
-                window.userData.testProgress[window.currentTestIndex] = {
+            if (State.getCurrentMode() === 'NORMAL') {
+                State.getUserData().testProgress[State.getCurrentTestIndex()] = {
                     finished: true,
                     score: score
                 };
@@ -504,10 +505,10 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             resultContainer.classList.remove('hidden');
             
             const scoreText = document.getElementById('score-text');
-            scoreText.innerHTML = `${score} / ${window.currentTestQuestions.length}`;
+            scoreText.innerHTML = `${score} / ${State.getCurrentTestQuestions().length}`;
             
             const reviewBtn = document.getElementById('review-mistakes-btn');
-            if (score < window.currentTestQuestions.length) {
+            if (score < State.getCurrentTestQuestions().length) {
                 reviewBtn.classList.remove('hidden');
                 reviewBtn.classList.add('flex');
             } else {
@@ -516,7 +517,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }
             
             // CONFETTI ANIMATION IF FULL SCORE
-            if (score === window.currentTestQuestions.length && typeof confetti === 'function') {
+            if (score === State.getCurrentTestQuestions().length && typeof confetti === 'function') {
                 confetti({
                     particleCount: 200,
                     spread: 100,
@@ -525,19 +526,19 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 });
             }
             
-            window.currentQuestionIndex = 0;
+            State.setCurrentQuestionIndex(0);
             window.updateUI();
-            if(window.currentMode === 'NORMAL') window.renderDropdown();
+            if(State.getCurrentMode() === 'NORMAL') window.renderDropdown();
         }
         
         window.showReviewMistakes = function() {
-            for(let i=0; i<window.currentTestQuestions.length; i++) {
+            for(let i=0; i<State.getCurrentTestQuestions().length; i++) {
                 const radioName = `question-${i}`;
                 const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
-                const q = window.currentTestQuestions[i].data;
+                const q = State.getCurrentTestQuestions()[i].data;
                 
                 if (!selectedOption || selectedOption.value !== q.answer) {
-                    window.currentQuestionIndex = i;
+                    State.setCurrentQuestionIndex(i);
                     window.updateUI();
                     return;
                 }
@@ -578,12 +579,12 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             let catData = {};
             let hasData = false;
             
-            if(window.userData.testProgress) {
-                Object.keys(window.userData.testProgress).forEach(tIdx => {
-                    const prog = window.userData.testProgress[tIdx];
+            if(State.getUserData().testProgress) {
+                Object.keys(State.getUserData().testProgress).forEach(tIdx => {
+                    const prog = State.getUserData().testProgress[tIdx];
                     if(prog && prog.finished) {
                         hasData = true;
-                        const test = window.testData[tIdx];
+                        const test = State.getTestData()[tIdx];
                         const cat = window.getCategoryName(test.title);
                         if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
                         catData[cat].correct += prog.score;
@@ -699,8 +700,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 btn.disabled = true;
                 
                 await addDoc(collection(db, 'suggestions'), {
-                    uid: window.currentUser.uid,
-                    displayName: window.currentUser.displayName || window.currentUser.email,
+                    uid: State.getCurrentUser().uid,
+                    displayName: State.getCurrentUser().displayName || State.getCurrentUser().email,
                     text: text,
                     timestamp: new Date().toISOString()
                 });
@@ -725,7 +726,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         window.openAdminPanel = async function() {
             const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
-            if(!window.currentUser || !ADMIN_EMAILS.includes(window.currentUser.email)) {
+            if(!State.getCurrentUser() || !ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
                 window.showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
                 return;
             }
@@ -768,19 +769,19 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.openProfileModal = function() {
-            if(!window.currentUser) return;
+            if(!State.getCurrentUser()) return;
             const modal = document.getElementById('profile-modal');
             
-            document.getElementById('profile-email').value = window.currentUser.email;
-            document.getElementById('profile-username').value = window.currentUser.displayName || window.currentUser.email.split('@')[0];
+            document.getElementById('profile-email').value = State.getCurrentUser().email;
+            document.getElementById('profile-username').value = State.getCurrentUser().displayName || State.getCurrentUser().email.split('@')[0];
             
             let totalQ = 0;
             let correctQ = 0;
-            if(window.userData.testProgress) {
-                Object.keys(window.userData.testProgress).forEach(tIdx => {
-                    const prog = window.userData.testProgress[tIdx];
+            if(State.getUserData().testProgress) {
+                Object.keys(State.getUserData().testProgress).forEach(tIdx => {
+                    const prog = State.getUserData().testProgress[tIdx];
                     if(prog && prog.finished) {
-                        const test = window.testData[tIdx];
+                        const test = State.getTestData()[tIdx];
                         totalQ += test.questions.length;
                         correctQ += prog.score;
                     }
@@ -816,7 +817,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             btn.disabled = true;
             
             try {
-                await updateProfile(window.currentUser, { displayName: newName });
+                await updateProfile(State.getCurrentUser(), { displayName: newName });
                 document.getElementById('welcome-text').textContent = `Hoş geldin, ${newName}`;
                 
                 window.showModal({ type: 'success', title: 'İşlem Başarılı', text: 'Kullanıcı adınız başarıyla güncellenmiştir.', confirmText: 'Tamam' });
@@ -830,14 +831,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         window.updateEmailAddress = async function() {
             const newEmail = document.getElementById('profile-email').value.trim();
-            if(!newEmail || newEmail === window.currentUser.email) return;
+            if(!newEmail || newEmail === State.getCurrentUser().email) return;
             
             const btn = document.getElementById('profile-email-btn');
             btn.textContent = '...';
             btn.disabled = true;
             
             try {
-                await updateEmail(window.currentUser, newEmail);
+                await updateEmail(State.getCurrentUser(), newEmail);
                 window.showModal({ type: 'success', title: 'İşlem Başarılı', text: 'E-posta adresiniz başarıyla güncellenmiştir. Hesabınıza artık yeni e-posta adresinizle giriş yapabilirsiniz.', confirmText: 'Tamam' });
             } catch(error) {
                 console.error(error);
@@ -864,8 +865,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 cancelText: 'İptal Et',
                 onConfirm: async () => {
                     try {
-                        await deleteDoc(doc(db, "users", window.currentUser.uid));
-                        await deleteUser(window.currentUser);
+                        await deleteDoc(doc(db, "users", State.getCurrentUser().uid));
+                        await deleteUser(State.getCurrentUser());
                         
                         window.closeProfileModal();
                         window.showModal({ type: 'info', title: 'Hesap Silindi', text: 'Hesabınız ve tüm verileriniz kalıcı olarak silindi. Hoşçakalın!', confirmText: 'Tamam' });
