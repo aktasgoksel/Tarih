@@ -10,8 +10,8 @@ Bu rapor, projenin güvenlik analizi (Penetration Test) bakış açısıyla tara
 | No | Açık / Risk Tanımı | Risk Seviyesi | Etkilenen Alan | Durum |
 |----|-------------------|---------------|----------------|-------|
 | 1  | Önerilerde Kullanıcı Kimliği Taklit Etme (Spoofing) | **Yüksek** | `suggestions` Koleksiyonu / `firestore.rules` | **DÜZELTİLDİ** |
-| 2  | Öneri Gönderiminde Payload Sınırı Olmaması (DDoS/Maliyet) | **Orta** | `suggestions` Koleksiyonu / `firestore.rules` | *Onay Bekliyor* |
-| 3  | İstatistik Modalı Konu İsimlerinde XSS (Cross-Site Scripting) | **Düşük** | İstatistik Ekranı / `tests.js` | *Onay Bekliyor* |
+| 2  | Öneri Gönderiminde Payload Sınırı Olmaması (DDoS/Maliyet) | **Orta** | `suggestions` Koleksiyonu / `firestore.rules` | **DÜZELTİLDİ** |
+| 3  | İstatistik Modalı Konu İsimlerinde XSS (Cross-Site Scripting) | **Düşük** | İstatistik Ekranı / `tests.js` | **DÜZELTİLDİ** |
 | 4  | Kullanıcı Profiline Doğrudan İstemci Tarafından Yazma | **Düşük** | `users` Koleksiyonu / `firestore.rules` | *Bilgilendirme* |
 
 ---
@@ -32,7 +32,7 @@ Bu rapor, projenin güvenlik analizi (Penetration Test) bakış açısıyla tara
 - **İstismar Senaryosu:** Bir saldırgan otomatik bir script hazırlayarak, her biri 1MB boyutunda anlamsız metinler içeren binlerce öneri dökümanı oluşturabilir. Bu işlem Firestore depolama alanını hızla şişirir, yazma/okuma kotalarını doldurur ve Firebase üzerinde beklenmeyen yüksek maliyetlere (DDoS) yol açar.
 - **Önerilen Düzeltme:** `firestore.rules` dosyasındaki kurala veri tipi ve karakter sınırı eklenmesi:
   `&& request.resource.data.text is string && request.resource.data.text.size() < 5000`
-- **Durum:** Onay Bekliyor.
+- **Durum:** Düzeltildi. (Commit: `4f9be3e`)
 
 ---
 
@@ -40,7 +40,7 @@ Bu rapor, projenin güvenlik analizi (Penetration Test) bakış açısıyla tara
 - **Açıklama:** `tests.js` içerisinde kullanıcı istatistikleri render edilirken konu başlıkları (`${l}`) doğrudan `innerHTML` yardımıyla sayfaya basılmaktadır. Bu veri normalde sadece yöneticinin yazabildiği `/tests` koleksiyonundaki test başlıklarından ayrıştırılmaktadır.
 - **İstismar Senaryosu:** Yönetici hesabı ele geçirilirse veya yönetici paneline bypass ile soru enjekte edilirse, test başlığına `<img src=x onerror=alert(document.cookie)>` gibi bir payload yazılabilir. Bu testi çözen kullanıcıların profilinde başarı oranları modalı açıldığında bu zararlı script otomatik olarak çalışır (Stored XSS).
 - **Önerilen Düzeltme:** `tests.js` line 633'teki `${l}` alanı `${window.escapeHTML(l)}` olarak güncellenmelidir.
-- **Durum:** Onay Bekliyor.
+- **Durum:** Düzeltildi. (Commit: `ca7af1b`)
 
 ---
 
