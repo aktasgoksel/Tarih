@@ -57,7 +57,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                         });
                     }
                 }
-            }, 1000);
+            }, 1000));
         }
         
         window.pauseTimer = function() {
