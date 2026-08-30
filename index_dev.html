@@ -39,11 +39,15 @@
     <link rel="stylesheet" href="./src/style.css">
     <style>
         /* Soru Şıkkı Seçildiğinde (Checked) */
-        input[type="radio"]:checked + .option-label {
+        input[type="radio"]:checked + .option-label,
+        input[type="radio"]:checked + label,
+        .peer:checked + .option-label {
             border-color: #3b82f6 !important;
             background-color: #eff6ff !important;
         }
-        .dark input[type="radio"]:checked + .option-label {
+        .dark input[type="radio"]:checked + .option-label,
+        .dark input[type="radio"]:checked + label,
+        .dark .peer:checked + .option-label {
             border-color: #60a5fa !important;
             background-color: rgba(59, 130, 246, 0.15) !important;
         }
