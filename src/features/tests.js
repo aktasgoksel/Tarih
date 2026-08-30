@@ -51,7 +51,7 @@ import { showModal } from "../ui/modal.js";
             });
         }
 
-        function generateMistakeTest() {
+        export function generateMistakeTest() {
             State.setCurrentMode('MISTAKES');
             State.setCurrentTestQuestions([]);
             
@@ -86,7 +86,7 @@ import { showModal } from "../ui/modal.js";
             window.updateUI();
         }
         
-        function generateFavoritesTest() {
+        export function generateFavoritesTest() {
             State.setCurrentMode('FAVORITES');
             State.setCurrentTestQuestions([]);
             
