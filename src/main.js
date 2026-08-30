@@ -342,11 +342,11 @@ async function loadTestsFromFirestore() {
                     userData = { mistakes: [], favorites: [], testProgress: {} };
                 }
                 
+                await loadTestsFromFirestore();
+                
                 cleanStaleMistakes();
                 updateMistakeBadge();
                 updateFavoritesBadge();
-                
-                await loadTestsFromFirestore();
                 
             } else {
                 // Logged out
