@@ -2,10 +2,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Öneriler: Giriş yapmış herkes yazabilir, sadece admin okuyabilir
+    // Öneriler: Giriş yapmış herkes yazabilir, sadece admin okuyabilir/silebilir
     match /suggestions/{suggestionId} {
       allow create: if request.auth != null;
-      allow read: if request.auth != null && request.auth.token.email == "gokselaktas84@gmail.com";
+      allow read, delete: if request.auth != null && request.auth.token.email == "gokselaktas84@gmail.com";
     }
 
     // Testler: Giriş yapmış herkes okuyabilir, sadece admin yazabilir
