@@ -9,13 +9,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         window.testTotalQuestionsForTimer = 0;
         
         window.prepareTimer = function prepareTimer(totalQuestions) {
-            stopTimer();
+            window.stopTimer();
             window.testTotalQuestionsForTimer = totalQuestions;
             window.timeRemaining = totalQuestions * 60; // 1 min per question
             updateTimerUI();
             
             document.getElementById('start-timer-btn').classList.remove('hidden');
-            document.getElementById('start-timer-btn-mobile').classList.remove('hidden');
+            const stbm2 = document.getElementById('start-timer-btn-mobile'); if(stbm2) stbm2.classList.remove('hidden');
             document.getElementById('mobile-timer-bar').classList.remove('hidden');
             
             document.getElementById('timer-container').classList.add('hidden');
@@ -31,7 +31,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             updatePauseIcons();
             
             document.getElementById('start-timer-btn').classList.add('hidden');
-            document.getElementById('start-timer-btn-mobile').classList.add('hidden');
+            const stbm = document.getElementById('start-timer-btn-mobile'); if(stbm) stbm.classList.add('hidden');
             
             document.getElementById('timer-container').classList.remove('hidden');
             document.getElementById('timer-container').classList.add('flex');
@@ -44,7 +44,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     window.timeRemaining--;
                     updateTimerUI();
                     if(window.timeRemaining <= 0) {
-                        stopTimer();
+                        window.stopTimer();
                         window.showModal({
                             type: 'warning',
                             title: 'Süre Doldu!',
@@ -82,8 +82,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
         
         window.resetTimerManually = function() {
-            stopTimer();
-            prepareTimer(window.testTotalQuestionsForTimer);
+            window.stopTimer();
+            window.prepareTimer(window.testTotalQuestionsForTimer);
         }
 
         window.stopTimer = function stopTimer() {
@@ -97,7 +97,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             document.getElementById('mobile-timer-bar').classList.add('hidden');
             document.getElementById('mobile-timer-container').classList.add('hidden');
             document.getElementById('mobile-timer-container').classList.remove('flex');
-            document.getElementById('start-timer-btn-mobile').classList.add('hidden');
+            const stbm = document.getElementById('start-timer-btn-mobile'); if(stbm) stbm.classList.add('hidden');
         }
 
         function updateTimerUI() {

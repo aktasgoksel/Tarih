@@ -4,7 +4,7 @@ import { auth, db } from "./firebase.js";
 import './ui/loader.js';
 import './ui/theme.js';
 import './core/security.js';
-import './core/state.js';
+
 import './core/auth.js';
 import './features/favorites.js';
 import './features/timer.js';

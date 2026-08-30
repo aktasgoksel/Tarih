@@ -141,7 +141,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     document.getElementById('app-screen').classList.add('hidden');
                     document.getElementById('verify-screen').classList.remove('hidden');
                     document.getElementById('verify-screen').classList.add('flex');
-                    document.getElementById('verify-email-text').textContent = `${user.email} adresinize bir doğrulama bağlantısı gönderdik. Devam etmek için lütfen gelen kutunuzu kontrol edin.`;
+                    const vet = document.getElementById('verify-email-text'); if(vet) vet.textContent = `${user.email} adresinize bir doğrulama bağlantısı gönderdik. Devam etmek için lütfen gelen kutunuzu kontrol edin.`;
                     return;
                 }
                 
@@ -152,7 +152,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 // Logged in & Verified
                 window.currentUser = user;
                 document.getElementById('auth-screen').classList.add('hidden');
-                window.showLoader('Verileriniz Firebase\'den indiriliyor, lütfen bekleyin...');
+                window.showLoader('Yükleniyor, lütfen bekleyin...');
 
                 
                 // ADMIN ROLE CHECK
@@ -164,8 +164,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
                 
                 let displayName = user.displayName || user.email.split('@')[0];
-                document.getElementById('welcome-text').textContent = `Hoş geldin, ${displayName}`;
-                err.textContent = '';
+                const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `Hoş geldin, ${displayName}`;
+                const err = document.getElementById('auth-error'); if(err) err.textContent = '';
                 
                 // Fetch data from Firestore
                 try {
@@ -199,7 +199,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 
             } else {
                 // Logged out
-                stopTimer();
+                window.stopTimer();
                 window.currentUser = null;
                 window.userData = { mistakes: [], favorites: [], testProgress: {} };
                 
@@ -214,7 +214,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 document.getElementById('register-username').value = '';
                 document.getElementById('register-password').value = '';
                 document.getElementById('forgot-email').value = '';
-                err.textContent = '';
+                const err = document.getElementById('auth-error'); if(err) err.textContent = '';
                 window.switchAuth('login');
             }
         });
@@ -232,7 +232,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }
         }
         
-        window.saveUserDataCloud = async function window.saveUserDataCloud() {
+        window.saveUserDataCloud = async function saveUserDataCloud() {
             if(!window.currentUser) return;
             updateMistakeBadge();
             updateFavoritesBadge();
@@ -247,7 +247,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         function updateMistakeBadge() {
             const badge = document.getElementById('mistake-badge');
             const mistakeCount = window.userData.mistakes ? window.userData.mistakes.length : 0;
-            badge.textContent = mistakeCount;
+            if(badge) badge.textContent = mistakeCount;
             
             const btn = document.getElementById('dashboard-mistake-btn');
             const clearBtn = document.getElementById('clear-mistakes-btn');
@@ -264,7 +264,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         function updateFavoritesBadge() {
             const badge = document.getElementById('favorite-badge');
             const favCount = window.userData.favorites ? window.userData.favorites.length : 0;
-            badge.textContent = favCount;
+            if(badge) badge.textContent = favCount;
             
             const btn = document.getElementById('dashboard-favorite-btn');
             if(favCount === 0) {
@@ -276,13 +276,20 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         window.clearAllMistakes = function() {
             if(window.userData.mistakes && window.userData.mistakes.length > 0) {
-                if(confirm("Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz?")) {
-                    window.userData.mistakes = [];
-                    window.saveUserDataCloud();
-                    if(window.currentMode === 'MISTAKES') {
-                        window.showTest(0);
+                window.showModal({
+                    type: 'warning',
+                    title: 'Yanlışları Sıfırla',
+                    text: 'Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz? Bu işlem geri alınamaz.',
+                    confirmText: 'Evet, Sıfırla',
+                    cancelText: 'İptal',
+                    onConfirm: () => {
+                        window.userData.mistakes = [];
+                        window.saveUserDataCloud();
+                        if(window.currentMode === 'MISTAKES') {
+                            window.showTest(0);
+                        }
                     }
-                }
+                });
             }
         }
 

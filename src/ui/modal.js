@@ -158,7 +158,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     window.saveUserDataCloud();
                     
                     window.showTest(window.currentTestIndex);
-                    renderDropdown();
+                    window.renderDropdown();
                 }
             });
         }

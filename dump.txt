@@ -1,0 +1,185 @@
+window.renderDropdown = function renderDropdown() {
+            const dropdown = document.getElementById('test-dropdown');
+            dropdown.innerHTML = '';
+            
+            // Random Trial Option
+            const randomOpt = document.createElement('option');
+            randomOpt.value = 'RANDOM_27';
+            randomOpt.textContent = '🎲 Gerçek KPSS Denemesi (Rastgele 27 Soru)';
+            randomOpt.className = 'font-bold text-indigo-600 dark:text-indigo-400';
+            dropdown.appendChild(randomOpt);
+            
+            // Mistake Option
+            const mistakeOpt = document.createElement('option');
+            mistakeOpt.value = 'MISTAKES';
+            mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Özel Test)';
+            mistakeOpt.className = 'font-bold text-rose-600 dark:text-rose-400';
+            dropdown.appendChild(mistakeOpt);
+            
+            // Favorite Option
+            const favOpt = document.createElement('option');
+            favOpt.value = 'FAVORITES';
+            favOpt.textContent = '⭐ Favori Sorularım (Kaydedilenler)';
+            favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
+            dropdown.appendChild(favOpt);
+            
+            window.testData.forEach((test, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                const isFinished = window.userData.testProgress[index] && window.userData.testProgress[index].finished;
+                
+                let scoreText = '';
+                if(isFinished) {
+                    const score = window.userData.testProgress[index].score;
+                    scoreText = ` \u2713 (Çözüldü - ${score}/${test.questions.length})`;
+                }
+                opt.textContent = `${test.title}${scoreText}`;
+                dropdown.appendChild(opt);
+            });
+        }
+
+        function generateMistakeTest() {
+            window.currentMode = 'MISTAKES';
+            window.currentTestQuestions = [];
+            
+            const shuffled = [...window.userData.mistakes].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 30); // up to 30 mistake questions
+            
+            selected.forEach(m => {
+                const test = window.testData[m.testIdx];
+                if(test && test.questions && test.questions[m.qIdx]) {
+                    window.currentTestQuestions.push({
+                        originalTestIdx: m.testIdx,
+                        originalQIdx: m.qIdx,
+                        data: test.questions[m.qIdx]
+                    });
+                }
+            });
+            
+            document.getElementById('current-test-title').textContent = window.currentTestQuestions.length > 0 
+                ? `🔥 Yanlışlarım (${window.currentTestQuestions.length} Soru)` 
+                : 'Hiç yanlışınız yok! Tebrikler!';
+                
+            window.currentQuestionIndex = 0;
+            renderTestUI(window.currentTestQuestions);
+            renderGrid(window.currentTestQuestions.length);
+            
+            if(window.currentTestQuestions.length > 0) {
+                window.prepareTimer(window.currentTestQuestions.length);
+            } else {
+                window.stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
+            window.updateUI();
+        }
+        
+        function generateFavoritesTest() {
+            window.currentMode = 'FAVORITES';
+            window.currentTestQuestions = [];
+            
+            const shuffled = [...window.userData.favorites].sort(() => 0.5 - Math.random());
+            
+            shuffled.forEach(m => {
+                const test = window.testData[m.testIdx];
+                if(test && test.questions && test.questions[m.qIdx]) {
+                    window.currentTestQuestions.push({
+                        originalTestIdx: m.testIdx,
+                        originalQIdx: m.qIdx,
+                        data: test.questions[m.qIdx]
+                    });
+                }
+            });
+            
+            document.getElementById('current-test-title').textContent = window.currentTestQuestions.length > 0 
+                ? `⭐ Favori Sorularım (${window.currentTestQuestions.length} Soru)` 
+                : 'Henüz favori sorunuz yok.';
+                
+            window.currentQuestionIndex = 0;
+            renderTestUI(window.currentTestQuestions);
+            renderGrid(window.currentTestQuestions.length);
+            
+            if(window.currentTestQuestions.length > 0) {
+                window.prepareTimer(window.currentTestQuestions.length);
+            } else {
+                window.stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
+            window.updateUI();
+        }
+
+        window.generateRandomTest = function() {
+            window.currentMode = 'RANDOM_27';
+            window.currentTestQuestions = [];
+            
+            let allQ = [];
+            window.testData.forEach((test, tIdx) => {
+                test.questions.forEach((q, qIdx) => {
+                    allQ.push({ originalTestIdx: tIdx, originalQIdx: qIdx, data: q });
+                });
+            });
+            
+            allQ.sort(() => 0.5 - Math.random());
+            window.currentTestQuestions = allQ.slice(0, 27);
+            
+            document.getElementById('current-test-title').textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
+            window.currentQuestionIndex = 0;
+            
+            renderTestUI(window.currentTestQuestions);
+            renderGrid(window.currentTestQuestions.length);
+            
+            if(window.currentTestQuestions.length > 0) {
+                window.prepareTimer(window.currentTestQuestions.length);
+            } else {
+                window.stopTimer();
+                document.getElementById('grid-container').classList.add('hidden');
+            }
+            window.updateUI();
+        }
+
+        window.showTest = function(val) {
+            if(val === 'MISTAKES') {
+                document.getElementById('test-dropdown').value = 'MISTAKES';
+                generateMistakeTest();
+                return;
+            }
+            if(val === 'FAVORITES') {
+                document.getElementById('test-dropdown').value = 'FAVORITES';
+                generateFavoritesTest();
+                return;
+            }
+            if(val === 'RANDOM_27') {
+                document.getElementById('test-dropdown').value = 'RANDOM_27';
+                window.generateRandomTest();
+                return;
+            }
+            
+            window.currentMode = 'NORMAL';
+            let index = parseInt(val);
+            window.currentTestIndex = index;
+            window.currentQuestionIndex = 0;
+            
+            document.getElementById('test-dropdown').value = index;
+            document.getElementById('current-test-title').textContent = window.testData[index].title;
+            
+            window.currentTestQuestions = window.testData[index].questions.map((q, idx) => ({
+                originalTestIdx: index,
+                originalQIdx: idx,
+                data: q
+            }));
+            
+            renderTestUI(window.currentTestQuestions);
+            renderGrid(window.currentTestQuestions.length);
+            
+            const isFinished = window.userData.testProgress[index] && window.userData.testProgress[index].finished;
+            
+            if (isFinished) {
+                window.stopTimer();
+                evaluateTest(window.currentTestQuestions);
+            } else {
+                window.prepareTimer(window.currentTestQuestions.length);
+            }
+            
+            window.updateUI();
+        }
+
+        

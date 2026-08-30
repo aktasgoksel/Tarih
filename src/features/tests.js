@@ -63,7 +63,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             });
             
-            document.getElementById('current-test-title').textContent = window.currentTestQuestions.length > 0 
+            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = window.currentTestQuestions.length > 0 
                 ? `🔥 Yanlışlarım (${window.currentTestQuestions.length} Soru)` 
                 : 'Hiç yanlışınız yok! Tebrikler!';
                 
@@ -97,7 +97,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 }
             });
             
-            document.getElementById('current-test-title').textContent = window.currentTestQuestions.length > 0 
+            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = window.currentTestQuestions.length > 0 
                 ? `⭐ Favori Sorularım (${window.currentTestQuestions.length} Soru)` 
                 : 'Henüz favori sorunuz yok.';
                 
@@ -128,7 +128,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             allQ.sort(() => 0.5 - Math.random());
             window.currentTestQuestions = allQ.slice(0, 27);
             
-            document.getElementById('current-test-title').textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
+            const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
             window.currentQuestionIndex = 0;
             
             renderTestUI(window.currentTestQuestions);
@@ -166,7 +166,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             window.currentQuestionIndex = 0;
             
             document.getElementById('test-dropdown').value = index;
-            document.getElementById('current-test-title').textContent = window.testData[index].title;
+            const cTitle = document.getElementById('current-test-title'); if(cTitle) cTitle.textContent = window.testData[index].title;
             
             window.currentTestQuestions = window.testData[index].questions.map((q, idx) => ({
                 originalTestIdx: index,
@@ -226,7 +226,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     
                     optionsHtml += 
                         `<div class="mb-3 relative group">
-                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); window.updateGridUI();">
+                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); window.window.updateGridUI();">
                             <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50 pr-10 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:border-blue-400 dark:peer-checked:bg-blue-900/30">
                                 <span class="font-bold mr-2 text-blue-600 dark:text-blue-400">${optKey})</span> <span class="inline-block align-top">${optText}</span>
                             </label>
@@ -273,14 +273,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             document.querySelectorAll('.question-block').forEach((el, idx) => {
                 if(idx === window.currentQuestionIndex) {
                     el.classList.add('active');
-                    updateGridUI();
+                    window.updateGridUI();
         } else {
                     el.classList.remove('active');
                 }
             });
             
             const counterText = `Soru ${window.currentQuestionIndex + 1} / ${totalQ}`;
-            document.getElementById('question-counter').textContent = counterText;
+            const qCounter = document.getElementById('question-counter'); if(qCounter) qCounter.textContent = counterText;
             
             const progressPct = ((window.currentQuestionIndex) / (totalQ - 1)) * 100 || 0;
             document.getElementById('progress-bar').style.width = `${progressPct}%`;
@@ -347,7 +347,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 mobStatusEl.className = mobStatusClass;
             }
             
-            updateGridUI();
+            window.updateGridUI();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -474,9 +474,18 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             });
             
             if(!forceSubmit && answeredCount < window.currentTestQuestions.length) {
-                if(!confirm(`Henüz ${window.currentTestQuestions.length - answeredCount} soruyu boş bıraktınız. Testi bitirmek istediğinize emin misiniz?`)) {
-                    return;
-                }
+                const emptyCount = window.currentTestQuestions.length - answeredCount;
+                window.showModal({
+                    type: 'warning',
+                    title: 'Eksik Sorular Var',
+                    text: `Henüz ${emptyCount} soruyu boş bıraktınız. Testi yine de bitirmek istediğinize emin misiniz?`,
+                    confirmText: 'Evet, Bitir',
+                    cancelText: 'Vazgeç',
+                    onConfirm: () => {
+                        window.submitCurrentTest(true);
+                    }
+                });
+                return;
             }
             
             window.stopTimer(); 
@@ -518,7 +527,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             
             window.currentQuestionIndex = 0;
             window.updateUI();
-            if(window.currentMode === 'NORMAL') renderDropdown();
+            if(window.currentMode === 'NORMAL') window.renderDropdown();
         }
         
         window.showReviewMistakes = function() {
@@ -546,7 +555,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 modal.firstElementChild.classList.add('scale-100');
             }, 10);
             
-            renderStats();
+            window.renderStats();
         }
 
         window.closeStatsModal = function() {
@@ -575,7 +584,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     if(prog && prog.finished) {
                         hasData = true;
                         const test = window.testData[tIdx];
-                        const cat = getCategoryName(test.title);
+                        const cat = window.getCategoryName(test.title);
                         if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
                         catData[cat].correct += prog.score;
                         catData[cat].total += test.questions.length;
@@ -702,7 +711,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 btn.disabled = false;
             } catch (e) {
                 console.error(e);
-                window.showModal({ type: 'error', title: 'Hata', text: 'Bir hata oluştu. Lütfen bağlantınızı kontrol edin.', confirmText: 'Tamam' });
+                let errorMsg = 'Bir hata oluştu. Lütfen bağlantınızı kontrol edin.';
+                if (e.code === 'permission-denied' || (e.message && e.message.includes('permission'))) {
+                    errorMsg = 'Veritabanı erişim yetkisi reddedildi. Firestore kurallarınızda "suggestions" koleksiyonuna yazma izni verildiğinden emin olun.';
+                } else if (e.message) {
+                    errorMsg = `Hata detayı: ${e.message}`;
+                }
+                window.showModal({ type: 'error', title: 'Hata', text: errorMsg, confirmText: 'Tamam' });
                 document.getElementById('submit-suggestion-btn').textContent = 'Tekrar Dene';
                 document.getElementById('submit-suggestion-btn').disabled = false;
             }
@@ -772,9 +787,9 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 });
             }
             
-            document.getElementById('profile-stat-total').textContent = totalQ;
-            document.getElementById('profile-stat-correct').textContent = correctQ;
-            document.getElementById('profile-stat-wrong').textContent = totalQ - correctQ;
+            const pst = document.getElementById('profile-stat-total'); if(pst) pst.textContent = totalQ;
+            const psc = document.getElementById('profile-stat-correct'); if(psc) psc.textContent = correctQ;
+            const psw = document.getElementById('profile-stat-wrong'); if(psw) psw.textContent = totalQ - correctQ;
             
             modal.classList.remove('hidden');
             setTimeout(() => {
