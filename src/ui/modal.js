@@ -126,10 +126,6 @@ export function showModal(options) {
     }, 10);
 }
 
-export function closeAdminPanel() {
-    document.getElementById('admin-modal').classList.add('hidden');
-}
-
 export function resetTest() {
     if(State.getCurrentMode() === 'MISTAKES') {
         generateMistakeTest();
@@ -164,5 +160,4 @@ export function resetTest() {
 window.showLegalModal = showLegalModal;
 window.closeLegalModal = closeLegalModal;
 window.showModal = showModal;
-window.closeAdminPanel = closeAdminPanel;
 window.resetTest = resetTest;
