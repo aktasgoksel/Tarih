@@ -1,0 +1,33 @@
+{
+  "name": "tarih",
+  "version": "1.0.0",
+  "description": "TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrenciler için geliştirilmiş, ilerleme takibi ve analiz yetenekleriyle donatılmış dijital bir eğitim platformudur. Bu doküman, uygulamanın sunduğu özellikleri ve temel kullanım prensiplerini içermektedir.",
+  "main": "data.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aktasgoksel/Tarih.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/aktasgoksel/Tarih/issues"
+  },
+  "homepage": "https://github.com/aktasgoksel/Tarih#readme",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "firebase": "^12.18.0"
+  }
+}
