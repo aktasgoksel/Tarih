@@ -14,15 +14,39 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      // Return cached version or fetch from network
-      return response || fetch(event.request).catch(() => {
-        // Fallback for offline if fetch fails (e.g., return index.html for navigation requests)
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
-    })
-  );
+  const url = new URL(event.request.url);
+  const isNav = event.request.mode === 'navigate' || 
+                url.pathname.endsWith('index.html') || 
+                url.pathname === '/' || 
+                url.pathname.endsWith('/');
+
+  if (isNav) {
+    // Network-First Strategy
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match('./index.html') || caches.match(event.request);
+        })
+    );
+  } else {
+    // Cache-First Strategy for static assets/libraries
+    event.respondWith(
+      caches.match(event.request).then(response => {
+        return response || fetch(event.request).then(netResponse => {
+          if (netResponse.status === 200) {
+            const responseClone = netResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          }
+          return netResponse;
+        });
+      })
+    );
+  }
 });
