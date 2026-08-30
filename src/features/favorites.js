@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -5,14 +6,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
 // --- FAVORITES LOGIC ---
         window.toggleFavorite = function(uiIndex) {
-            const qObj = window.currentTestQuestions[uiIndex];
-            if(!window.userData.favorites) window.userData.favorites = [];
+            const qObj = State.getCurrentTestQuestions()[uiIndex];
+            if(!State.getUserData().favorites) State.getUserData().favorites = [];
             
-            const idx = window.userData.favorites.findIndex(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
+            const idx = State.getUserData().favorites.findIndex(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
             if(idx === -1) {
-                window.userData.favorites.push({ testIdx: qObj.originalTestIdx, qIdx: qObj.originalQIdx });
+                State.getUserData().favorites.push({ testIdx: qObj.originalTestIdx, qIdx: qObj.originalQIdx });
             } else {
-                window.userData.favorites.splice(idx, 1);
+                State.getUserData().favorites.splice(idx, 1);
             }
             window.saveUserDataCloud();
             
