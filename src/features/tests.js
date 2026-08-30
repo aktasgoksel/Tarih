@@ -401,6 +401,20 @@ import { showModal } from "../ui/modal.js";
             saveUserDataCloud();
         }
 
+        function markQuestionAndDisableInputs(radioName, correctAnswer, selectedOption) {
+            const inputs = document.querySelectorAll(`input[name="${radioName}"]`);
+            inputs.forEach(input => input.disabled = true);
+
+            const correctInput = document.querySelector(`input[name="${radioName}"][value="${correctAnswer}"]`);
+            if(correctInput) {
+                correctInput.nextElementSibling.classList.add('correct-answer');
+            }
+
+            if (selectedOption && selectedOption.value !== correctAnswer) {
+                selectedOption.nextElementSibling.classList.add('incorrect-answer');
+            }
+        }
+
         export function evaluateSingleQuestion(uiIndex) {
             const qObj = State.getCurrentTestQuestions()[uiIndex];
             const q = qObj.data;
@@ -412,20 +426,9 @@ import { showModal } from "../ui/modal.js";
                 return;
             }
             
-            const inputs = document.querySelectorAll(`input[name="${radioName}"]`);
-            inputs.forEach(input => input.disabled = true);
+            markQuestionAndDisableInputs(radioName, q.answer, selectedOption);
 
-            const correctInput = document.querySelector(`input[name="${radioName}"][value="${q.answer}"]`);
-            if(correctInput) {
-                correctInput.nextElementSibling.classList.add('correct-answer');
-            }
-
-            let isMistake = false;
-            if (selectedOption.value !== q.answer) {
-                selectedOption.nextElementSibling.classList.add('incorrect-answer');
-                isMistake = true;
-            }
-            
+            const isMistake = selectedOption.value !== q.answer;
             recordMistake(qObj.originalTestIdx, qObj.originalQIdx, isMistake);
             
             const solutionDiv = document.getElementById(`solution-${uiIndex}`);
@@ -445,20 +448,13 @@ import { showModal } from "../ui/modal.js";
                 const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
                 const solutionDiv = document.getElementById(`solution-${uiIndex}`);
                 
-                const inputs = document.querySelectorAll(`input[name="${radioName}"]`);
-                inputs.forEach(input => input.disabled = true);
-
-                const correctInput = document.querySelector(`input[name="${radioName}"][value="${q.answer}"]`);
-                if(correctInput) {
-                    correctInput.nextElementSibling.classList.add('correct-answer');
-                }
+                markQuestionAndDisableInputs(radioName, q.answer, selectedOption);
 
                 if (selectedOption) {
                     if (selectedOption.value === q.answer) {
                         score++;
                         recordMistake(qObj.originalTestIdx, qObj.originalQIdx, false);
                     } else {
-                        selectedOption.nextElementSibling.classList.add('incorrect-answer');
                         recordMistake(qObj.originalTestIdx, qObj.originalQIdx, true);
                     }
                 } else {
