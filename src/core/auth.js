@@ -169,35 +169,50 @@ onAuthStateChanged(auth, async (user) => {
         
         // Fetch data from Firestore
         try {
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                State.setUserData(docSnap.data());
-            } else {
-                // New user
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    State.setUserData(docSnap.data());
+                } else {
+                    // New user
+                    State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
+                    await setDoc(docRef, State.getUserData());
+                }
+            } catch(e) {
+                console.error("Veri çekilemedi, geçici (boş) profille başlandı", e);
                 State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
-                await setDoc(docRef, State.getUserData());
             }
-        } catch(e) {
-            console.error("Veri çekilemedi, geçici (boş) profille başlandı", e);
-            State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
+            
+            // Only load tests if not already loaded in memory to prevent duplicate requests
+            if (State.getTestData().length === 0) {
+                await loadTestsFromFirestore();
+            }
+            
+            // Decoupled UI Render Calls
+            renderDropdown();
+            if (State.getTestData().length > 0) {
+                showTest(State.getCurrentTestIndex() || 0);
+            }
+            
+            cleanStaleMistakes();
+            updateMistakeBadge();
+            updateFavoritesBadge();
+        } catch(error) {
+            console.error("Giriş sonrası yükleme hatası:", error);
+            showModal({
+                type: 'error',
+                title: 'Yükleme Hatası',
+                text: 'Verileriniz yüklenirken bir hata oluştu: ' + error.message + '. Lütfen internet bağlantınızı kontrol edip sayfayı yenileyin.',
+                confirmText: 'Yeniden Dene',
+                onConfirm: () => window.location.reload()
+            });
+        } finally {
+            hideLoader();
+            document.getElementById('app-screen').classList.remove('hidden');
+            document.getElementById('app-screen').classList.add('flex');
         }
-        
-        await loadTestsFromFirestore();
-        
-        // Decoupled UI Render Calls
-        renderDropdown();
-        if (State.getTestData().length > 0) {
-            showTest(State.getCurrentTestIndex() || 0);
-        }
-        
-        cleanStaleMistakes();
-        updateMistakeBadge();
-        updateFavoritesBadge();
-        hideLoader();
-        document.getElementById('app-screen').classList.remove('hidden');
-        document.getElementById('app-screen').classList.add('flex');
         
     } else {
         // Logged out
@@ -223,6 +238,7 @@ onAuthStateChanged(auth, async (user) => {
 
 function cleanStaleMistakes() {
     if (!State.getUserData().mistakes) return;
+    if (State.getTestData().length === 0) return; // Guard to prevent wiping mistakes if tests haven't loaded!
     const originalLength = State.getUserData().mistakes.length;
     State.getUserData().mistakes = State.getUserData().mistakes.filter(m => {
         return State.getTestData()[m.testIdx] && State.getTestData()[m.testIdx].questions && State.getTestData()[m.testIdx].questions[m.qIdx];
