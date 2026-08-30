@@ -61,3 +61,4 @@ async function loadTestsFromFirestore() {
 
 
         
+window.loadTestsFromFirestore = loadTestsFromFirestore;

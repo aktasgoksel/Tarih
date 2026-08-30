@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -150,14 +151,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 document.getElementById('verify-screen').classList.remove('flex');
                 
                 // Logged in & Verified
-                window.currentUser = user;
+                State.setCurrentUser(user);
                 document.getElementById('auth-screen').classList.add('hidden');
                 window.showLoader('Yükleniyor, lütfen bekleyin...');
 
                 
                 // ADMIN ROLE CHECK
                 const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
-                if(ADMIN_EMAILS.includes(window.currentUser.email)) {
+                if(ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
                     document.getElementById('admin-panel-btn').classList.remove('hidden');
                 } else {
                     document.getElementById('admin-panel-btn').classList.add('hidden');
@@ -173,21 +174,18 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     const docSnap = await getDoc(docRef);
                     
                     if (docSnap.exists()) {
-                        window.userData = docSnap.data();
-                        if(!window.userData.mistakes) window.userData.mistakes = [];
-                        if(!window.userData.favorites) window.userData.favorites = [];
-                        if(!window.userData.testProgress) window.userData.testProgress = {};
+                        State.setUserData(docSnap.data());
                     } else {
                         // New user
-                        window.userData = { mistakes: [], favorites: [], testProgress: {} };
-                        await setDoc(docRef, window.userData);
+                        State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
+                        await setDoc(docRef, State.getUserData());
                     }
                 } catch(e) {
                     console.error("Veri çekilemedi, geçici (boş) profille başlandı", e);
-                    window.userData = { mistakes: [], favorites: [], testProgress: {} };
+                    State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
                 }
                 
-                await loadTestsFromFirestore();
+                await window.loadTestsFromFirestore();
                 
                 cleanStaleMistakes();
                 updateMistakeBadge();
@@ -200,8 +198,8 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             } else {
                 // Logged out
                 window.stopTimer();
-                window.currentUser = null;
-                window.userData = { mistakes: [], favorites: [], testProgress: {} };
+                State.setCurrentUser(null);
+                State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
                 
                 document.getElementById('verify-screen').classList.add('hidden');
                 document.getElementById('verify-screen').classList.remove('flex');
@@ -222,23 +220,23 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         
         function cleanStaleMistakes() {
-            if (!window.userData.mistakes) return;
-            const originalLength = window.userData.mistakes.length;
-            window.userData.mistakes = window.userData.mistakes.filter(m => {
-                return window.testData[m.testIdx] && window.testData[m.testIdx].questions && window.testData[m.testIdx].questions[m.qIdx];
+            if (!State.getUserData().mistakes) return;
+            const originalLength = State.getUserData().mistakes.length;
+            State.getUserData().mistakes = State.getUserData().mistakes.filter(m => {
+                return State.getTestData()[m.testIdx] && State.getTestData()[m.testIdx].questions && State.getTestData()[m.testIdx].questions[m.qIdx];
             });
-            if (originalLength !== window.userData.mistakes.length) {
+            if (originalLength !== State.getUserData().mistakes.length) {
                 window.saveUserDataCloud();
             }
         }
         
         window.saveUserDataCloud = async function saveUserDataCloud() {
-            if(!window.currentUser) return;
+            if(!State.getCurrentUser()) return;
             updateMistakeBadge();
             updateFavoritesBadge();
             
             try {
-                await setDoc(doc(db, "users", window.currentUser.uid), window.userData);
+                await setDoc(doc(db, "users", State.getCurrentUser().uid), State.getUserData());
             } catch(e) {
                 console.error("Veritabanına kaydedilemedi:", e);
             }
@@ -246,7 +244,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         function updateMistakeBadge() {
             const badge = document.getElementById('mistake-badge');
-            const mistakeCount = window.userData.mistakes ? window.userData.mistakes.length : 0;
+            const mistakeCount = State.getUserData().mistakes ? State.getUserData().mistakes.length : 0;
             if(badge) badge.textContent = mistakeCount;
             
             const btn = document.getElementById('dashboard-mistake-btn');
@@ -263,7 +261,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         function updateFavoritesBadge() {
             const badge = document.getElementById('favorite-badge');
-            const favCount = window.userData.favorites ? window.userData.favorites.length : 0;
+            const favCount = State.getUserData().favorites ? State.getUserData().favorites.length : 0;
             if(badge) badge.textContent = favCount;
             
             const btn = document.getElementById('dashboard-favorite-btn');
@@ -275,7 +273,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.clearAllMistakes = function() {
-            if(window.userData.mistakes && window.userData.mistakes.length > 0) {
+            if(State.getUserData().mistakes && State.getUserData().mistakes.length > 0) {
                 window.showModal({
                     type: 'warning',
                     title: 'Yanlışları Sıfırla',
@@ -283,9 +281,9 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     confirmText: 'Evet, Sıfırla',
                     cancelText: 'İptal',
                     onConfirm: () => {
-                        window.userData.mistakes = [];
+                        State.getUserData().mistakes = [];
                         window.saveUserDataCloud();
-                        if(window.currentMode === 'MISTAKES') {
+                        if(State.getCurrentMode() === 'MISTAKES') {
                             window.showTest(0);
                         }
                     }
