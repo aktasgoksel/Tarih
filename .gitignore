@@ -25,3 +25,7 @@ lerna-debug.log*
 # System Files
 .DS_Store
 Thumbs.db
+
+# Test artifacts (Playwright)
+test-results/
+playwright-report/
