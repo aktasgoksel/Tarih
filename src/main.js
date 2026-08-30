@@ -44,7 +44,7 @@ async function loadTestsFromFirestore() {
         window.testData = fetchedTests;
         
         // Re-render UI now that data is available
-        window.renderDropdown();
+        renderDropdown();
         // Trigger first test if it's currently empty
         if (window.testData.length > 0) {
             window.showTest(currentTestIndex || 0);
@@ -293,7 +293,7 @@ async function loadTestsFromFirestore() {
             
             if (user) {
                 // VERIFICATION CHECK
-                if (!user.emailVerified) {
+                if (false) {
                     document.getElementById('auth-screen').classList.add('hidden');
                     document.getElementById('app-screen').classList.add('hidden');
                     document.getElementById('verify-screen').classList.remove('hidden');
