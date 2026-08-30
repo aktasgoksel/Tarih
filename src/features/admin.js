@@ -37,12 +37,12 @@ export async function openAdminPanel() {
                 const dateStr = new Date(item.timestamp).toLocaleString('tr-TR');
                 html += `
                     <div class="bg-white dark:bg-slate-800 p-4 mb-4 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
-                        <div class="flex justify-between items-center mb-2 border-b border-gray-100 dark:border-slate-700 pb-2">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2 border-b border-gray-100 dark:border-slate-700 pb-2">
                             <div>
                                 <span class="font-bold text-blue-600 dark:text-blue-400">${window.escapeHTML(item.displayName)}</span>
                                 <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">(${window.escapeHTML(item.email || '')})</span>
                             </div>
-                            <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
                                 <span class="text-xs text-gray-500 dark:text-gray-400">${dateStr}</span>
                                 <button onclick="window.deleteSuggestion('${item.id}')" class="text-rose-500 hover:text-rose-700 p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors" title="Sil">
                                     <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
