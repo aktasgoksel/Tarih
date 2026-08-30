@@ -562,7 +562,7 @@ import { showModal } from "../ui/modal.js";
                 modal.firstElementChild.classList.add('scale-100');
             }, 10);
             
-            window.renderStats();
+            renderStats();
         }
 
         export function closeStatsModal() {
@@ -591,7 +591,7 @@ import { showModal } from "../ui/modal.js";
                     if(prog && prog.finished) {
                         hasData = true;
                         const test = State.getTestData()[tIdx];
-                        const cat = window.getCategoryName(test.title);
+                        const cat = getCategoryName(test.title);
                         if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
                         catData[cat].correct += prog.score;
                         catData[cat].total += test.questions.length;
