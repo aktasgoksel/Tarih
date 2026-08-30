@@ -707,7 +707,8 @@ import { showModal } from "../ui/modal.js";
                 
                 await addDoc(collection(db, 'suggestions'), {
                     uid: State.getCurrentUser().uid,
-                    displayName: State.getCurrentUser().displayName || State.getCurrentUser().email,
+                    displayName: State.getCurrentUser().displayName || State.getCurrentUser().email.split('@')[0],
+                    email: State.getCurrentUser().email,
                     text: text,
                     timestamp: new Date().toISOString()
                 });
