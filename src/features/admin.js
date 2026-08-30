@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -45,14 +46,14 @@ window.saveAdminQuestion = async function() {
     try {
         // Find existing test or create new
         let targetTestId = null;
-        let targetTestOrder = window.testData.length + 1;
+        let targetTestOrder = State.getTestData().length + 1;
         let existingQuestions = [];
         
-        for(let i=0; i<window.testData.length; i++) {
-            if(window.testData[i].title === title) {
-                targetTestId = window.testData[i].id;
-                targetTestOrder = window.testData[i].order;
-                existingQuestions = window.testData[i].questions || [];
+        for(let i=0; i<State.getTestData().length; i++) {
+            if(State.getTestData()[i].title === title) {
+                targetTestId = State.getTestData()[i].id;
+                targetTestOrder = State.getTestData()[i].order;
+                existingQuestions = State.getTestData()[i].questions || [];
                 break;
             }
         }
@@ -92,7 +93,7 @@ window.saveAdminQuestion = async function() {
         document.getElementById('admin-solution').value = '';
         
         // Reload tests
-        await loadTestsFromFirestore();
+        await window.loadTestsFromFirestore();
         
     } catch(err) {
         console.error('Soru kaydedilemedi:', err);

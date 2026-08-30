@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -134,15 +135,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         window.resetTest = function() {
-            if(window.currentMode === 'MISTAKES') {
+            if(State.getCurrentMode() === 'MISTAKES') {
                 generateMistakeTest();
                 return;
             }
-            if(window.currentMode === 'FAVORITES') {
+            if(State.getCurrentMode() === 'FAVORITES') {
                 generateFavoritesTest();
                 return;
             }
-            if(window.currentMode === 'RANDOM_27') {
+            if(State.getCurrentMode() === 'RANDOM_27') {
                 window.generateRandomTest();
                 return;
             }
@@ -154,10 +155,10 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 confirmText: 'Sıfırla',
                 cancelText: 'İptal',
                 onConfirm: () => {
-                    window.userData.testProgress[window.currentTestIndex] = null;
+                    State.getUserData().testProgress[State.getCurrentTestIndex()] = null;
                     window.saveUserDataCloud();
                     
-                    window.showTest(window.currentTestIndex);
+                    window.showTest(State.getCurrentTestIndex());
                     window.renderDropdown();
                 }
             });

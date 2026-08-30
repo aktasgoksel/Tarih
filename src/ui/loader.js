@@ -1,3 +1,4 @@
+import { State } from "../state.js";
 
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -24,7 +25,7 @@ window.hideLoader = function() {
 
 
 
-window.testData = [];
+
 
 // Load tests from Firestore
 async function loadTestsFromFirestore() {
@@ -38,7 +39,7 @@ async function loadTestsFromFirestore() {
         
         // Sort by order
         fetchedTests.sort((a, b) => a.order - b.order);
-        window.testData = fetchedTests;
+        State.setTestData(fetchedTests);
         
         
         // Force instant-feedback to be false on load to prevent browser caching
@@ -48,8 +49,8 @@ async function loadTestsFromFirestore() {
         // Re-render UI now that data is available
         window.renderDropdown();
         // Trigger first test if it's currently empty
-        if (window.testData.length > 0) {
-            window.showTest(window.currentTestIndex || 0);
+        if (State.getTestData().length > 0) {
+            window.showTest(State.getCurrentTestIndex() || 0);
         }
         
     } catch (error) {
