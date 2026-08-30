@@ -4,7 +4,7 @@
   "description": "TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrenciler için geliştirilmiş, ilerleme takibi ve analiz yetenekleriyle donatılmış dijital bir eğitim platformudur. Bu doküman, uygulamanın sunduğu özellikleri ve temel kullanım prensiplerini içermektedir.",
   "main": "data.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite index_dev.html",
     "build": "vite build",
     "preview": "vite preview"
   },
