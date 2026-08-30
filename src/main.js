@@ -54,7 +54,6 @@ async function loadTestsFromFirestore() {
         console.error("Failed to fetch tests:", error);
     }
 }
-loadTestsFromFirestore();
 
 
         // --- THEME LOGIC ---
@@ -347,8 +346,7 @@ loadTestsFromFirestore();
                 updateMistakeBadge();
                 updateFavoritesBadge();
                 
-                renderDropdown();
-                window.showTest(0); // Start at test 0
+                await loadTestsFromFirestore();
                 
             } else {
                 // Logged out
