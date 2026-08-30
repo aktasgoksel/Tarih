@@ -1,3 +1,20 @@
+
+window.showLoader = function(msg = "Yükleniyor...") {
+    const loader = document.getElementById('global-loader');
+    if(loader) {
+        document.getElementById('loader-text').textContent = msg;
+        loader.classList.remove('hidden');
+        loader.classList.add('flex');
+    }
+};
+window.hideLoader = function() {
+    const loader = document.getElementById('global-loader');
+    if(loader) {
+        loader.classList.add('hidden');
+        loader.classList.remove('flex');
+    }
+};
+
 import './style.css';
 
 
@@ -289,8 +306,8 @@ async function loadTestsFromFirestore() {
                 // Logged in & Verified
                 currentUser = user;
                 document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('app-screen').classList.remove('hidden');
-                document.getElementById('app-screen').classList.add('flex');
+                window.showLoader('Verileriniz Firebase\'den indiriliyor, lütfen bekleyin...');
+
                 
                 // ADMIN ROLE CHECK
                 const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
@@ -329,6 +346,10 @@ async function loadTestsFromFirestore() {
                 cleanStaleMistakes();
                 updateMistakeBadge();
                 updateFavoritesBadge();
+                window.hideLoader();
+                document.getElementById('app-screen').classList.remove('hidden');
+                document.getElementById('app-screen').classList.add('flex');
+
                 
             } else {
                 // Logged out
@@ -358,7 +379,7 @@ async function loadTestsFromFirestore() {
             if (!userData.mistakes) return;
             const originalLength = userData.mistakes.length;
             userData.mistakes = userData.mistakes.filter(m => {
-                return testData[m.testIdx] && testData[m.testIdx].questions && testData[m.testIdx].questions[m.qIdx];
+                return window.testData[m.testIdx] && window.testData[m.testIdx].questions && window.testData[m.testIdx].questions[m.qIdx];
             });
             if (originalLength !== userData.mistakes.length) {
                 saveUserDataCloud();
@@ -629,7 +650,7 @@ async function loadTestsFromFirestore() {
             favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
             dropdown.appendChild(favOpt);
             
-            testData.forEach((test, index) => {
+            window.testData.forEach((test, index) => {
                 const opt = document.createElement('option');
                 opt.value = index;
                 const isFinished = userData.testProgress[index] && userData.testProgress[index].finished;
@@ -652,7 +673,7 @@ async function loadTestsFromFirestore() {
             const selected = shuffled.slice(0, 30); // up to 30 mistake questions
             
             selected.forEach(m => {
-                const test = testData[m.testIdx];
+                const test = window.testData[m.testIdx];
                 if(test && test.questions && test.questions[m.qIdx]) {
                     currentTestQuestions.push({
                         originalTestIdx: m.testIdx,
@@ -686,7 +707,7 @@ async function loadTestsFromFirestore() {
             const shuffled = [...userData.favorites].sort(() => 0.5 - Math.random());
             
             shuffled.forEach(m => {
-                const test = testData[m.testIdx];
+                const test = window.testData[m.testIdx];
                 if(test && test.questions && test.questions[m.qIdx]) {
                     currentTestQuestions.push({
                         originalTestIdx: m.testIdx,
@@ -718,7 +739,7 @@ async function loadTestsFromFirestore() {
             currentTestQuestions = [];
             
             let allQ = [];
-            testData.forEach((test, tIdx) => {
+            window.testData.forEach((test, tIdx) => {
                 test.questions.forEach((q, qIdx) => {
                     allQ.push({ originalTestIdx: tIdx, originalQIdx: qIdx, data: q });
                 });
@@ -765,9 +786,9 @@ async function loadTestsFromFirestore() {
             currentQuestionIndex = 0;
             
             document.getElementById('test-dropdown').value = index;
-            document.getElementById('current-test-title').textContent = testData[index].title;
+            document.getElementById('current-test-title').textContent = window.testData[index].title;
             
-            currentTestQuestions = testData[index].questions.map((q, idx) => ({
+            currentTestQuestions = window.testData[index].questions.map((q, idx) => ({
                 originalTestIdx: index,
                 originalQIdx: idx,
                 data: q
@@ -806,7 +827,7 @@ async function loadTestsFromFirestore() {
                 
                 let sourceBadge = '';
                 if(currentMode !== 'NORMAL') {
-                    sourceBadge = `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-indigo-200 dark:border-indigo-800/50 shadow-sm">Kaynak: ${window.escapeHTML(testData[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
+                    sourceBadge = `<span class="text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3 py-1.5 rounded-full mb-5 inline-block font-medium border border-indigo-200 dark:border-indigo-800/50 shadow-sm">Kaynak: ${window.escapeHTML(window.testData[qObj.originalTestIdx].title)} (Soru ${q.qNum})</span>`;
                 }
                 
                 let isFav = userData.favorites && userData.favorites.find(f => f.testIdx === qObj.originalTestIdx && f.qIdx === qObj.originalQIdx);
@@ -872,7 +893,8 @@ async function loadTestsFromFirestore() {
             document.querySelectorAll('.question-block').forEach((el, idx) => {
                 if(idx === currentQuestionIndex) {
                     el.classList.add('active');
-                } else {
+                    updateGridUI();
+        } else {
                     el.classList.remove('active');
                 }
             });
@@ -1170,7 +1192,7 @@ async function loadTestsFromFirestore() {
                     const prog = userData.testProgress[tIdx];
                     if(prog && prog.finished) {
                         hasData = true;
-                        const test = testData[tIdx];
+                        const test = window.testData[tIdx];
                         const cat = getCategoryName(test.title);
                         if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
                         catData[cat].correct += prog.score;
@@ -1361,7 +1383,7 @@ async function loadTestsFromFirestore() {
                 Object.keys(userData.testProgress).forEach(tIdx => {
                     const prog = userData.testProgress[tIdx];
                     if(prog && prog.finished) {
-                        const test = testData[tIdx];
+                        const test = window.testData[tIdx];
                         totalQ += test.questions.length;
                         correctQ += prog.score;
                     }
