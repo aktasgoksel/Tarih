@@ -1,3 +1,25 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Slider Logic */
+.question-block {
+    display: none;
+}
+
+.question-block.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Checkbox */
+.custom-radio {
+    accent-color: #3b82f6;
+    width: 1.2rem;
+    height: 1.2rem;
+}
