@@ -1,8 +1,8 @@
 import { State } from "../state.js";
 
-import { auth, db } from "../firebase.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { db } from "../firebase.js";
+import { deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { doc, deleteDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { saveUserDataCloud, updateMistakeBadge, updateFavoritesBadge } from "../core/auth.js";
 import { renderGrid, updateGridUI } from "./optic.js";
 import { prepareTimer, stopTimer } from "./timer.js";

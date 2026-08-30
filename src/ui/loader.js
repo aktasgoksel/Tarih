@@ -1,4 +1,4 @@
-import { auth, db } from "../firebase.js";
+import { db } from "../firebase.js";
 import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { State } from "../state.js";
 
