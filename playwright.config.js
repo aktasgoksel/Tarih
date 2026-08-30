@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -7,6 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1, // Run E2E tests sequentially to prevent database state collision
+  timeout: 60000, // 60 seconds per test — Firestore loading can take up to 30s
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:5173',
