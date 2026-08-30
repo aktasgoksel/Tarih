@@ -1,6 +1,6 @@
 import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 import { loadTestsFromFirestore, showLoader, hideLoader } from "../ui/loader.js";
@@ -19,6 +19,8 @@ export async function login() {
     
     err.textContent = 'Giriş yapılıyor...';
     try {
+        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
+        await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, email, pass);
     } catch(error) {
         console.error(error);
@@ -80,9 +82,13 @@ export async function sendResetEmail() {
 
 export async function loginWithGoogle() {
     const provider = new GoogleAuthProvider();
+    // Her girişte hesap seçim ekranını zorunlu kıl (son hesaba otomatik bağlanmayı engeller)
+    provider.setCustomParameters({ prompt: 'select_account' });
     const err = document.getElementById('auth-error');
     err.textContent = 'Google ekranı bekleniyor...';
     try {
+        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
+        await setPersistence(auth, browserSessionPersistence);
         await signInWithPopup(auth, provider);
     } catch(error) {
         console.error(error);
