@@ -3,10 +3,15 @@ import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { saveUserDataCloud, updateMistakeBadge, updateFavoritesBadge } from "../core/auth.js";
+import { renderGrid, updateGridUI } from "./optic.js";
+import { prepareTimer, stopTimer } from "./timer.js";
+import { showModal } from "../ui/modal.js";
+
 
 // --- APP LOGIC ---
 
-        window.renderDropdown = function renderDropdown() {
+        export function renderDropdown() {
             const dropdown = document.getElementById('test-dropdown');
             dropdown.innerHTML = '';
             
@@ -73,9 +78,9 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(State.getCurrentTestQuestions().length);
             
             if(State.getCurrentTestQuestions().length > 0) {
-                window.prepareTimer(State.getCurrentTestQuestions().length);
+                prepareTimer(State.getCurrentTestQuestions().length);
             } else {
-                window.stopTimer();
+                stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
             window.updateUI();
@@ -107,15 +112,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(State.getCurrentTestQuestions().length);
             
             if(State.getCurrentTestQuestions().length > 0) {
-                window.prepareTimer(State.getCurrentTestQuestions().length);
+                prepareTimer(State.getCurrentTestQuestions().length);
             } else {
-                window.stopTimer();
+                stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
             window.updateUI();
         }
 
-        window.generateRandomTest = function() {
+        export function generateRandomTest() {
             State.setCurrentMode('RANDOM_27');
             State.setCurrentTestQuestions([]);
             
@@ -136,15 +141,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             renderGrid(State.getCurrentTestQuestions().length);
             
             if(State.getCurrentTestQuestions().length > 0) {
-                window.prepareTimer(State.getCurrentTestQuestions().length);
+                prepareTimer(State.getCurrentTestQuestions().length);
             } else {
-                window.stopTimer();
+                stopTimer();
                 document.getElementById('grid-container').classList.add('hidden');
             }
             window.updateUI();
         }
 
-        window.showTest = function(val) {
+        export function showTest(val) {
             if(val === 'MISTAKES') {
                 document.getElementById('test-dropdown').value = 'MISTAKES';
                 generateMistakeTest();
@@ -181,10 +186,10 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             const isFinished = State.getUserData().testProgress[index] && State.getUserData().testProgress[index].finished;
             
             if (isFinished) {
-                window.stopTimer();
+                stopTimer();
                 evaluateTest(State.getCurrentTestQuestions());
             } else {
-                window.prepareTimer(State.getCurrentTestQuestions().length);
+                prepareTimer(State.getCurrentTestQuestions().length);
             }
             
             window.updateUI();
@@ -227,7 +232,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     
                     optionsHtml += 
                         `<div class="mb-3 relative group">
-                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); window.updateGridUI();">
+                            <input type="radio" id="opt-${index}-${optIndex}" name="${radioName}" value="${optKey}" class="peer sr-only" onchange="window.handleOptionSelect(${index}); updateGridUI();">
                             <label for="opt-${index}-${optIndex}" class="option-label block w-full p-4 border border-gray-200 dark:border-slate-600 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 group-hover:border-blue-300 dark:group-hover:border-blue-500/50 pr-10 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:border-blue-400 dark:peer-checked:bg-blue-900/30">
                                 <span class="font-bold mr-2 text-blue-600 dark:text-blue-400">${optKey})</span> <span class="inline-block align-top">${optText}</span>
                             </label>
@@ -267,14 +272,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         
 
-        window.updateUI = function() {
+        export function updateUI() {
             const totalQ = State.getCurrentTestQuestions().length;
             if(totalQ === 0) return;
             
             document.querySelectorAll('.question-block').forEach((el, idx) => {
                 if(idx === State.getCurrentQuestionIndex()) {
                     el.classList.add('active');
-                    window.updateGridUI();
+                    updateGridUI();
         } else {
                     el.classList.remove('active');
                 }
@@ -332,7 +337,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 border border-transparent dark:border-emerald-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800/50';
                 resultContainer.classList.remove('hidden');
-                window.stopTimer();
+                stopTimer();
             } else {
                 statusText = 'Çözülüyor';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200 border border-transparent dark:border-yellow-800/50';
@@ -348,11 +353,11 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 mobStatusEl.className = mobStatusClass;
             }
             
-            window.updateGridUI();
+            updateGridUI();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.nextQuestion = function() {
+        export function nextQuestion() {
             const total = State.getCurrentTestQuestions().length;
             if (State.getCurrentQuestionIndex() < total - 1) {
                 State.setCurrentQuestionIndex(State.getCurrentQuestionIndex() + 1);
@@ -360,14 +365,14 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }
         }
 
-        window.prevQuestion = function() {
+        export function prevQuestion() {
             if (State.getCurrentQuestionIndex() > 0) {
                 State.setCurrentQuestionIndex(State.getCurrentQuestionIndex() - 1);
                 window.updateUI();
             }
         }
         
-        window.handleOptionSelect = function(qIndex) {
+        export function handleOptionSelect(qIndex) {
             const isInstant = document.getElementById('instant-feedback').checked;
             const isFinished = (State.getCurrentMode() === 'NORMAL') ? (State.getUserData().testProgress[State.getCurrentTestIndex()] && State.getUserData().testProgress[State.getCurrentTestIndex()].finished) : false;
             
@@ -388,17 +393,17 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     State.getUserData().mistakes.splice(existingIdx, 1);
                 }
             }
-            window.saveUserDataCloud();
+            saveUserDataCloud();
         }
 
-        window.evaluateSingleQuestion = function(uiIndex) {
+        export function evaluateSingleQuestion(uiIndex) {
             const qObj = State.getCurrentTestQuestions()[uiIndex];
             const q = qObj.data;
             const radioName = `question-${uiIndex}`;
             
             const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
             if (!selectedOption) {
-                window.showModal({ type: 'info', title: 'Uyarı', text: 'Çözümü görmek için lütfen önce bir şık işaretleyin.', confirmText: 'Tamam' });
+                showModal({ type: 'info', title: 'Uyarı', text: 'Çözümü görmek için lütfen önce bir şık işaretleyin.', confirmText: 'Tamam' });
                 return;
             }
             
@@ -464,7 +469,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             return score;
         }
 
-        window.submitCurrentTest = function(forceSubmit = false) {
+        export function submitCurrentTest(forceSubmit = false) {
             if(State.getCurrentMode() === 'MISTAKES' || State.getCurrentMode() === 'FAVORITES') return;
             
             let answeredCount = 0;
@@ -476,7 +481,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             
             if(!forceSubmit && answeredCount < State.getCurrentTestQuestions().length) {
                 const emptyCount = State.getCurrentTestQuestions().length - answeredCount;
-                window.showModal({
+                showModal({
                     type: 'warning',
                     title: 'Eksik Sorular Var',
                     text: `Henüz ${emptyCount} soruyu boş bıraktınız. Testi yine de bitirmek istediğinize emin misiniz?`,
@@ -489,7 +494,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 return;
             }
             
-            window.stopTimer(); 
+            stopTimer(); 
             
             const score = evaluateTest(State.getCurrentTestQuestions());
             
@@ -498,7 +503,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     finished: true,
                     score: score
                 };
-                window.saveUserDataCloud();
+                saveUserDataCloud();
             }
             
             const resultContainer = document.getElementById('result-container');
@@ -531,7 +536,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             if(State.getCurrentMode() === 'NORMAL') window.renderDropdown();
         }
         
-        window.showReviewMistakes = function() {
+        export function showReviewMistakes() {
             for(let i=0; i<State.getCurrentTestQuestions().length; i++) {
                 const radioName = `question-${i}`;
                 const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
@@ -547,7 +552,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
 
         let myChart = null;
 
-        window.showStatsModal = function() {
+        export function showStatsModal() {
             const modal = document.getElementById('stats-modal');
             modal.classList.remove('hidden');
             setTimeout(() => {
@@ -559,7 +564,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             window.renderStats();
         }
 
-        window.closeStatsModal = function() {
+        export function closeStatsModal() {
             const modal = document.getElementById('stats-modal');
             modal.classList.add('opacity-0');
             modal.firstElementChild.classList.add('scale-95');
@@ -569,13 +574,13 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }, 300);
         }
         
-        window.getCategoryName = function getCategoryName(title) {
+        export function getCategoryName(title) {
             if(!title.includes(':')) return "Genel";
             const part = title.split(':')[1];
             return part.split('-')[0].trim();
         }
 
-        window.renderStats = function renderStats() {
+        export function renderStats() {
             let catData = {};
             let hasData = false;
             
@@ -680,15 +685,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             });
         }
 
-        window.openSuggestionModal = function() {
+        export function openSuggestionModal() {
             document.getElementById('suggestion-modal').classList.remove('hidden');
         }
-        window.closeSuggestionModal = function() {
+        export function closeSuggestionModal() {
             document.getElementById('suggestion-modal').classList.add('hidden');
             document.getElementById('suggestion-text').value = '';
         }
         
-        window.submitSuggestion = async function() {
+        export async function submitSuggestion() {
             const text = document.getElementById('suggestion-text').value.trim();
             if(!text) return;
             
@@ -706,7 +711,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                     timestamp: new Date().toISOString()
                 });
                 
-                window.showModal({ type: 'success', title: 'Başarılı', text: 'Öneriniz başarıyla alındı! Geri bildiriminiz için teşekkür ederiz.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'Başarılı', text: 'Öneriniz başarıyla alındı! Geri bildiriminiz için teşekkür ederiz.', confirmText: 'Tamam' });
                 window.closeSuggestionModal();
                 btn.textContent = 'Gönder';
                 btn.disabled = false;
@@ -718,16 +723,16 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 } else if (e.message) {
                     errorMsg = `Hata detayı: ${e.message}`;
                 }
-                window.showModal({ type: 'error', title: 'Hata', text: errorMsg, confirmText: 'Tamam' });
+                showModal({ type: 'error', title: 'Hata', text: errorMsg, confirmText: 'Tamam' });
                 document.getElementById('submit-suggestion-btn').textContent = 'Tekrar Dene';
                 document.getElementById('submit-suggestion-btn').disabled = false;
             }
         }
 
-        window.openAdminPanel = async function() {
+        export async function openAdminPanel() {
             const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
             if(!State.getCurrentUser() || !ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
-                window.showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
+                showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
                 return;
             }
             document.getElementById('admin-modal').classList.remove('hidden');
@@ -768,7 +773,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }
         }
 
-        window.openProfileModal = function() {
+        export function openProfileModal() {
             if(!State.getCurrentUser()) return;
             const modal = document.getElementById('profile-modal');
             
@@ -800,7 +805,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             }, 10);
         }
 
-        window.closeProfileModal = function() {
+        export function closeProfileModal() {
             const modal = document.getElementById('profile-modal');
             modal.classList.add('opacity-0');
             modal.firstElementChild.classList.add('scale-95');
@@ -808,7 +813,7 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        window.updateUsername = async function() {
+        export async function updateUsername() {
             const newName = document.getElementById('profile-username').value.trim();
             if(!newName) return;
             
@@ -820,16 +825,16 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                 await updateProfile(State.getCurrentUser(), { displayName: newName });
                 document.getElementById('welcome-text').textContent = `Hoş geldin, ${newName}`;
                 
-                window.showModal({ type: 'success', title: 'İşlem Başarılı', text: 'Kullanıcı adınız başarıyla güncellenmiştir.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'İşlem Başarılı', text: 'Kullanıcı adınız başarıyla güncellenmiştir.', confirmText: 'Tamam' });
             } catch(e) {
                 console.error(e);
-                window.showModal({ type: 'error', title: 'Hata', text: 'Kullanıcı adı güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
+                showModal({ type: 'error', title: 'Hata', text: 'Kullanıcı adı güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
             }
             btn.textContent = 'Güncelle';
             btn.disabled = false;
         }
 
-        window.updateEmailAddress = async function() {
+        export async function updateEmailAddress() {
             const newEmail = document.getElementById('profile-email').value.trim();
             if(!newEmail || newEmail === State.getCurrentUser().email) return;
             
@@ -839,25 +844,25 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
             
             try {
                 await updateEmail(State.getCurrentUser(), newEmail);
-                window.showModal({ type: 'success', title: 'İşlem Başarılı', text: 'E-posta adresiniz başarıyla güncellenmiştir. Hesabınıza artık yeni e-posta adresinizle giriş yapabilirsiniz.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'İşlem Başarılı', text: 'E-posta adresiniz başarıyla güncellenmiştir. Hesabınıza artık yeni e-posta adresinizle giriş yapabilirsiniz.', confirmText: 'Tamam' });
             } catch(error) {
                 console.error(error);
                 if (error.code === 'auth/requires-recent-login') {
-                    window.showModal({ type: 'error', title: 'Doğrulama Gerekiyor', text: 'Güvenlik prosedürleri gereği e-posta adresinizi değiştirmeden önce sistemden çıkış yapıp tekrar giriş yapmanız gerekmektedir.', confirmText: 'Anladım' });
+                    showModal({ type: 'error', title: 'Doğrulama Gerekiyor', text: 'Güvenlik prosedürleri gereği e-posta adresinizi değiştirmeden önce sistemden çıkış yapıp tekrar giriş yapmanız gerekmektedir.', confirmText: 'Anladım' });
                 } else if (error.code === 'auth/email-already-in-use') {
-                    window.showModal({ type: 'error', title: 'Hata', text: 'Girdiğiniz e-posta adresi başka bir hesaba aittir. Lütfen farklı bir adres deneyin.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'Girdiğiniz e-posta adresi başka bir hesaba aittir. Lütfen farklı bir adres deneyin.', confirmText: 'Kapat' });
                 } else if (error.code === 'auth/invalid-email') {
-                    window.showModal({ type: 'error', title: 'Hata', text: 'Geçersiz bir e-posta formatı girdiniz.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'Geçersiz bir e-posta formatı girdiniz.', confirmText: 'Kapat' });
                 } else {
-                    window.showModal({ type: 'error', title: 'Hata', text: 'E-posta adresi güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'E-posta adresi güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
                 }
             }
             btn.textContent = 'Güncelle';
             btn.disabled = false;
         }
 
-        window.deleteAccount = function() {
-            window.showModal({
+        export function deleteAccount() {
+            showModal({
                 type: 'warning',
                 title: 'Dikkat!',
                 text: 'Hesabınızı ve çözdüğünüz tüm soruları kalıcı olarak silmek üzeresiniz. Bu işlem kesinlikle geri alınamaz. Onaylıyor musunuz?',
@@ -869,15 +874,15 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
                         await deleteUser(State.getCurrentUser());
                         
                         window.closeProfileModal();
-                        window.showModal({ type: 'info', title: 'Hesap Silindi', text: 'Hesabınız ve tüm verileriniz kalıcı olarak silindi. Hoşçakalın!', confirmText: 'Tamam' });
+                        showModal({ type: 'info', title: 'Hesap Silindi', text: 'Hesabınız ve tüm verileriniz kalıcı olarak silindi. Hoşçakalın!', confirmText: 'Tamam' });
                         setTimeout(() => window.location.reload(), 2000);
                         
                     } catch(error) {
                         console.error(error);
                         if (error.code === 'auth/requires-recent-login') {
-                            window.showModal({ type: 'error', title: 'Güvenlik Doğrulaması', text: 'Güvenlik nedeniyle hesabınızı silebilmemiz için yakın zamanda giriş yapmış olmanız gerekiyor. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra bu işlemi tekrarlayın.', confirmText: 'Tamam' });
+                            showModal({ type: 'error', title: 'Güvenlik Doğrulaması', text: 'Güvenlik nedeniyle hesabınızı silebilmemiz için yakın zamanda giriş yapmış olmanız gerekiyor. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra bu işlemi tekrarlayın.', confirmText: 'Tamam' });
                         } else {
-                            window.showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluştu: ' + error.message, confirmText: 'Tamam' });
+                            showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluştu: ' + error.message, confirmText: 'Tamam' });
                         }
                     }
                 }
@@ -885,3 +890,24 @@ import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, addDoc, getDo
         }
 
         
+// Expose functions to window for legacy inline calls in HTML
+window.renderDropdown = renderDropdown;
+window.showTest = showTest;
+window.updateUI = updateUI;
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
+window.handleOptionSelect = handleOptionSelect;
+window.evaluateSingleQuestion = evaluateSingleQuestion;
+window.submitCurrentTest = submitCurrentTest;
+window.generateRandomTest = generateRandomTest;
+window.generateMistakeTest = generateMistakeTest;
+window.generateFavoritesTest = generateFavoritesTest;
+window.openSuggestionModal = openSuggestionModal;
+window.closeSuggestionModal = closeSuggestionModal;
+window.submitSuggestion = submitSuggestion;
+window.openAdminPanel = openAdminPanel;
+window.openProfileModal = openProfileModal;
+window.closeProfileModal = closeProfileModal;
+window.updateUsername = updateUsername;
+window.updateEmailAddress = updateEmailAddress;
+window.deleteAccount = deleteAccount;
