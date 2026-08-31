@@ -7,7 +7,7 @@ import { auth, db } from "../firebase.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-import { loadTestsFromFirestore, showLoader, hideLoader } from "../ui/loader.js";
+import { loadTestsFromFirestore, showLoader, hideLoader, updateLoaderText } from "../ui/loader.js";
 import { stopTimer } from "../features/timer.js";
 import { showModal } from "../ui/modal.js";
 import { showTest, renderDropdown } from "../features/tests.js";
@@ -163,7 +163,8 @@ onAuthStateChanged(auth, async (user) => {
         // Logged in & Verified
         State.setCurrentUser(user);
         document.getElementById('auth-screen').classList.add('hidden');
-        showLoader('YÃ¼kleniyor, lÃ¼tfen bekleyin...');
+        console.time('login-to-ready');
+        showLoader('Giriş yapılıyor...');
         
         // ADMIN ROLE CHECK
         const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
@@ -186,11 +187,13 @@ onAuthStateChanged(auth, async (user) => {
         try {
             const docRef = doc(db, "users", user.uid);
             
+            updateLoaderText('Kullanıcı bilgileri doğrulanıyor...');
             const userPromise = getDoc(docRef).catch(e => {
                 console.error("KullanÄ±cÄ± verisi Ã§ekilemedi, geÃ§ici profil kullanÄ±lacak:", e);
                 return null;
             });
             
+            updateLoaderText('Test verileri yükleniyor...');
             const testsPromise = State.getTestData().length === 0 ? loadTestsFromFirestore() : Promise.resolve(null);
             
             const [docSnap, _] = await Promise.all([userPromise, testsPromise]);
@@ -209,6 +212,7 @@ onAuthStateChanged(auth, async (user) => {
             }
             
             // Decoupled UI Render Calls
+            updateLoaderText('Arayüz hazırlanıyor...');
             renderDropdown();
             if (State.getTestData().length > 0) {
                 showTest(State.getCurrentTestIndex() || 0);
@@ -227,6 +231,7 @@ onAuthStateChanged(auth, async (user) => {
                 onConfirm: () => window.location.reload()
             });
         } finally {
+            console.timeEnd('login-to-ready');
             hideLoader();
             document.getElementById('app-screen').classList.remove('hidden');
             document.getElementById('app-screen').classList.add('flex');
@@ -402,3 +407,6 @@ window.clearAllMistakes = clearAllMistakes;
 window.switchAuth = switchAuth;
 window.togglePassword = togglePassword;
 window.handleEnter = handleEnter;
+
+
+

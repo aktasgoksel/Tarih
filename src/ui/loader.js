@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
  * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
  */
@@ -7,30 +7,44 @@ import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.8.1/f
 import { State } from "../state.js";
 
 let loaderTimeout = null;
+let loaderLongTimeoutMsg = null;
 
-export function showLoader(msg = "YÃ¼kleniyor...") {
+export function updateLoaderText(msg) {
+    const loaderText = document.getElementById('loader-text');
+    if (loaderText) {
+        loaderText.textContent = msg;
+    }
+}
+
+export function showLoader(msg = "Yükleniyor...") {
     const loader = document.getElementById('global-loader');
     if(loader) {
-        document.getElementById('loader-text').textContent = msg;
+        updateLoaderText(msg);
         loader.classList.remove('hidden');
         loader.classList.add('flex');
         
-        if (loaderTimeout) {
-            clearTimeout(loaderTimeout);
-        }
+        if (loaderTimeout) clearTimeout(loaderTimeout);
+        if (loaderLongTimeoutMsg) clearTimeout(loaderLongTimeoutMsg);
         
-        // Timeout after 30 seconds to prevent hanging loading screen
+        // Timeout for 15 seconds to prevent hanging
         loaderTimeout = setTimeout(() => {
             if (loader && !loader.classList.contains('hidden')) {
                 hideLoader();
-                const errorMsg = 'YÃ¼kleme iÅŸlemi beklenenden uzun sÃ¼rdÃ¼. LÃ¼tfen internet baÄŸlantÄ±nÄ±zÄ± kontrol edip sayfayÄ± yenileyin.';
+                const errorMsg = 'Bağlantı çok uzun sürdü veya zaman aşımına uğradı. Lütfen internet bağlantınızı kontrol edip sayfayı yenileyin.';
                 if (window.showModal) {
-                    window.showModal({ type: 'error', title: 'BaÄŸlantÄ± Zaman AÅŸÄ±mÄ±', text: errorMsg, confirmText: 'Yeniden Dene', onConfirm: () => window.location.reload() });
+                    window.showModal({ type: 'error', title: 'Bağlantı Zaman Aşımı', text: errorMsg, confirmText: 'Yeniden Dene', onConfirm: () => window.location.reload() });
                 } else {
                     alert(errorMsg);
                 }
             }
-        }, 30000);
+        }, 15000);
+
+        // After 5 seconds, show a note that it might take a bit
+        loaderLongTimeoutMsg = setTimeout(() => {
+            if (loader && !loader.classList.contains('hidden')) {
+                updateLoaderText('İlk bağlantı kurulumu biraz sürebilir, lütfen bekleyin...');
+            }
+        }, 5000);
     }
 }
 
@@ -43,6 +57,10 @@ export function hideLoader() {
     if (loaderTimeout) {
         clearTimeout(loaderTimeout);
         loaderTimeout = null;
+    }
+    if (loaderLongTimeoutMsg) {
+        clearTimeout(loaderLongTimeoutMsg);
+        loaderLongTimeoutMsg = null;
     }
 }
 
