@@ -93,7 +93,7 @@ window.saveAdminQuestion = async function() {
     const sol = document.getElementById('admin-solution').value.trim();
     
     if(!title || !qText || !optA || !optB || !optC || !optD || !optE) {
-        feedback.textContent = 'LÃ¼tfen tÃ¼m soru ve ÅŸÄ±k alanlarÄ±nÄ± doldurun!';
+        feedback.textContent = 'Lütfen tüm soru ve şık alanlarını doldurun!';
         feedback.className = 'mt-4 text-center font-medium text-red-500 block';
         return;
     }
@@ -111,9 +111,18 @@ window.saveAdminQuestion = async function() {
             if(State.getTestData()[i].title === title) {
                 targetTestId = State.getTestData()[i].id;
                 targetTestOrder = State.getTestData()[i].order;
-                existingQuestions = State.getTestData()[i].questions || [];
+                existingQuestions = [...(State.getTestData()[i].questions || [])];
                 break;
             }
+        }
+        
+        // Validation: max 24 questions per test
+        if(existingQuestions.length >= 24) {
+            feedback.textContent = `Bu test zaten 24 soruya sahip. Daha fazla soru eklenemez.`;
+            feedback.className = 'mt-4 text-center font-medium text-red-500 block';
+            btn.disabled = false;
+            btn.textContent = 'Soruyu Veritabanına Kaydet';
+            return;
         }
         
         if(!targetTestId) {
@@ -138,7 +147,12 @@ window.saveAdminQuestion = async function() {
             questions: existingQuestions
         });
         
-        feedback.textContent = 'Soru baÅŸarÄ±yla kaydedildi!';
+        const remaining = 24 - existingQuestions.length;
+        if (remaining > 0) {
+            feedback.textContent = `Soru başarıyla kaydedildi! (${existingQuestions.length}/24 — ${remaining} soru daha eklenebilir)`;
+        } else {
+            feedback.textContent = `Soru başarıyla kaydedildi! Test tamamlandı (24/24) ✓`;
+        }
         feedback.className = 'mt-4 text-center font-bold text-green-500 block';
         
         // Clear form
@@ -161,7 +175,35 @@ window.saveAdminQuestion = async function() {
         feedback.className = 'mt-4 text-center font-medium text-red-500 block';
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Soruyu VeritabanÄ±na Kaydet';
+        btn.textContent = 'Soruyu Veritabanına Kaydet';
+    }
+};
+
+// Database Audit: Check all tests for question count
+window.auditTests = function() {
+    const tests = State.getTestData();
+    if (!tests || tests.length === 0) {
+        showModal({ type: 'error', title: 'Denetim Hatası', text: 'Test verisi yüklenmemiş. Lütfen önce giriş yapın.', confirmText: 'Tamam' });
+        return;
+    }
+    
+    let report = '';
+    let incompleteCount = 0;
+    
+    const sorted = [...tests].sort((a, b) => (a.order || 0) - (b.order || 0));
+    
+    for (const t of sorted) {
+        const qCount = Array.isArray(t.questions) ? t.questions.length : 0;
+        if (qCount !== 24) {
+            incompleteCount++;
+            report += `\n❌ "${t.title}" → ${qCount}/24 soru (${24 - qCount} eksik)`;
+        }
+    }
+    
+    if (incompleteCount === 0) {
+        showModal({ type: 'success', title: 'Veritabanı Denetimi', text: `Tüm ${tests.length} test eksiksiz (24/24 soru). ✓`, confirmText: 'Harika' });
+    } else {
+        showModal({ type: 'warning', title: 'Veritabanı Denetimi', text: `${tests.length} testten ${incompleteCount} tanesinde eksik soru var:\n${report}`, confirmText: 'Anladım' });
     }
 };
 
