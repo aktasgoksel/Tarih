@@ -33,4 +33,32 @@
             applyTheme(false);
         }
 
+const MENU_ICON = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>`;
+const CLOSE_ICON = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`;
+
+window.closeMobileNav = function() {
+    const panel = document.getElementById('header-actions');
+    const toggle = document.getElementById('mobile-nav-toggle');
+    const icon = document.getElementById('mobile-nav-icon');
+    if (panel) panel.classList.remove('is-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    if (icon) icon.innerHTML = MENU_ICON;
+};
+
+window.toggleMobileNav = function() {
+    const panel = document.getElementById('header-actions');
+    if (!panel) return;
+    const willOpen = !panel.classList.contains('is-open');
+    panel.classList.toggle('is-open', willOpen);
+    const toggle = document.getElementById('mobile-nav-toggle');
+    const icon = document.getElementById('mobile-nav-icon');
+    if (toggle) toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    if (icon) icon.innerHTML = willOpen ? CLOSE_ICON : MENU_ICON;
+};
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 640) window.closeMobileNav();
+});
+
+
         

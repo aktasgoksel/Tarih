@@ -12,7 +12,7 @@ export function renderGrid(totalQ) {
         const btn = document.createElement('button');
         btn.id = `grid-btn-${i}`;
         btn.textContent = i + 1;
-        btn.className = "w-10 h-10 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none";
+        btn.className = "w-11 h-11 min-w-11 min-h-11 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none";
         btn.onclick = () => {
             State.setCurrentQuestionIndex(i);
             window.updateUI();
@@ -27,7 +27,7 @@ export function updateGridUI() {
         const btn = document.getElementById(`grid-btn-${i}`);
         if(!btn) continue;
         
-        btn.className = "w-10 h-10 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none cursor-pointer ";
+        btn.className = "w-11 h-11 min-w-11 min-h-11 rounded-lg text-sm font-bold border transition-all flex items-center justify-center focus:outline-none cursor-pointer ";
         
         const isAnswered = document.querySelector(`input[name="question-${i}"]:checked`);
         

@@ -2,6 +2,15 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 /* Slider Logic */
 .question-block {
     display: none;
@@ -27,6 +36,41 @@
     accent-color: #3b82f6;
     width: 1.2rem;
     height: 1.2rem;
+}
+
+/* Header actions: desktop always visible, mobile hamburger */
+.header-actions-panel {
+    display: none;
+}
+
+.header-actions-panel.is-open {
+    display: flex;
+}
+
+@media (min-width: 640px) {
+    .header-actions-panel {
+        display: flex !important;
+    }
+}
+
+/* Prevent long test titles / option text from causing horizontal scroll */
+#app-screen,
+#admin-screen,
+#questions-container,
+.option-label {
+    max-width: 100%;
+}
+
+.option-label {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+#current-test-title,
+#welcome-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
