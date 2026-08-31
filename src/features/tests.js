@@ -1,7 +1,7 @@
 import { State } from "../state.js";
 
 import { db } from "../firebase.js";
-import { deleteUser, updateEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { deleteUser, updateEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { doc, deleteDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { saveUserDataCloud, updateMistakeBadge, updateFavoritesBadge } from "../core/auth.js";
 import { renderGrid, updateGridUI } from "./optic.js";
@@ -54,6 +54,7 @@ import { showModal } from "../ui/modal.js";
         export function generateMistakeTest() {
             State.setCurrentMode('MISTAKES');
             State.setCurrentTestQuestions([]);
+            setReshuffleVisible(false);
             
             const shuffled = [...State.getUserData().mistakes].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 30); // up to 30 mistake questions
@@ -89,6 +90,7 @@ import { showModal } from "../ui/modal.js";
         export function generateFavoritesTest() {
             State.setCurrentMode('FAVORITES');
             State.setCurrentTestQuestions([]);
+            setReshuffleVisible(false);
             
             const shuffled = [...State.getUserData().favorites].sort(() => 0.5 - Math.random());
             
@@ -120,13 +122,26 @@ import { showModal } from "../ui/modal.js";
             window.updateUI();
         }
 
+        function setReshuffleVisible(visible) {
+            const btn = document.getElementById('reshuffle-random-btn');
+            if (!btn) return;
+            if (visible) {
+                btn.classList.remove('hidden');
+                btn.classList.add('inline-flex');
+            } else {
+                btn.classList.add('hidden');
+                btn.classList.remove('inline-flex');
+            }
+        }
+
         export function generateRandomTest() {
             State.setCurrentMode('RANDOM_27');
             State.setCurrentTestQuestions([]);
+            setReshuffleVisible(true);
             
             let allQ = [];
             State.getTestData().forEach((test, tIdx) => {
-                test.questions.forEach((q, qIdx) => {
+                (test.questions || []).forEach((q, qIdx) => {
                     allQ.push({ originalTestIdx: tIdx, originalQIdx: qIdx, data: q });
                 });
             });
@@ -167,12 +182,22 @@ import { showModal } from "../ui/modal.js";
             }
             
             State.setCurrentMode('NORMAL');
-            let index = parseInt(val);
+            setReshuffleVisible(false);
+            let index = parseInt(val, 10);
+            const tests = State.getTestData();
+            if (!Number.isFinite(index) || index < 0 || !tests[index]) {
+                index = 0;
+            }
+            if (!tests[index]) {
+                const cTitleEmpty = document.getElementById('current-test-title');
+                if (cTitleEmpty) cTitleEmpty.textContent = 'Henüz test yüklenmedi';
+                return;
+            }
             State.setCurrentTestIndex(index);
             State.setCurrentQuestionIndex(0);
             
-            document.getElementById('test-dropdown').value = index;
-            const cTitle = document.getElementById('current-test-title'); if(cTitle) cTitle.textContent = State.getTestData()[index].title;
+            document.getElementById('test-dropdown').value = String(index);
+            const cTitle = document.getElementById('current-test-title'); if(cTitle) cTitle.textContent = tests[index].title;
             
             State.setCurrentTestQuestions(State.getTestData()[index].questions.map((q, idx) => ({
                 originalTestIdx: index,
@@ -221,7 +246,7 @@ import { showModal } from "../ui/modal.js";
                     ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
                     : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
 
-                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-5 right-5 p-1 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110" title="Favorilere Ekle/Çıkar">${starSvg}</button>`;
+                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-4 right-4 min-h-11 min-w-11 p-2 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110 flex items-center justify-center" title="Favorilere Ekle/Çıkar">${starSvg}</button>`;
 
                 let optionsHtml = '';
                 Object.keys(q.options).forEach((optKey, optIndex) => {
@@ -534,7 +559,7 @@ import { showModal } from "../ui/modal.js";
             
             State.setCurrentQuestionIndex(0);
             window.updateUI();
-            if(State.getCurrentMode() === 'NORMAL') window.renderDropdown();
+            if(State.getCurrentMode() === 'NORMAL') renderDropdown();
         }
         
         export function showReviewMistakes() {
@@ -572,6 +597,10 @@ import { showModal } from "../ui/modal.js";
             modal.firstElementChild.classList.remove('scale-100');
             setTimeout(() => {
                 modal.classList.add('hidden');
+                if (myChart) {
+                    myChart.destroy();
+                    myChart = null;
+                }
             }, 300);
         }
         
@@ -589,8 +618,9 @@ import { showModal } from "../ui/modal.js";
                 Object.keys(State.getUserData().testProgress).forEach(tIdx => {
                     const prog = State.getUserData().testProgress[tIdx];
                     if(prog && prog.finished) {
-                        hasData = true;
                         const test = State.getTestData()[tIdx];
+                        if (!test || !test.questions) return;
+                        hasData = true;
                         const cat = getCategoryName(test.title);
                         if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
                         catData[cat].correct += prog.score;
@@ -747,6 +777,7 @@ import { showModal } from "../ui/modal.js";
                     const prog = State.getUserData().testProgress[tIdx];
                     if(prog && prog.finished) {
                         const test = State.getTestData()[tIdx];
+                        if (!test || !test.questions) return;
                         totalQ += test.questions.length;
                         correctQ += prog.score;
                     }
@@ -851,6 +882,7 @@ import { showModal } from "../ui/modal.js";
 
         
 // Expose functions to window for legacy inline calls in HTML
+window.renderDropdown = renderDropdown;
 window.showTest = showTest;
 window.updateUI = updateUI;
 window.nextQuestion = nextQuestion;

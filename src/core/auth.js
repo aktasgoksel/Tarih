@@ -60,16 +60,16 @@ export async function sendResetEmail() {
     
     if(!email) { err.textContent = "Lütfen e-posta adresinizi girin."; return; }
     
-    err.className = "text-sm text-center font-medium h-5 mt-3 text-blue-600 dark:text-blue-400";
+    err.className = "text-sm text-center font-medium min-h-5 mt-3 text-blue-600 dark:text-blue-400";
     err.textContent = "Bağlantı gönderiliyor...";
     
     try {
         await sendPasswordResetEmail(auth, email);
-        err.className = "text-sm text-center font-medium h-5 mt-3 text-emerald-600 dark:text-emerald-400";
+        err.className = "text-sm text-center font-medium min-h-5 mt-3 text-emerald-600 dark:text-emerald-400";
         err.textContent = "Şifre sıfırlama bağlantısı e-postanıza gönderildi!";
         setTimeout(() => window.switchAuth('login'), 3500);
     } catch(error) {
-        err.className = "text-sm text-center font-medium h-5 mt-3 text-red-500 dark:text-red-400";
+        err.className = "text-sm text-center font-medium min-h-5 mt-3 text-red-500 dark:text-red-400";
         if(error.code === 'auth/user-not-found') {
             err.textContent = "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.";
         } else if(error.code === 'auth/invalid-email') {
@@ -163,10 +163,15 @@ onAuthStateChanged(auth, async (user) => {
         
         // ADMIN ROLE CHECK
         const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
-        if(ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
-            document.getElementById('admin-panel-btn').classList.remove('hidden');
-        } else {
-            document.getElementById('admin-panel-btn').classList.add('hidden');
+        const adminBtn = document.getElementById('admin-panel-btn');
+        if (adminBtn) {
+            if (ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
+                adminBtn.classList.remove('hidden');
+                adminBtn.classList.add('inline-flex');
+            } else {
+                adminBtn.classList.add('hidden');
+                adminBtn.classList.remove('inline-flex');
+            }
         }
         
         let displayName = user.displayName || user.email.split('@')[0];
@@ -339,7 +344,7 @@ export function switchAuth(type) {
     
     if (errorText) {
         errorText.textContent = '';
-        errorText.className = 'text-sm text-center font-medium h-5 mt-3 empty:hidden text-red-500 dark:text-red-400';
+        errorText.className = 'text-sm text-center font-medium min-h-5 mt-3 empty:hidden text-red-500 dark:text-red-400';
     }
     
     if (loginForm) loginForm.classList.add('hidden-form');
@@ -348,7 +353,7 @@ export function switchAuth(type) {
     
     if(type === 'register') {
         if (registerForm) registerForm.classList.remove('hidden-form');
-        const usernameInput = document.getElementById('register-username');
+        const usernameInput = document.getElementById('register-displayname');
         if (usernameInput) usernameInput.focus();
     } else if(type === 'forgot') {
         if (forgotForm) forgotForm.classList.remove('hidden-form');
@@ -359,6 +364,14 @@ export function switchAuth(type) {
         const loginInput = document.getElementById('login-username');
         if (loginInput) loginInput.focus();
     }
+}
+
+export function handleEnter(e, action) {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (action === 'login') login();
+    else if (action === 'register') register();
+    else if (action === 'forgot') sendResetEmail();
 }
 
 export function togglePassword(inputId, btn) {
@@ -384,3 +397,4 @@ window.resendVerification = resendVerification;
 window.clearAllMistakes = clearAllMistakes;
 window.switchAuth = switchAuth;
 window.togglePassword = togglePassword;
+window.handleEnter = handleEnter;

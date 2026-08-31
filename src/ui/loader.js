@@ -65,3 +65,5 @@ export async function loadTestsFromFirestore() {
         throw error;
     }
 }
+
+window.loadTestsFromFirestore = loadTestsFromFirestore;

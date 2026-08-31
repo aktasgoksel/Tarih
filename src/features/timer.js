@@ -8,14 +8,32 @@ export function prepareTimer(totalQuestions) {
     State.setTimeRemaining(totalQuestions * 60); // 1 min per question
     updateTimerUI();
     
-    document.getElementById('start-timer-btn').classList.remove('hidden');
-    const stbm2 = document.getElementById('start-timer-btn-mobile'); if(stbm2) stbm2.classList.remove('hidden');
-    document.getElementById('mobile-timer-bar').classList.remove('hidden');
+    const startBtn = document.getElementById('start-timer-btn');
+    if (startBtn) {
+        startBtn.classList.remove('hidden');
+        startBtn.classList.add('flex');
+    }
+    const stbm2 = document.getElementById('start-timer-btn-mobile');
+    if (stbm2) {
+        stbm2.classList.remove('hidden');
+        stbm2.classList.add('flex');
+    }
+    const mobileBar = document.getElementById('mobile-timer-bar');
+    if (mobileBar) {
+        mobileBar.classList.remove('hidden');
+        mobileBar.classList.add('flex');
+    }
     
-    document.getElementById('timer-container').classList.add('hidden');
-    document.getElementById('timer-container').classList.remove('flex');
-    document.getElementById('mobile-timer-container').classList.add('hidden');
-    document.getElementById('mobile-timer-container').classList.remove('flex');
+    const timerContainer = document.getElementById('timer-container');
+    if (timerContainer) {
+        timerContainer.classList.add('hidden');
+        timerContainer.classList.remove('flex');
+    }
+    const mobileTimer = document.getElementById('mobile-timer-container');
+    if (mobileTimer) {
+        mobileTimer.classList.add('hidden');
+        mobileTimer.classList.remove('flex');
+    }
 }
 
 export function startTimerManually() {
@@ -24,8 +42,16 @@ export function startTimerManually() {
     State.setIsTimerPaused(false);
     updatePauseIcons();
     
-    document.getElementById('start-timer-btn').classList.add('hidden');
-    const stbm = document.getElementById('start-timer-btn-mobile'); if(stbm) stbm.classList.add('hidden');
+    const startBtn = document.getElementById('start-timer-btn');
+    if (startBtn) {
+        startBtn.classList.add('hidden');
+        startBtn.classList.remove('flex');
+    }
+    const stbm = document.getElementById('start-timer-btn-mobile');
+    if (stbm) {
+        stbm.classList.add('hidden');
+        stbm.classList.remove('flex');
+    }
     
     document.getElementById('timer-container').classList.remove('hidden');
     document.getElementById('timer-container').classList.add('flex');
@@ -82,6 +108,7 @@ export function resetTimerManually() {
 
 export function stopTimer() {
     clearInterval(State.getTimerInterval());
+    State.setTimerInterval(null);
     State.setIsTimerRunning(false);
     
     document.getElementById('timer-container').classList.add('hidden');
@@ -102,8 +129,8 @@ function updateTimerUI() {
     const el = document.getElementById('timer-text');
     const mobEl = document.getElementById('mobile-timer-text');
     
-    el.textContent = text;
-    mobEl.textContent = text;
+    if (el) el.textContent = text;
+    if (mobEl) mobEl.textContent = text;
     
     if(State.getTimeRemaining() < 60) {
         el.classList.add('text-red-400');

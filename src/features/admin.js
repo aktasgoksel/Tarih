@@ -147,7 +147,9 @@ window.saveAdminQuestion = async function() {
         document.getElementById('admin-solution').value = '';
         
         // Reload tests
-        await window.loadTestsFromFirestore();
+        const { loadTestsFromFirestore } = await import('../ui/loader.js');
+        await loadTestsFromFirestore();
+        if (typeof window.renderDropdown === 'function') window.renderDropdown();
         
     } catch(err) {
         console.error('Soru kaydedilemedi:', err);

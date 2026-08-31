@@ -52,6 +52,7 @@ export function showLegalModal(type) {
     void modal.offsetWidth;
     modal.classList.remove('opacity-0');
     inner.classList.remove('scale-95');
+    inner.classList.add('scale-100');
 }
 
 export function closeLegalModal() {
@@ -59,6 +60,7 @@ export function closeLegalModal() {
     const inner = modal.querySelector('div');
     modal.classList.add('opacity-0');
     inner.classList.add('scale-95');
+    inner.classList.remove('scale-100');
     setTimeout(() => {
         modal.classList.add('hidden');
     }, 300);
