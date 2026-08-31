@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { State } from "../state.js";
 
 import { db } from "../firebase.js";
@@ -18,21 +22,21 @@ import { showModal } from "../ui/modal.js";
             // Random Trial Option
             const randomOpt = document.createElement('option');
             randomOpt.value = 'RANDOM_27';
-            randomOpt.textContent = '🎲 Gerçek KPSS Denemesi (Rastgele 27 Soru)';
+            randomOpt.textContent = 'ğŸ² GerÃ§ek KPSS Denemesi (Rastgele 27 Soru)';
             randomOpt.className = 'font-bold text-indigo-600 dark:text-indigo-400';
             dropdown.appendChild(randomOpt);
             
             // Mistake Option
             const mistakeOpt = document.createElement('option');
             mistakeOpt.value = 'MISTAKES';
-            mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Özel Test)';
+            mistakeOpt.textContent = 'ğŸ”¥ YanlÄ±ÅŸ YaptÄ±ÄŸÄ±m Sorular (Ã–zel Test)';
             mistakeOpt.className = 'font-bold text-rose-600 dark:text-rose-400';
             dropdown.appendChild(mistakeOpt);
             
             // Favorite Option
             const favOpt = document.createElement('option');
             favOpt.value = 'FAVORITES';
-            favOpt.textContent = '⭐ Favori Sorularım (Kaydedilenler)';
+            favOpt.textContent = 'â­ Favori SorularÄ±m (Kaydedilenler)';
             favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
             dropdown.appendChild(favOpt);
             
@@ -44,7 +48,7 @@ import { showModal } from "../ui/modal.js";
                 let scoreText = '';
                 if(isFinished) {
                     const score = State.getUserData().testProgress[index].score;
-                    scoreText = ` \u2713 (Çözüldü - ${score}/${test.questions.length})`;
+                    scoreText = ` \u2713 (Ã‡Ã¶zÃ¼ldÃ¼ - ${score}/${test.questions.length})`;
                 }
                 opt.textContent = `${test.title}${scoreText}`;
                 dropdown.appendChild(opt);
@@ -71,8 +75,8 @@ import { showModal } from "../ui/modal.js";
             });
             
             const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
-                ? `🔥 Yanlışlarım (${State.getCurrentTestQuestions().length} Soru)` 
-                : 'Hiç yanlışınız yok! Tebrikler!';
+                ? `ğŸ”¥ YanlÄ±ÅŸlarÄ±m (${State.getCurrentTestQuestions().length} Soru)` 
+                : 'HiÃ§ yanlÄ±ÅŸÄ±nÄ±z yok! Tebrikler!';
                 
             State.setCurrentQuestionIndex(0);
             renderTestUI(State.getCurrentTestQuestions());
@@ -106,8 +110,8 @@ import { showModal } from "../ui/modal.js";
             });
             
             const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
-                ? `⭐ Favori Sorularım (${State.getCurrentTestQuestions().length} Soru)` 
-                : 'Henüz favori sorunuz yok.';
+                ? `â­ Favori SorularÄ±m (${State.getCurrentTestQuestions().length} Soru)` 
+                : 'HenÃ¼z favori sorunuz yok.';
                 
             State.setCurrentQuestionIndex(0);
             renderTestUI(State.getCurrentTestQuestions());
@@ -149,7 +153,7 @@ import { showModal } from "../ui/modal.js";
             allQ.sort(() => 0.5 - Math.random());
             State.setCurrentTestQuestions(allQ.slice(0, 27));
             
-            const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
+            const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = 'ğŸ² Rastgele KPSS Denemesi (27 Soru)';
             State.setCurrentQuestionIndex(0);
             
             renderTestUI(State.getCurrentTestQuestions());
@@ -190,7 +194,7 @@ import { showModal } from "../ui/modal.js";
             }
             if (!tests[index]) {
                 const cTitleEmpty = document.getElementById('current-test-title');
-                if (cTitleEmpty) cTitleEmpty.textContent = 'Henüz test yüklenmedi';
+                if (cTitleEmpty) cTitleEmpty.textContent = 'HenÃ¼z test yÃ¼klenmedi';
                 return;
             }
             State.setCurrentTestIndex(index);
@@ -225,7 +229,7 @@ import { showModal } from "../ui/modal.js";
             container.innerHTML = '';
             
             if(questions.length === 0) {
-                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">Gösterilecek soru bulunamadı.</span></div>';
+                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">GÃ¶sterilecek soru bulunamadÄ±.</span></div>';
                 document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
@@ -246,7 +250,7 @@ import { showModal } from "../ui/modal.js";
                     ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
                     : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
 
-                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-4 right-4 min-h-11 min-w-11 p-2 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110 flex items-center justify-center" title="Favorilere Ekle/Çıkar">${starSvg}</button>`;
+                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-4 right-4 min-h-11 min-w-11 p-2 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110 flex items-center justify-center" title="Favorilere Ekle/Ã‡Ä±kar">${starSvg}</button>`;
 
                 let optionsHtml = '';
                 Object.keys(q.options).forEach((optKey, optIndex) => {
@@ -279,16 +283,16 @@ import { showModal } from "../ui/modal.js";
                     <div id="check-btn-container-${index}" class="mt-5 flex justify-end">
                         <button onclick="window.evaluateSingleQuestion(${index})" class="px-5 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/50 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/50 font-bold transition-colors text-sm shadow-sm flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Cevabı Kontrol Et
+                            CevabÄ± Kontrol Et
                         </button>
                     </div>
 
                     <div id="solution-${index}" class="hidden mt-6 p-5 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg">
                         <h4 class="font-bold text-amber-800 dark:text-amber-400 mb-2 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Çözüm ve Açıklama (Doğru Cevap: ${q.answer})
+                            Ã‡Ã¶zÃ¼m ve AÃ§Ä±klama (DoÄŸru Cevap: ${q.answer})
                         </h4>
-                        <p class="text-amber-900 dark:text-amber-200/90 leading-relaxed font-medium">${q.solution ? (typeof q.solution === 'string' ? window.escapeHTML(q.solution).replace(/\n/g, '<br>') : window.escapeHTML(q.solution)) : 'Açıklama bulunmuyor.'}</p>
+                        <p class="text-amber-900 dark:text-amber-200/90 leading-relaxed font-medium">${q.solution ? (typeof q.solution === 'string' ? window.escapeHTML(q.solution).replace(/\n/g, '<br>') : window.escapeHTML(q.solution)) : 'AÃ§Ä±klama bulunmuyor.'}</p>
                     </div>`
                 ;
                 container.appendChild(questionEl);
@@ -363,13 +367,13 @@ import { showModal } from "../ui/modal.js";
                 // if random test is submitted, it will show result-container. We shouldn't force hide it here unless it's resetting.
                 // It will be handled in evaluateTest / submitCurrentTest
             } else if(isFinished) {
-                statusText = 'Tamamlandı';
+                statusText = 'TamamlandÄ±';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 border border-transparent dark:border-emerald-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800/50';
                 resultContainer.classList.remove('hidden');
                 stopTimer();
             } else {
-                statusText = 'Çözülüyor';
+                statusText = 'Ã‡Ã¶zÃ¼lÃ¼yor';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200 border border-transparent dark:border-yellow-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/50 dark:text-yellow-200 dark:border-yellow-800/50';
             }
@@ -447,7 +451,7 @@ import { showModal } from "../ui/modal.js";
             
             const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
             if (!selectedOption) {
-                showModal({ type: 'info', title: 'Uyarı', text: 'Çözümü görmek için lütfen önce bir şık işaretleyin.', confirmText: 'Tamam' });
+                showModal({ type: 'info', title: 'UyarÄ±', text: 'Ã‡Ã¶zÃ¼mÃ¼ gÃ¶rmek iÃ§in lÃ¼tfen Ã¶nce bir ÅŸÄ±k iÅŸaretleyin.', confirmText: 'Tamam' });
                 return;
             }
             
@@ -510,9 +514,9 @@ import { showModal } from "../ui/modal.js";
                 showModal({
                     type: 'warning',
                     title: 'Eksik Sorular Var',
-                    text: `Henüz ${emptyCount} soruyu boş bıraktınız. Testi yine de bitirmek istediğinize emin misiniz?`,
+                    text: `HenÃ¼z ${emptyCount} soruyu boÅŸ bÄ±raktÄ±nÄ±z. Testi yine de bitirmek istediÄŸinize emin misiniz?`,
                     confirmText: 'Evet, Bitir',
-                    cancelText: 'Vazgeç',
+                    cancelText: 'VazgeÃ§',
                     onConfirm: () => {
                         window.submitCurrentTest(true);
                     }
@@ -648,7 +652,7 @@ import { showModal } from "../ui/modal.js";
             
             // Build progress bars
             const detailsEl = document.getElementById('category-details');
-            detailsEl.innerHTML = '<h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 border-b border-gray-200 dark:border-slate-700 pb-2">Konu Bazlı Başarı Oranları</h3>';
+            detailsEl.innerHTML = '<h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 border-b border-gray-200 dark:border-slate-700 pb-2">Konu BazlÄ± BaÅŸarÄ± OranlarÄ±</h3>';
             
             labels.forEach(l => {
                 const pct = Math.round((catData[l].correct / catData[l].total) * 100);
@@ -682,7 +686,7 @@ import { showModal } from "../ui/modal.js";
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Doğru Sayısı',
+                        label: 'DoÄŸru SayÄ±sÄ±',
                         data: correctData,
                         backgroundColor: [
                             '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e', '#f97316', '#6366f1', '#84cc16'
@@ -707,7 +711,7 @@ import { showModal } from "../ui/modal.js";
                                     const val = context.raw || 0;
                                     const total = catData[label].total;
                                     const pct = Math.round((val / total) * 100);
-                                    return ` ${label}: ${val} Doğru (%${pct})`;
+                                    return ` ${label}: ${val} DoÄŸru (%${pct})`;
                                 }
                             }
                         }
@@ -732,7 +736,7 @@ import { showModal } from "../ui/modal.js";
             
             try {
                 const btn = document.getElementById('submit-suggestion-btn');
-                btn.textContent = 'Gönderiliyor...';
+                btn.textContent = 'GÃ¶nderiliyor...';
                 btn.disabled = true;
                 
                 await addDoc(collection(db, 'suggestions'), {
@@ -743,17 +747,17 @@ import { showModal } from "../ui/modal.js";
                     timestamp: new Date().toISOString()
                 });
                 
-                showModal({ type: 'success', title: 'Başarılı', text: 'Öneriniz başarıyla alındı! Geri bildiriminiz için teşekkür ederiz.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'BaÅŸarÄ±lÄ±', text: 'Ã–neriniz baÅŸarÄ±yla alÄ±ndÄ±! Geri bildiriminiz iÃ§in teÅŸekkÃ¼r ederiz.', confirmText: 'Tamam' });
                 window.closeSuggestionModal();
-                btn.textContent = 'Gönder';
+                btn.textContent = 'GÃ¶nder';
                 btn.disabled = false;
             } catch (e) {
                 console.error(e);
-                let errorMsg = 'Bir hata oluştu. Lütfen bağlantınızı kontrol edin.';
+                let errorMsg = 'Bir hata oluÅŸtu. LÃ¼tfen baÄŸlantÄ±nÄ±zÄ± kontrol edin.';
                 if (e.code === 'permission-denied' || (e.message && e.message.includes('permission'))) {
-                    errorMsg = 'Veritabanı erişim yetkisi reddedildi. Firestore kurallarınızda "suggestions" koleksiyonuna yazma izni verildiğinden emin olun.';
+                    errorMsg = 'VeritabanÄ± eriÅŸim yetkisi reddedildi. Firestore kurallarÄ±nÄ±zda "suggestions" koleksiyonuna yazma izni verildiÄŸinden emin olun.';
                 } else if (e.message) {
-                    errorMsg = `Hata detayı: ${e.message}`;
+                    errorMsg = `Hata detayÄ±: ${e.message}`;
                 }
                 showModal({ type: 'error', title: 'Hata', text: errorMsg, confirmText: 'Tamam' });
                 document.getElementById('submit-suggestion-btn').textContent = 'Tekrar Dene';
@@ -814,14 +818,14 @@ import { showModal } from "../ui/modal.js";
             
             try {
                 await updateProfile(State.getCurrentUser(), { displayName: newName });
-                document.getElementById('welcome-text').textContent = `Hoş geldin, ${newName}`;
+                document.getElementById('welcome-text').textContent = `HoÅŸ geldin, ${newName}`;
                 
-                showModal({ type: 'success', title: 'İşlem Başarılı', text: 'Kullanıcı adınız başarıyla güncellenmiştir.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'Ä°ÅŸlem BaÅŸarÄ±lÄ±', text: 'KullanÄ±cÄ± adÄ±nÄ±z baÅŸarÄ±yla gÃ¼ncellenmiÅŸtir.', confirmText: 'Tamam' });
             } catch(e) {
                 console.error(e);
-                showModal({ type: 'error', title: 'Hata', text: 'Kullanıcı adı güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
+                showModal({ type: 'error', title: 'Hata', text: 'KullanÄ±cÄ± adÄ± gÃ¼ncellenirken sistemsel bir hata oluÅŸtu.', confirmText: 'Kapat' });
             }
-            btn.textContent = 'Güncelle';
+            btn.textContent = 'GÃ¼ncelle';
             btn.disabled = false;
         }
 
@@ -835,20 +839,20 @@ import { showModal } from "../ui/modal.js";
             
             try {
                 await updateEmail(State.getCurrentUser(), newEmail);
-                showModal({ type: 'success', title: 'İşlem Başarılı', text: 'E-posta adresiniz başarıyla güncellenmiştir. Hesabınıza artık yeni e-posta adresinizle giriş yapabilirsiniz.', confirmText: 'Tamam' });
+                showModal({ type: 'success', title: 'Ä°ÅŸlem BaÅŸarÄ±lÄ±', text: 'E-posta adresiniz baÅŸarÄ±yla gÃ¼ncellenmiÅŸtir. HesabÄ±nÄ±za artÄ±k yeni e-posta adresinizle giriÅŸ yapabilirsiniz.', confirmText: 'Tamam' });
             } catch(error) {
                 console.error(error);
                 if (error.code === 'auth/requires-recent-login') {
-                    showModal({ type: 'error', title: 'Doğrulama Gerekiyor', text: 'Güvenlik prosedürleri gereği e-posta adresinizi değiştirmeden önce sistemden çıkış yapıp tekrar giriş yapmanız gerekmektedir.', confirmText: 'Anladım' });
+                    showModal({ type: 'error', title: 'DoÄŸrulama Gerekiyor', text: 'GÃ¼venlik prosedÃ¼rleri gereÄŸi e-posta adresinizi deÄŸiÅŸtirmeden Ã¶nce sistemden Ã§Ä±kÄ±ÅŸ yapÄ±p tekrar giriÅŸ yapmanÄ±z gerekmektedir.', confirmText: 'AnladÄ±m' });
                 } else if (error.code === 'auth/email-already-in-use') {
-                    showModal({ type: 'error', title: 'Hata', text: 'Girdiğiniz e-posta adresi başka bir hesaba aittir. Lütfen farklı bir adres deneyin.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'GirdiÄŸiniz e-posta adresi baÅŸka bir hesaba aittir. LÃ¼tfen farklÄ± bir adres deneyin.', confirmText: 'Kapat' });
                 } else if (error.code === 'auth/invalid-email') {
-                    showModal({ type: 'error', title: 'Hata', text: 'Geçersiz bir e-posta formatı girdiniz.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'GeÃ§ersiz bir e-posta formatÄ± girdiniz.', confirmText: 'Kapat' });
                 } else {
-                    showModal({ type: 'error', title: 'Hata', text: 'E-posta adresi güncellenirken sistemsel bir hata oluştu.', confirmText: 'Kapat' });
+                    showModal({ type: 'error', title: 'Hata', text: 'E-posta adresi gÃ¼ncellenirken sistemsel bir hata oluÅŸtu.', confirmText: 'Kapat' });
                 }
             }
-            btn.textContent = 'Güncelle';
+            btn.textContent = 'GÃ¼ncelle';
             btn.disabled = false;
         }
 
@@ -856,24 +860,24 @@ import { showModal } from "../ui/modal.js";
             showModal({
                 type: 'warning',
                 title: 'Dikkat!',
-                text: 'Hesabınızı ve çözdüğünüz tüm soruları kalıcı olarak silmek üzeresiniz. Bu işlem kesinlikle geri alınamaz. Onaylıyor musunuz?',
-                confirmText: 'Evet, Hesabımı Sil',
-                cancelText: 'İptal Et',
+                text: 'HesabÄ±nÄ±zÄ± ve Ã§Ã¶zdÃ¼ÄŸÃ¼nÃ¼z tÃ¼m sorularÄ± kalÄ±cÄ± olarak silmek Ã¼zeresiniz. Bu iÅŸlem kesinlikle geri alÄ±namaz. OnaylÄ±yor musunuz?',
+                confirmText: 'Evet, HesabÄ±mÄ± Sil',
+                cancelText: 'Ä°ptal Et',
                 onConfirm: async () => {
                     try {
                         await deleteDoc(doc(db, "users", State.getCurrentUser().uid));
                         await deleteUser(State.getCurrentUser());
                         
                         window.closeProfileModal();
-                        showModal({ type: 'info', title: 'Hesap Silindi', text: 'Hesabınız ve tüm verileriniz kalıcı olarak silindi. Hoşçakalın!', confirmText: 'Tamam' });
+                        showModal({ type: 'info', title: 'Hesap Silindi', text: 'HesabÄ±nÄ±z ve tÃ¼m verileriniz kalÄ±cÄ± olarak silindi. HoÅŸÃ§akalÄ±n!', confirmText: 'Tamam' });
                         setTimeout(() => window.location.reload(), 2000);
                         
                     } catch(error) {
                         console.error(error);
                         if (error.code === 'auth/requires-recent-login') {
-                            showModal({ type: 'error', title: 'Güvenlik Doğrulaması', text: 'Güvenlik nedeniyle hesabınızı silebilmemiz için yakın zamanda giriş yapmış olmanız gerekiyor. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra bu işlemi tekrarlayın.', confirmText: 'Tamam' });
+                            showModal({ type: 'error', title: 'GÃ¼venlik DoÄŸrulamasÄ±', text: 'GÃ¼venlik nedeniyle hesabÄ±nÄ±zÄ± silebilmemiz iÃ§in yakÄ±n zamanda giriÅŸ yapmÄ±ÅŸ olmanÄ±z gerekiyor. LÃ¼tfen Ã§Ä±kÄ±ÅŸ yapÄ±p tekrar giriÅŸ yaptÄ±ktan sonra bu iÅŸlemi tekrarlayÄ±n.', confirmText: 'Tamam' });
                         } else {
-                            showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluştu: ' + error.message, confirmText: 'Tamam' });
+                            showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluÅŸtu: ' + error.message, confirmText: 'Tamam' });
                         }
                     }
                 }
@@ -902,3 +906,4 @@ window.closeStatsModal = closeStatsModal;
 window.updateUsername = updateUsername;
 window.updateEmailAddress = updateEmailAddress;
 window.deleteAccount = deleteAccount;
+

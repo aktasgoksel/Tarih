@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 class StateManager {
     constructor() {
         this._currentUser = null;
@@ -68,3 +72,4 @@ class StateManager {
 }
 
 export const State = new StateManager();
+

@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { State } from "../state.js";
 
 // --- OPTIK FORM (GRID) LOGIC ---
@@ -42,4 +46,5 @@ export function updateGridUI() {
 }
 
 window.updateGridUI = updateGridUI;
+
 

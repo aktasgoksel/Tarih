@@ -1,10 +1,14 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { db } from "../firebase.js";
 import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { State } from "../state.js";
 
 let loaderTimeout = null;
 
-export function showLoader(msg = "Yükleniyor...") {
+export function showLoader(msg = "YÃ¼kleniyor...") {
     const loader = document.getElementById('global-loader');
     if(loader) {
         document.getElementById('loader-text').textContent = msg;
@@ -19,9 +23,9 @@ export function showLoader(msg = "Yükleniyor...") {
         loaderTimeout = setTimeout(() => {
             if (loader && !loader.classList.contains('hidden')) {
                 hideLoader();
-                const errorMsg = 'Yükleme işlemi beklenenden uzun sürdü. Lütfen internet bağlantınızı kontrol edip sayfayı yenileyin.';
+                const errorMsg = 'YÃ¼kleme iÅŸlemi beklenenden uzun sÃ¼rdÃ¼. LÃ¼tfen internet baÄŸlantÄ±nÄ±zÄ± kontrol edip sayfayÄ± yenileyin.';
                 if (window.showModal) {
-                    window.showModal({ type: 'error', title: 'Bağlantı Zaman Aşımı', text: errorMsg, confirmText: 'Yeniden Dene', onConfirm: () => window.location.reload() });
+                    window.showModal({ type: 'error', title: 'BaÄŸlantÄ± Zaman AÅŸÄ±mÄ±', text: errorMsg, confirmText: 'Yeniden Dene', onConfirm: () => window.location.reload() });
                 } else {
                     alert(errorMsg);
                 }
@@ -67,3 +71,4 @@ export async function loadTestsFromFirestore() {
 }
 
 window.loadTestsFromFirestore = loadTestsFromFirestore;
+

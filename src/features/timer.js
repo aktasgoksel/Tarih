@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { State } from "../state.js";
 import { showModal } from "../ui/modal.js";
 import { submitCurrentTest } from "./tests.js";
@@ -67,9 +71,9 @@ export function startTimerManually() {
                 window.stopTimer();
                 showModal({
                     type: 'warning',
-                    title: 'Süre Doldu!',
-                    text: 'Test süreniz sona erdi. Test otomatik olarak bitiriliyor.',
-                    confirmText: 'Sonucu Gör',
+                    title: 'SÃ¼re Doldu!',
+                    text: 'Test sÃ¼reniz sona erdi. Test otomatik olarak bitiriliyor.',
+                    confirmText: 'Sonucu GÃ¶r',
                     onConfirm: () => {
                         submitCurrentTest(true);
                     }

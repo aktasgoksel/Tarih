@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
 import { doc, setDoc, collection, getDocs, query, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -9,7 +13,7 @@ import { showModal } from "../ui/modal.js";
 export async function openAdminPanel() {
     const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
     if(!State.getCurrentUser() || !ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
-        showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
+        showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz eriÅŸim!', confirmText: 'Tamam' });
         return;
     }
 
@@ -20,7 +24,7 @@ export async function openAdminPanel() {
 
     const list = document.getElementById('admin-suggestions-list');
     if (list) {
-        list.innerHTML = '<div class="text-center py-10 text-gray-500">Veritabanından öneriler çekiliyor...</div>';
+        list.innerHTML = '<div class="text-center py-10 text-gray-500">VeritabanÄ±ndan Ã¶neriler Ã§ekiliyor...</div>';
         
         try {
             const q = query(collection(db, "suggestions"));
@@ -55,12 +59,12 @@ export async function openAdminPanel() {
             });
             
             if(items.length === 0) {
-                html = '<div class="text-center py-10 text-gray-500 font-medium">Henüz kimse bir öneri göndermemiş.</div>';
+                html = '<div class="text-center py-10 text-gray-500 font-medium">HenÃ¼z kimse bir Ã¶neri gÃ¶ndermemiÅŸ.</div>';
             }
             list.innerHTML = html;
         } catch (e) {
             console.error(e);
-            list.innerHTML = '<div class="text-center text-red-500 py-10 font-bold">Veriler çekilemedi! Firebase Rules (Kurallar) izin vermiyor olabilir.</div>';
+            list.innerHTML = '<div class="text-center text-red-500 py-10 font-bold">Veriler Ã§ekilemedi! Firebase Rules (Kurallar) izin vermiyor olabilir.</div>';
         }
     }
 }
@@ -89,7 +93,7 @@ window.saveAdminQuestion = async function() {
     const sol = document.getElementById('admin-solution').value.trim();
     
     if(!title || !qText || !optA || !optB || !optC || !optD || !optE) {
-        feedback.textContent = 'Lütfen tüm soru ve şık alanlarını doldurun!';
+        feedback.textContent = 'LÃ¼tfen tÃ¼m soru ve ÅŸÄ±k alanlarÄ±nÄ± doldurun!';
         feedback.className = 'mt-4 text-center font-medium text-red-500 block';
         return;
     }
@@ -134,7 +138,7 @@ window.saveAdminQuestion = async function() {
             questions: existingQuestions
         });
         
-        feedback.textContent = 'Soru başarıyla kaydedildi!';
+        feedback.textContent = 'Soru baÅŸarÄ±yla kaydedildi!';
         feedback.className = 'mt-4 text-center font-bold text-green-500 block';
         
         // Clear form
@@ -157,26 +161,26 @@ window.saveAdminQuestion = async function() {
         feedback.className = 'mt-4 text-center font-medium text-red-500 block';
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Soruyu Veritabanına Kaydet';
+        btn.textContent = 'Soruyu VeritabanÄ±na Kaydet';
     }
 };
 
 export async function deleteSuggestion(suggestionId) {
     showModal({
         type: 'warning',
-        title: 'Öneriyi Sil',
-        text: 'Bu öneriyi silmek istediğinize emin misiniz? Bu işlem geri alınamaz.',
+        title: 'Ã–neriyi Sil',
+        text: 'Bu Ã¶neriyi silmek istediÄŸinize emin misiniz? Bu iÅŸlem geri alÄ±namaz.',
         confirmText: 'Evet, Sil',
-        cancelText: 'İptal',
+        cancelText: 'Ä°ptal',
         onConfirm: async () => {
             try {
                 await deleteDoc(doc(db, "suggestions", suggestionId));
                 // Reload suggestions list instantly
                 await openAdminPanel();
-                showModal({ type: 'success', title: 'Başarılı', text: 'Öneri başarıyla silindi.', confirmText: 'Kapat' });
+                showModal({ type: 'success', title: 'BaÅŸarÄ±lÄ±', text: 'Ã–neri baÅŸarÄ±yla silindi.', confirmText: 'Kapat' });
             } catch (e) {
                 console.error(e);
-                showModal({ type: 'error', title: 'Hata', text: 'Öneri silinirken bir hata oluştu: ' + e.message, confirmText: 'Tamam' });
+                showModal({ type: 'error', title: 'Hata', text: 'Ã–neri silinirken bir hata oluÅŸtu: ' + e.message, confirmText: 'Tamam' });
             }
         }
     });

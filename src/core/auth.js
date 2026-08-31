@@ -1,3 +1,7 @@
+﻿/**
+ * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
+ * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
+ */
 import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -15,16 +19,16 @@ export async function login() {
     const pass = document.getElementById('login-password').value;
     const err = document.getElementById('auth-error');
     
-    if(!email || !pass) { err.textContent = 'Lütfen e-posta ve şifrenizi girin.'; return; }
+    if(!email || !pass) { err.textContent = 'LÃ¼tfen e-posta ve ÅŸifrenizi girin.'; return; }
     
-    err.textContent = 'Giriş yapılıyor...';
+    err.textContent = 'GiriÅŸ yapÄ±lÄ±yor...';
     try {
-        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
+        // Oturumu sadece tarayÄ±cÄ±/sekme aÃ§Ä±kken geÃ§erli kÄ±l (sayfa kapanÄ±nca otomatik Ã§Ä±kÄ±ÅŸ)
         await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, email, pass);
     } catch(error) {
         console.error(error);
-        err.textContent = 'Giriş başarısız. E-posta veya şifrenizi kontrol edin.';
+        err.textContent = 'GiriÅŸ baÅŸarÄ±sÄ±z. E-posta veya ÅŸifrenizi kontrol edin.';
     }
 }
 
@@ -34,10 +38,10 @@ export async function register() {
     const pass = document.getElementById('register-password').value;
     const err = document.getElementById('auth-error');
     
-    if(!username || !email || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
-    if(pass.length < 6) { err.textContent = 'Şifre en az 6 karakter olmalı.'; return; }
+    if(!username || !email || !pass) { err.textContent = 'LÃ¼tfen tÃ¼m alanlarÄ± doldurun.'; return; }
+    if(pass.length < 6) { err.textContent = 'Åifre en az 6 karakter olmalÄ±.'; return; }
     
-    err.textContent = 'Kayıt olunuyor... Lütfen bekleyin.';
+    err.textContent = 'KayÄ±t olunuyor... LÃ¼tfen bekleyin.';
     try {
         const userCred = await createUserWithEmailAndPassword(auth, email, pass);
         await updateProfile(userCred.user, { displayName: username });
@@ -45,11 +49,11 @@ export async function register() {
     } catch(error) {
         console.error(error);
         if(error.code === 'auth/email-already-in-use') {
-            err.textContent = 'Bu e-posta adresi zaten kullanımda.';
+            err.textContent = 'Bu e-posta adresi zaten kullanÄ±mda.';
         } else if(error.code === 'auth/invalid-email') {
-            err.textContent = 'Geçersiz e-posta adresi.';
+            err.textContent = 'GeÃ§ersiz e-posta adresi.';
         } else {
-            err.textContent = 'Kayıt olurken bir hata oluştu: ' + error.message;
+            err.textContent = 'KayÄ±t olurken bir hata oluÅŸtu: ' + error.message;
         }
     }
 }
@@ -58,22 +62,22 @@ export async function sendResetEmail() {
     const email = document.getElementById('forgot-email').value.trim();
     const err = document.getElementById('auth-error');
     
-    if(!email) { err.textContent = "Lütfen e-posta adresinizi girin."; return; }
+    if(!email) { err.textContent = "LÃ¼tfen e-posta adresinizi girin."; return; }
     
     err.className = "text-sm text-center font-medium min-h-5 mt-3 text-blue-600 dark:text-blue-400";
-    err.textContent = "Bağlantı gönderiliyor...";
+    err.textContent = "BaÄŸlantÄ± gÃ¶nderiliyor...";
     
     try {
         await sendPasswordResetEmail(auth, email);
         err.className = "text-sm text-center font-medium min-h-5 mt-3 text-emerald-600 dark:text-emerald-400";
-        err.textContent = "Şifre sıfırlama bağlantısı e-postanıza gönderildi!";
+        err.textContent = "Åifre sÄ±fÄ±rlama baÄŸlantÄ±sÄ± e-postanÄ±za gÃ¶nderildi!";
         setTimeout(() => window.switchAuth('login'), 3500);
     } catch(error) {
         err.className = "text-sm text-center font-medium min-h-5 mt-3 text-red-500 dark:text-red-400";
         if(error.code === 'auth/user-not-found') {
-            err.textContent = "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.";
+            err.textContent = "Bu e-posta adresiyle kayÄ±tlÄ± bir hesap bulunamadÄ±.";
         } else if(error.code === 'auth/invalid-email') {
-            err.textContent = "Geçersiz e-posta formatı.";
+            err.textContent = "GeÃ§ersiz e-posta formatÄ±.";
         } else {
             err.textContent = "Hata: " + error.message;
         }
@@ -82,12 +86,12 @@ export async function sendResetEmail() {
 
 export async function loginWithGoogle() {
     const provider = new GoogleAuthProvider();
-    // Her girişte hesap seçim ekranını zorunlu kıl (son hesaba otomatik bağlanmayı engeller)
+    // Her giriÅŸte hesap seÃ§im ekranÄ±nÄ± zorunlu kÄ±l (son hesaba otomatik baÄŸlanmayÄ± engeller)
     provider.setCustomParameters({ prompt: 'select_account' });
     const err = document.getElementById('auth-error');
-    err.textContent = 'Google ekranı bekleniyor...';
+    err.textContent = 'Google ekranÄ± bekleniyor...';
     try {
-        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
+        // Oturumu sadece tarayÄ±cÄ±/sekme aÃ§Ä±kken geÃ§erli kÄ±l (sayfa kapanÄ±nca otomatik Ã§Ä±kÄ±ÅŸ)
         await setPersistence(auth, browserSessionPersistence);
         await signInWithPopup(auth, provider);
     } catch(error) {
@@ -114,7 +118,7 @@ export async function checkVerification() {
             window.location.reload();
         } else {
             msg.className = "text-sm font-medium mt-3 text-rose-500";
-            msg.textContent = "Hesabınız henüz doğrulanmamış. Lütfen e-postanızı kontrol edin.";
+            msg.textContent = "HesabÄ±nÄ±z henÃ¼z doÄŸrulanmamÄ±ÅŸ. LÃ¼tfen e-postanÄ±zÄ± kontrol edin.";
         }
     }
 }
@@ -123,17 +127,17 @@ export async function resendVerification() {
     if(auth.currentUser) {
         const msg = document.getElementById('verify-msg');
         msg.className = "text-sm font-medium mt-3 text-blue-500";
-        msg.textContent = "Gönderiliyor...";
+        msg.textContent = "GÃ¶nderiliyor...";
         try {
             await sendEmailVerification(auth.currentUser);
             msg.className = "text-sm font-medium mt-3 text-emerald-600";
-            msg.textContent = "Doğrulama e-postası tekrar gönderildi. Lütfen gelen kutunuzu (ve Spam klasörünü) kontrol edin.";
+            msg.textContent = "DoÄŸrulama e-postasÄ± tekrar gÃ¶nderildi. LÃ¼tfen gelen kutunuzu (ve Spam klasÃ¶rÃ¼nÃ¼) kontrol edin.";
         } catch (error) {
             msg.className = "text-sm font-medium mt-3 text-rose-500";
             if(error.code === 'auth/too-many-requests') {
-                msg.textContent = "Çok fazla istek attınız, lütfen daha sonra tekrar deneyin.";
+                msg.textContent = "Ã‡ok fazla istek attÄ±nÄ±z, lÃ¼tfen daha sonra tekrar deneyin.";
             } else {
-                msg.textContent = "E-posta gönderilirken hata oluştu.";
+                msg.textContent = "E-posta gÃ¶nderilirken hata oluÅŸtu.";
             }
         }
     }
@@ -148,7 +152,7 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById('app-screen').classList.add('hidden');
             document.getElementById('verify-screen').classList.remove('hidden');
             document.getElementById('verify-screen').classList.add('flex');
-            const vet = document.getElementById('verify-email-text'); if(vet) vet.textContent = `${user.email} adresinize bir doğrulama bağlantısı gönderdik. Devam etmek için lütfen gelen kutunuzu kontrol edin.`;
+            const vet = document.getElementById('verify-email-text'); if(vet) vet.textContent = `${user.email} adresinize bir doÄŸrulama baÄŸlantÄ±sÄ± gÃ¶nderdik. Devam etmek iÃ§in lÃ¼tfen gelen kutunuzu kontrol edin.`;
             return;
         }
         
@@ -159,7 +163,7 @@ onAuthStateChanged(auth, async (user) => {
         // Logged in & Verified
         State.setCurrentUser(user);
         document.getElementById('auth-screen').classList.add('hidden');
-        showLoader('Yükleniyor, lütfen bekleyin...');
+        showLoader('YÃ¼kleniyor, lÃ¼tfen bekleyin...');
         
         // ADMIN ROLE CHECK
         const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
@@ -175,7 +179,7 @@ onAuthStateChanged(auth, async (user) => {
         }
         
         let displayName = user.displayName || user.email.split('@')[0];
-        const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `Hoş geldin, ${displayName}`;
+        const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `HoÅŸ geldin, ${displayName}`;
         const err = document.getElementById('auth-error'); if(err) err.textContent = '';
         
         // Fetch data from Firestore in parallel
@@ -183,7 +187,7 @@ onAuthStateChanged(auth, async (user) => {
             const docRef = doc(db, "users", user.uid);
             
             const userPromise = getDoc(docRef).catch(e => {
-                console.error("Kullanıcı verisi çekilemedi, geçici profil kullanılacak:", e);
+                console.error("KullanÄ±cÄ± verisi Ã§ekilemedi, geÃ§ici profil kullanÄ±lacak:", e);
                 return null;
             });
             
@@ -199,7 +203,7 @@ onAuthStateChanged(auth, async (user) => {
                     try {
                         await setDoc(docRef, State.getUserData());
                     } catch(writeErr) {
-                        console.error("Yeni kullanıcı veritabanına kaydedilemedi:", writeErr);
+                        console.error("Yeni kullanÄ±cÄ± veritabanÄ±na kaydedilemedi:", writeErr);
                     }
                 }
             }
@@ -214,11 +218,11 @@ onAuthStateChanged(auth, async (user) => {
             updateMistakeBadge();
             updateFavoritesBadge();
         } catch(error) {
-            console.error("Giriş sonrası yükleme hatası:", error);
+            console.error("GiriÅŸ sonrasÄ± yÃ¼kleme hatasÄ±:", error);
             showModal({
                 type: 'error',
-                title: 'Yükleme Hatası',
-                text: 'Verileriniz yüklenirken bir hata oluştu: ' + error.message + '. Lütfen internet bağlantınızı kontrol edip sayfayı yenileyin.',
+                title: 'YÃ¼kleme HatasÄ±',
+                text: 'Verileriniz yÃ¼klenirken bir hata oluÅŸtu: ' + error.message + '. LÃ¼tfen internet baÄŸlantÄ±nÄ±zÄ± kontrol edip sayfayÄ± yenileyin.',
                 confirmText: 'Yeniden Dene',
                 onConfirm: () => window.location.reload()
             });
@@ -272,13 +276,13 @@ export async function saveUserDataCloud() {
     try {
         await setDoc(doc(db, "users", State.getCurrentUser().uid), State.getUserData());
     } catch(e) {
-        console.error("Veritabanına kaydedilemedi:", e);
+        console.error("VeritabanÄ±na kaydedilemedi:", e);
         if (!hasShownSaveWarning) {
             hasShownSaveWarning = true;
             showModal({
                 type: 'warning',
-                title: 'Bağlantı Hatası',
-                text: 'İlerlemeniz bulut veritabanına kaydedilemedi. İnternet bağlantınızı kontrol edin. İlerlemeniz geçici olarak tarayıcınızda saklanmaya devam edecektir.',
+                title: 'BaÄŸlantÄ± HatasÄ±',
+                text: 'Ä°lerlemeniz bulut veritabanÄ±na kaydedilemedi. Ä°nternet baÄŸlantÄ±nÄ±zÄ± kontrol edin. Ä°lerlemeniz geÃ§ici olarak tarayÄ±cÄ±nÄ±zda saklanmaya devam edecektir.',
                 confirmText: 'Tamam'
             });
             // Reset warning flag after 5 minutes
@@ -321,10 +325,10 @@ export function clearAllMistakes() {
     if(State.getUserData().mistakes && State.getUserData().mistakes.length > 0) {
         showModal({
             type: 'warning',
-            title: 'Yanlışları Sıfırla',
-            text: 'Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz? Bu işlem geri alınamaz.',
-            confirmText: 'Evet, Sıfırla',
-            cancelText: 'İptal',
+            title: 'YanlÄ±ÅŸlarÄ± SÄ±fÄ±rla',
+            text: 'TÃ¼m yanlÄ±ÅŸ soru kayÄ±tlarÄ±nÄ±zÄ± sÄ±fÄ±rlamak (silmek) istediÄŸinize emin misiniz? Bu iÅŸlem geri alÄ±namaz.',
+            confirmText: 'Evet, SÄ±fÄ±rla',
+            cancelText: 'Ä°ptal',
             onConfirm: () => {
                 State.getUserData().mistakes = [];
                 saveUserDataCloud();

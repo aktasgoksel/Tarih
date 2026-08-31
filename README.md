@@ -27,3 +27,7 @@ Uygulamaya telefonunuzdan, tabletinizden veya bilgisayarınızdan (herhangi bir 
 
 Öneri, geri bildirim veya hata bildirimi için:
 gokselaktas84@gmail.com
+
+## 📄 Lisans
+Bu proje Göksel Aktaş'a aittir. Tüm hakları saklıdır.
+İzinsiz kopyalanması, değiştirilmesi veya dağıtılması yasaktır. Detaylar için LICENSE dosyasına bakınız.
