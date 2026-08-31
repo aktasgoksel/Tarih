@@ -156,21 +156,23 @@
         </div>
     </div>
     
-    <!-- VERIFICATION SCREEN -->
-    <div id="verify-screen" class="hidden flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-800 to-indigo-900 dark:from-slate-800 dark:to-slate-950 p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-8 text-center border border-transparent dark:border-slate-700">
-            <svg class="w-16 h-16 mx-auto text-blue-500 dark:text-blue-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">E-posta Doğrulaması</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm" id="verify-email-text">Güvenliğiniz için kayıt olduğunuz e-posta adresine bir doğrulama bağlantısı gönderdik.</p>
-            <button onclick="window.checkVerification()" class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm mb-3">Doğruladım, Devam Et</button>
-            <button onclick="window.resendVerification()" class="w-full bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors shadow-sm mb-4">Bağlantıyı Tekrar Gönder</button>
-            <button onclick="window.logout()" class="w-full text-rose-500 dark:text-rose-400 font-semibold py-2 hover:underline">Çıkış Yap / Başka Hesap Dene</button>
-            <p id="verify-msg" class="text-sm font-medium mt-4 empty:hidden"></p>
-        </div>
-    </div>
+
 
     <!-- APP SCREEN -->
     <div id="app-screen" class="hidden flex-col min-h-screen">
+        <!-- EMAIL VERIFICATION BANNER -->
+        <div id="email-verification-banner" class="hidden bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 px-4 py-3 border-b border-amber-200 dark:border-amber-800/50 flex-col sm:flex-row items-center justify-between gap-3 text-sm z-30 relative transition-all duration-300">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span>⚠️ E-posta adresiniz henüz doğrulanmadı. Lütfen gelen kutunuzu kontrol edin.</span>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <button id="resend-verification-btn" onclick="window.triggerResendVerification()" class="font-bold underline hover:text-amber-900 dark:hover:text-amber-100 transition-colors">Doğrulama e-postasını tekrar gönder</button>
+                <button onclick="window.closeVerificationBanner()" class="p-1.5 hover:bg-amber-200 dark:hover:bg-amber-800/60 rounded-full transition-colors flex items-center justify-center min-w-8 min-h-8" title="Kapat">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
         <header class="bg-gradient-to-r from-blue-700 to-indigo-800 dark:from-slate-800 dark:to-slate-900 shadow-md sticky top-0 z-20 text-white transition-colors duration-200 border-b border-transparent dark:border-slate-700 relative">
             <div class="max-w-4xl mx-auto px-4 py-3 flex flex-col gap-2 w-full">
                 <!-- Row 1: User & Controls -->

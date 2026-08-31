@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
  * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
  */
@@ -45,7 +45,14 @@ export async function register() {
     try {
         const userCred = await createUserWithEmailAndPassword(auth, email, pass);
         await updateProfile(userCred.user, { displayName: username });
-        await sendEmailVerification(userCred.user);
+        try {
+            await sendEmailVerification(userCred.user);
+            showModal({ type: 'success', title: 'Kayıt Başarılı', text: 'Hesabınız oluşturuldu! E-posta adresinize bir doğrulama bağlantısı gönderdik. Lütfen gelen kutunuzu kontrol edin.', confirmText: 'Harika' });
+        } catch(verificationError) {
+            console.error("Doğrulama e-postası gönderilemedi: ", verificationError);
+            showModal({ type: 'success', title: 'Kayıt Başarılı', text: 'Hesabınız oluşturuldu ancak doğrulama e-postası gönderilemedi. Daha sonra tekrar deneyebilirsiniz.', confirmText: 'Anladım' });
+        }
+
     } catch(error) {
         console.error(error);
         if(error.code === 'auth/email-already-in-use') {
@@ -108,59 +115,88 @@ export async function logout() {
     }
 }
 
-export async function checkVerification() {
-    if(auth.currentUser) {
-        const msg = document.getElementById('verify-msg');
-        msg.className = "text-sm font-medium mt-3 text-blue-500";
-        msg.textContent = "Kontrol ediliyor...";
-        await auth.currentUser.reload();
-        if(auth.currentUser.emailVerified) {
-            window.location.reload();
-        } else {
-            msg.className = "text-sm font-medium mt-3 text-rose-500";
-            msg.textContent = "HesabÄ±nÄ±z henÃ¼z doÄŸrulanmamÄ±ÅŸ. LÃ¼tfen e-postanÄ±zÄ± kontrol edin.";
-        }
-    }
-}
+let pollingInterval = null;
+let resendCooldown = 0;
+let cooldownInterval = null;
 
-export async function resendVerification() {
-    if(auth.currentUser) {
-        const msg = document.getElementById('verify-msg');
-        msg.className = "text-sm font-medium mt-3 text-blue-500";
-        msg.textContent = "GÃ¶nderiliyor...";
-        try {
-            await sendEmailVerification(auth.currentUser);
-            msg.className = "text-sm font-medium mt-3 text-emerald-600";
-            msg.textContent = "DoÄŸrulama e-postasÄ± tekrar gÃ¶nderildi. LÃ¼tfen gelen kutunuzu (ve Spam klasÃ¶rÃ¼nÃ¼) kontrol edin.";
-        } catch (error) {
-            msg.className = "text-sm font-medium mt-3 text-rose-500";
-            if(error.code === 'auth/too-many-requests') {
-                msg.textContent = "Ã‡ok fazla istek attÄ±nÄ±z, lÃ¼tfen daha sonra tekrar deneyin.";
-            } else {
-                msg.textContent = "E-posta gÃ¶nderilirken hata oluÅŸtu.";
+function startVerificationPolling() {
+    if (pollingInterval) clearInterval(pollingInterval);
+    pollingInterval = setInterval(async () => {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            await currentUser.reload();
+            if (currentUser.emailVerified) {
+                closeVerificationBanner();
+                showModal({ type: 'success', title: 'Doğrulama Başarılı', text: 'E-posta adresiniz başarıyla doğrulandı! ✓', confirmText: 'Tamam' });
             }
         }
+    }, 5000);
+}
+
+export function closeVerificationBanner() {
+    const banner = document.getElementById('email-verification-banner');
+    if (banner) {
+        banner.classList.add('hidden');
+        banner.classList.remove('flex', 'sm:flex-row', 'flex-col'); // fallback to remove classes
+    }
+    if (pollingInterval) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
     }
 }
+window.closeVerificationBanner = closeVerificationBanner;
+
+export async function triggerResendVerification() {
+    if (resendCooldown > 0) return;
+    
+    const btn = document.getElementById('resend-verification-btn');
+    try {
+        if (auth.currentUser) {
+            await sendEmailVerification(auth.currentUser);
+            showModal({ type: 'info', title: 'E-posta Gönderildi', text: 'Doğrulama e-postası gönderildi, lütfen gelen kutunuzu kontrol edin.', confirmText: 'Tamam' });
+            
+            resendCooldown = 60;
+            if (btn) btn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            cooldownInterval = setInterval(() => {
+                resendCooldown--;
+                if (resendCooldown > 0) {
+                    if (btn) btn.textContent = `${resendCooldown} saniye sonra tekrar gönder`;
+                } else {
+                    clearInterval(cooldownInterval);
+                    if (btn) {
+                        btn.textContent = 'Doğrulama e-postasını tekrar gönder';
+                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            }, 1000);
+        }
+    } catch (error) {
+        if (error.code === 'auth/too-many-requests') {
+            showModal({ type: 'error', title: 'Çok Sık Deneme', text: 'Çok sık deneme yapıldı, lütfen birkaç dakika bekleyin.', confirmText: 'Anladım' });
+        } else {
+            showModal({ type: 'error', title: 'Hata', text: 'E-posta gönderilemedi: ' + error.message, confirmText: 'Kapat' });
+        }
+    }
+}
+window.triggerResendVerification = triggerResendVerification;
 
 // AUTH LISTENER
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        // VERIFICATION CHECK
-        if (false) {
-            document.getElementById('auth-screen').classList.add('hidden');
-            document.getElementById('app-screen').classList.add('hidden');
-            document.getElementById('verify-screen').classList.remove('hidden');
-            document.getElementById('verify-screen').classList.add('flex');
-            const vet = document.getElementById('verify-email-text'); if(vet) vet.textContent = `${user.email} adresinize bir doÄŸrulama baÄŸlantÄ±sÄ± gÃ¶nderdik. Devam etmek iÃ§in lÃ¼tfen gelen kutunuzu kontrol edin.`;
-            return;
+        // Email Verification Banner Check
+        if (!user.emailVerified) {
+            const banner = document.getElementById('email-verification-banner');
+            if (banner) {
+                banner.classList.remove('hidden');
+                banner.classList.add('flex');
+                startVerificationPolling();
+            }
+        } else {
+            closeVerificationBanner();
         }
         
-        // Hide Verification Screen
-        document.getElementById('verify-screen').classList.add('hidden');
-        document.getElementById('verify-screen').classList.remove('flex');
-        
-        // Logged in & Verified
+        // Logged in
         State.setCurrentUser(user);
         document.getElementById('auth-screen').classList.add('hidden');
         console.time('login-to-ready');
@@ -239,12 +275,11 @@ onAuthStateChanged(auth, async (user) => {
         
     } else {
         // Logged out
+        closeVerificationBanner();
         stopTimer();
         State.setCurrentUser(null);
         State.setUserData({ mistakes: [], favorites: [], testProgress: {} });
         
-        document.getElementById('verify-screen').classList.add('hidden');
-        document.getElementById('verify-screen').classList.remove('flex');
         document.getElementById('app-screen').classList.add('hidden');
         document.getElementById('auth-screen').classList.remove('hidden');
         
@@ -401,8 +436,7 @@ window.register = register;
 window.sendResetEmail = sendResetEmail;
 window.loginWithGoogle = loginWithGoogle;
 window.logout = logout;
-window.checkVerification = checkVerification;
-window.resendVerification = resendVerification;
+
 window.clearAllMistakes = clearAllMistakes;
 window.switchAuth = switchAuth;
 window.togglePassword = togglePassword;
