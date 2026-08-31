@@ -73,4 +73,62 @@ body {
     white-space: nowrap;
 }
 
+/* Soru Şıkkı Seçildiğinde (Checked) */
+input[type="radio"]:checked + .option-label,
+input[type="radio"]:checked + label,
+.peer:checked + .option-label {
+    border-color: #3b82f6 !important;
+    background-color: #eff6ff !important;
+}
+.dark input[type="radio"]:checked + .option-label,
+.dark input[type="radio"]:checked + label,
+.dark .peer:checked + .option-label {
+    border-color: #60a5fa !important;
+    background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Doğru Cevap Renklendirmeleri — checked durumunu da override eder */
+input[type="radio"]:checked + .option-label.correct-answer,
+.peer:checked + .option-label.correct-answer,
+.correct-answer {
+    background-color: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: bold;
+}
+.dark input[type="radio"]:checked + .option-label.correct-answer,
+.dark .peer:checked + .option-label.correct-answer,
+.dark .correct-answer {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    border-color: #10b981 !important;
+    color: #34d399 !important;
+}
+
+/* Yanlış Cevap Renklendirmeleri — checked durumunu da override eder */
+input[type="radio"]:checked + .option-label.incorrect-answer,
+.peer:checked + .option-label.incorrect-answer,
+.incorrect-answer {
+    background-color: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: bold;
+}
+.dark input[type="radio"]:checked + .option-label.incorrect-answer,
+.dark .peer:checked + .option-label.incorrect-answer,
+.dark .incorrect-answer {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    border-color: #ef4444 !important;
+    color: #f87171 !important;
+}
+
+/* Şıklar Üzerine Hover */
+.option-label {
+    transition: all 0.2s;
+}
+.option-label:hover {
+    background-color: #f1f5f9;
+}
+.dark .option-label:hover {
+    background-color: #334155;
+}
 
