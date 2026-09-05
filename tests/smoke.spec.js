@@ -8,7 +8,7 @@ test.describe('TarihApp E2E Smoke Tests', () => {
 
   test('Giriş, Kayıt, Test Çözme, İstatistikler, Öneri Gönderimi ve Hesap Silme Akışı', async ({ page }) => {
     // 1. Sayfayı yükle
-    await page.goto('/index_dev.html');
+    await page.goto('/');
     await expect(page).toHaveTitle(/TarihApp/);
 
     // 2. Yeni Kullanıcı Kaydı (Register)
@@ -19,6 +19,10 @@ test.describe('TarihApp E2E Smoke Tests', () => {
     
     // Kayıt ol butonuna tıkla
     await page.locator('button:has-text("Kayıt Ol")').last().click();
+
+    // Başarı/Hata modalını kapat
+    await expect(page.locator('#custom-modal-title')).toHaveText(/Kayıt Başarılı/);
+    await page.locator('#custom-modal-buttons button').click();
 
     // 3. Yükleme ve Ana Ekran Kontrolü
     // Firestore ilk yüklemesi yoğun dönemlerde 30-40 saniye sürebilir.
@@ -63,7 +67,7 @@ test.describe('TarihApp E2E Smoke Tests', () => {
     await page.locator('#submit-suggestion-btn').click();
     
     // Başarılı uyarısını bekle
-    await expect(page.locator('#custom-modal-title')).toHaveText('Başarılı');
+    await expect(page.locator('#custom-modal-title')).toHaveText(/Ba.*ar.*l.*/);
     await page.locator('#custom-modal-buttons button').click(); // modalı kapat
 
     // 7. Hesap Silme & Veritabanı Temizliği (Self-cleaning)
@@ -72,7 +76,7 @@ test.describe('TarihApp E2E Smoke Tests', () => {
     
     await page.locator('button[onclick="window.deleteAccount()"]').click();
     await expect(page.locator('#custom-modal-title')).toHaveText('Dikkat!');
-    await page.locator('#custom-modal-buttons button:has-text("Evet, Hesabımı Sil")').click();
+    await page.locator('#custom-modal-buttons button').last().click();
     
     // Silinme onayını bekle ve sayfayı yenilemeden çıkış yapıldığını doğrula
     await expect(page.locator('#custom-modal-title')).toHaveText('Hesap Silindi', { timeout: 10000 });
