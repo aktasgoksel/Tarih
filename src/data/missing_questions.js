@@ -1,0 +1,1374 @@
+export const missingQuestions = {
+  "24": [
+    {
+      "qNum": 9,
+      "question": "Aşağıdakilerden hangisi XVII. yüzyılda Osmanlı Devleti'nde görülen iç isyanların çıkmasında etkili olan nedenlerden biri değildir?",
+      "options": {
+        "A": "Merkezî otoritenin zayıflaması",
+        "B": "Rüşvet ve adam kayırmanın artması",
+        "C": "Tımar sisteminin bozulması",
+        "D": "Doğuda ve batıda en geniş sınırlara ulaşılması",
+        "E": "Savaşların uzun sürmesi ve masrafların artması"
+      },
+      "answer": "D",
+      "solution": "XVII. yüzyılda Osmanlı Devleti'nde idari, mali, ekonomik, askerî ve sosyal alanlarda meydana gelen sıkıntıların iç çalkantılara neden olmuş, İstanbul, Anadolu ve eyaletlerde isyanlar çıkmıştır. Bu isyanların çıkmasında merkezî otoritenin bozulması, saray adamlarının ve valide sultanların yönetimde etkili olması, tımar sisteminin bozulması, tarımsal üretimin düşmesi, halktan ağır vergiler alınması, köylünün toprağı terk etmesi, ordunun bozulması, savaşların uzun sürmesi ve masrafların artması gösterilebilir. Osmanlının XVII. yüzyılda doğu ve batıda en geniş sınırlara ulaşmasının iç isyanların çıkmasında etkisi olmamıştır."
+    },
+    {
+      "qNum": 10,
+      "question": "I. Kasr-ı Şirin Antlaşması\nII. Serav Antlaşması\nIII. Nasuh Paşa Antlaşması\nYukarıda verilenlerden hangileri XVII. yüzyılda Osmanlı Devleti ile İran arasında imzalanmıştır?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "E",
+      "solution": "XVII. yy. da I.Ahmet, II.Osman ve IV.Murat dönemlerinde İran ile mücadeleler olmuştur. Bu mücadeleler sonucunda 1612'te Nasuh Paşa, 1618'de Serav ve 1639'da ise Kasr-ı Şirin antlaşmaları imzalanmıştır."
+    },
+    {
+      "qNum": 11,
+      "question": "Aşağıdakilerden hangisi, sancağa çıkmayan ve kâfes usulüyle yetişen ilk Osmanlı padişahıdır?",
+      "options": {
+        "A": "III. Mehmet",
+        "B": "I. Ahmet",
+        "C": "III. Selim",
+        "D": "IV. Murat",
+        "E": "II. Osman"
+      },
+      "answer": "B",
+      "solution": "Osmanlı Devleti'nde III. Mehmet sancaktan gelerek tahta çıkmıştır. Kendisi tahta çıkınca da sancağa çıkma uygulamasına son vermiştir. Bu yüzden şehzadelerde şimşirlik (halk adıyla kafes) adı verilen odalarda tutulmuştur. III. Mehmet'in vefat etmesiyle de yönetici zümrenin tavsiyesiyle I. Ahmet şimşirlikten çıkarılıp tahta geçmiştir."
+    },
+    {
+      "qNum": 12,
+      "question": "Osmanlı Devleti'nde XVII. yüzyıldan itibaren devletin eski gücüne dönebilmesi için yeni ve kalıcı tedbirlerin alınması gerektiğini düşünen devlet erkanının nasihatname tarzında hazırladığı raporlara ne isim verilmiştir?",
+      "options": {
+        "A": "Layiha",
+        "B": "Tahrir",
+        "C": "Avarız",
+        "D": "Meşveret",
+        "E": "Seferatnâme"
+      },
+      "answer": "A",
+      "solution": "Osmanlı Devleti; XVII. yüzyıldan itibaren devletin düştüğü siyasi, ekonomi, eğitim ve toplumsal alanlarda sorunların tespiti için önemli devlet adamlarına lahiyalar yazdırmıştır."
+    },
+    {
+      "qNum": 13,
+      "question": "Osmanlı Devleti'nde eğitim ve kültürel alanda yaşanan hangi gelişme ülkenin geri kalmasına neden olmuştur?",
+      "options": {
+        "A": "Devlet, ocak içindir anlayışının askerler tarafından benimsenmesi",
+        "B": "Beşik ulemalığı sisteminin getirilmesi",
+        "C": "En büyük ve en olgun erkek üyenin tahta geçmesinin kararlaştırılması",
+        "D": "Sancak usulünün kaldırılması",
+        "E": "Devletin doğal sınırlara ulaşması"
+      },
+      "answer": "B",
+      "solution": "XVII. yüzyılda eğitim alanında birçok karar alınmıştır. Özellikle \"hocanın oğlu da hocadır\" anlayışı yani \"beşik ulemalığı\" sisteminin getirilerek küçük yaşta çocukların ders vermesi ve pozitif bilimlerin (kimya, matematik, cebir vb.) medrese ders programından çıkarılması, Osmanlı eğitim sisteminin gerilemesine neden olmuştur."
+    },
+    {
+      "qNum": 14,
+      "question": "Osmanlı Devleti'nin Duraklama Dönemi'ne girmesinde;\nI. merkezî otoritenin kaybolması,\nII. savaşların uzun sürmesi,\nIII. tımar sisteminin bozulması\ndurumlarından hangileri etkili olmuştur?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "E",
+      "solution": "Osmanlı Devleti XVII. yüzyılda idari, mali, siyasi açıdan eski gücünden uzaklaşmaya başlamıştır. Özellikle bu yüzyılda iç isyanların çıkması ve tımar sisteminin bozulması sonucu devlet otoritesini kaybetmeye başlamıştır. Yine savaşların eskiye göre uzun sürmesi de devleti ekonomik alanda olumsuz etkilemiştir."
+    },
+    {
+      "qNum": 15,
+      "question": "Osmanlı Devleti'nde veraset sisteminde son değişikliği yapan padişah, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "III. Ahmet",
+        "B": "I. Ahmet",
+        "C": "II. Mahmut",
+        "D": "IV. Murat",
+        "E": "II. Osman"
+      },
+      "answer": "B",
+      "solution": "Osmanlı Devleti'nde veraset (tahta çıkma) sisteminde son değişikliği I. Ahmet \"Ekber (en büyük) ve Erşed (akıllı olgun)\" sistemini getirerek yapmıştır."
+    },
+    {
+      "qNum": 16,
+      "question": "Osmanlı Devleti'nin XVII. yüzyılda imzaladığı aşağıdaki antlaşmalardan hangileri, birbirinin devamı niteliğindedir?",
+      "options": {
+        "A": "Vasvar - Hotin",
+        "B": "Ferhat Paşa - Bucaş",
+        "C": "Prut - Küçük Kaynarca",
+        "D": "Karlofça - İstanbul",
+        "E": "Bucaş - Karlofça"
+      },
+      "answer": "D",
+      "solution": "Osmanlı Devleti, Kutsal İttifak Devletleri ile yaptığı savaş sonunda 1699 yılında Karlofça Antlaşması'nı imzalamıştır. Bu antlaşmada Rus elçisinin imza yetkisi olmadığı için Karlofça Antlaşması'nı imzalamamıştır. Osmanlı Devleti Karlofça'nın devamı sayılan İstanbul Antlaşması'nı Rusya ile 1700 yılında imzalamıştır. O yüzden Karlofça ve İstanbul antlaşmaları birbirlerini tamamlayan antlaşmalardır."
+    },
+    {
+      "qNum": 17,
+      "question": "XVII. yüzyılda Osmanlı Devleti'ni doğuda ve batıda en geniş sınırlara ulaşması aşağıdaki antlaşmalardan hangileriyle gerçekleşmiştir?",
+      "options": {
+        "A": "Zitvatorok - Prut",
+        "B": "Karlofça - Kasr-ı Şirin",
+        "C": "Kasr-ı Şirin - Ferhat Paşa",
+        "D": "Ferhat Paşa - Bucaş",
+        "E": "Bucaş - İstanbul"
+      },
+      "answer": "D",
+      "solution": "Osmanlı Devleti en geniş sınırlarına XVII. yüzyılda ulaşmıştır. Batıda Lehistan ile yapılan Bucaş Antlaşması (1672), doğuda ise İran ile yapılan Ferhat Paşa Antlaşması'yla (1590) Osmanlı Devleti en geniş sınırlara ulaşmıştır."
+    },
+    {
+      "qNum": 18,
+      "question": "I. Toprak düzeninin bozulması\nII. Devlet, ocak içindir anlayışının benimsenmesi\nIII. Kapıkulu askerlerinin maaşlarının düzenli ödenmemesi\nYukarıdaki durumlardan hangileri XVII. yüzyılda Osmanlı Devleti'nde çıkan İstanbul İsyanlarının nedenlerinden biri değildir?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "Yalnız III",
+        "D": "I ve III",
+        "E": "II ve III"
+      },
+      "answer": "A",
+      "solution": "Osmanlı Devleti XVII. yüzyılda birçok isyan ile uğraşmak zorunda kalmıştır. Bunlardan başkent İstanbul'da çıkan yeniçeri ayaklanmaları önemlidir. Kapıkulu Ocağındaki askerlerin \"Ocak, devlet içindir.\" anlayışını değiştirmeleri (Devlet, ocak (asker) içindir.) ve üç ayda aldıkları ulufe maaşlarının geç ödenmesi veya ayarı düşük para ile ödenmesi, İstanbul ayaklanmalarının nedenleri arasındadır. Toprak düzeninin (tımar sistemi) bozulması ise Anadolu'da çıkan Celâli (Anadolu) Ayaklanmalarının bir nedenidir."
+    },
+    {
+      "qNum": 19,
+      "question": "Osmanlı Devleti'nde sancak sisteminin kaldırılıp kafes usulünün getirilmesi aşağıdakilerden hangisine neden olmuştur?",
+      "options": {
+        "A": "Toprak bütünlüğünün bozulmasına",
+        "B": "Celâli İsyanlarının çıkmasına",
+        "C": "Deneyimsiz padişahların başa geçmesine",
+        "D": "Merkezî otoritenin artmasına",
+        "E": "Islahat hareketlerinin başarısız olmasına"
+      },
+      "answer": "C",
+      "solution": "XVII. yüzyılda I.Ahmet'in veraset anlayışında değişiklik yaparak \"Ekber ve Erşed\" sistemi taht kavgalarını önlesede şehzadelerin sancağa çıkma (illere vali olarak gönderilmesi) uygulamasının kaldırılması devlete zarar vermiştir. Eskiden deneyim kazanmak için gönderilen şehzadeler bu uygulama sonucu Topkapı Sarayı'nda bir odada tutulmuştur. Sırası gelince padişah olan bu şehzadeler hiçbir şekilde devlet yönetme tecrübesi kazanmadan tahta çıkmışlardır."
+    },
+    {
+      "qNum": 20,
+      "question": "XVII. yüzyılda Osmanlı Devleti'nde çıkan hangi isyan sonucunda, Anadolu'da can ve mal güvenliği kalmazken köyden kente doğru yapılan göçler artmıştır?",
+      "options": {
+        "A": "Merkez",
+        "B": "Celâli",
+        "C": "Eyalet",
+        "D": "Suhte",
+        "E": "Şah Kulu"
+      },
+      "answer": "B",
+      "solution": "XVII. yüzyılda çıkan isyanlardan biri de Celâli Ayaklanmalarıdır. Bu ayaklanmalar sonucunda köyden kente göçler başlamış, köylülerin terk ettiği topraklara ise eşkıyalar yerleşmiştir. Böylece Anadolu'da da can ve mal güvenliği sağlanamaz hâle gelmiştir."
+    },
+    {
+      "qNum": 21,
+      "question": "Yeniçeri Ocağını kaldırmak isteyen ilk Osmanlı padişahı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "IV. Murat",
+        "B": "II. Mahmut",
+        "C": "III. Selim",
+        "D": "II. Osman",
+        "E": "I. Murat"
+      },
+      "answer": "D",
+      "solution": "II. Osman, Lehistan üzerine çıkılan Hotin Seferi sırasında kalenin kuşatılmasına rağmen yeniçerilerin isteksiz davrandığını görmesi üzerine Yeniçeri Ocağını kaldırmaya düşünmüştür. Bu fikrinin saray içinde yayılması sonucu II.Osman, yeniçeriler tarafından Yedikule Zindanlarında boğdurularak öldürülmüştür."
+    },
+    {
+      "qNum": 22,
+      "question": "I. Çınar Vakası'nın yaşanması\nII. II. Osman'ın yeniçeriler tarafından öldürülmesi\nIII. Celâli İsyanlarının çıkması\n\nXVII. yüzyılda verilen olaylardan hangileri, Osmanlı Devleti'nin merkezî otoritesini sarsmıştır?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "E",
+      "solution": "1645'te IV. Mehmet'in tahta çıkışında Kapıkulu askerleri ayarı düşük aylık verilmesine tepki göstererek isyan etti. İdamlarını istedikleri devlet adamlarından oluşan bir listeyi padişah IV. Mehmet'e sundular. Padişahın onay vermesi sonucu otuza yakın devlet adamı asılarak idam edildi. Tarihe \"Vaka-i Vakvakiye\" (Çınar Vakası) olarak geçen bu olay, merkezî otoritenin ne kadar sarsıldığını göstermektedir. Aynı şekilde II. Osman'ın da yeniçeriler tarafından öldürülmesi ve Anadolu'da Celâli İsyanlarının çıkması da devlet otoritesinin ne kadar kaybolduğunu göstermektedir."
+    },
+    {
+      "qNum": 23,
+      "question": "XVII. yüzyılda Osmanlı Devleti'nin izlediği genel politika, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Mevcut toprakları korumak",
+        "B": "Avrupa'nın bilimsel ve teknolojik gelişmeleri yakından takip etmek",
+        "C": "Kapitülasyonları yaygınlaştırmak",
+        "D": "Avrupa'da başlayan mezhep savaşlarında taraf olmak",
+        "E": "Kaybedilen toprakları geri almak"
+      },
+      "answer": "A",
+      "solution": "Osmanlı Devleti'nin önemli XVII. yüzyılda izlediği genel politika doğuda ve batıda ulaşmış olduğu en geniş imparatorluk topraklarını korumaktır."
+    },
+    {
+      "qNum": 24,
+      "question": "Aşağıdakilerden hangisi XVII. yüzyılda Osmanlı Devleti'nde islahat yapan devlet adamlarından biri değildir?",
+      "options": {
+        "A": "IV. Murat",
+        "B": "III. Selim",
+        "C": "II. Osman",
+        "D": "I. Ahmet",
+        "E": "Köprülüler"
+      },
+      "answer": "B",
+      "solution": "Osmanlı Devleti'nin önemli ıslahatçılarından olan III. Selim, Duraklama Dönemi'nin (XVII. yüzyıl) değil Gerileme Dönemi'nin (XVIII. yüzyıl) padişahıdır."
+    }
+  ],
+  "27": [
+    {
+      "qNum": 9,
+      "question": "Sultan II.Abdülhamit'in İslam'ı müdafaa etmek için kanının son damlasına kadar ve hazinesinin son kuruşuna kadar harcamaya hazırdır. sözlerinin İstanbul'da Vakit ve Arapça El Cevaib gazetelerinde sık sık tekrarlanması, aşağıda verilen hangi devletin XIX. yüzyılda Kuzey Afrika'daki yaptığı işgallere karşı içeride ve dışarıda direnişi artırmak ve muhalefet oluşturmaya yöneliktir?",
+      "options": {
+        "A": "İngiltere",
+        "B": "Fransa",
+        "C": "Almanya",
+        "D": "Rusya",
+        "E": "İtalya"
+      },
+      "answer": "B",
+      "solution": "Fransa'nın Cezayir, Fas ve Tunus'u işgal etmesi üzerine İstanbul'da Vakit ve Arapça yayın yapan El Cevaib gazeteleri çıkarılarak bu gazetelerde sık sık \"Sultan, İslam'ı müdafaa etmek için kanının son damlasına kadar ve hazinesinin son kuruşuna kadar harcamaya hazırdır.\" denilerek içeride direnişi artırma dışarıda ise Avrupa devletleri nezdinde Fransa'ya karşı muhalefet oluşturulmaya çalışılmıştır."
+    },
+    {
+      "qNum": 10,
+      "question": "Padişahlığı Meclis tarafından onaylanan ve Mecliste yemin ederek göreve başlayan ilk Osmanlı padişahı kimdir?",
+      "options": {
+        "A": "II. Abdülhamit",
+        "B": "V. Mehmet Reşat",
+        "C": "II. Mahmut",
+        "D": "Sultan Vahdettin",
+        "E": "Sultan Abdülmecit"
+      },
+      "answer": "B",
+      "solution": "31 Mart Vakası sonucunda Sultan II.Abdülhamit görevinden ayrılmıştır. Yerine ise Sultan V. Mehmet Reşat getirilmiştir. 21 Ağustos 1909'da da 1876 Kanunuesasi'nin 24 maddesi değiştirilmiştir. Bu değişikliklerden biri de padişahın tahta çıkışında Kanunuesasi hükümlerine uyacağına, vatan ve millete sadakat edeceğine dair yemin etmesi şartı getirildi. Böylece V.Mehmet Reşat, padişahlığı Meclis tarafından onaylanan ve Mecliste yemin eden ilk Osmanlı padişahı olmuştur."
+    },
+    {
+      "qNum": 11,
+      "question": "Osmanlı Devleti'nde 1890'larda başlayan Ermeni Olayları sonucu yetim kalan çocuklar ile başıboş çocukların hem ahlaki hem de ilmî eğitimlerini alması için 1903'te hangi kurum açılmıştır?",
+      "options": {
+        "A": "Himaye-i Etfal Cemiyeti",
+        "B": "Darülhayr-ı Ali",
+        "C": "Donanma Cemiyeti",
+        "D": "Hilal-i Ahmer Cemiyeti",
+        "E": "Sanayi-i Nefise Mektebi"
+      },
+      "answer": "B",
+      "solution": "Osmanlı Devleti'nde \"Millet-i Sadıka\" olarak bilinen Ermeniler XIX. yüzyılın ikinci yarısından itibaren bağımsızlık kazanmak için isyan etmişlerdir. Bu isyanlar sonucunda binlerce Osmanlı vatandaşı şehit edilmiştir. Bunun üzerine II.Abdülhamit yetim kalan çocukların eğitim alabilmesi ve topluma faydalı birer birey olabilmesi için 1903'te \"Darülhayr-ı Ali\" adında bir kurum açmıştır."
+    },
+    {
+      "qNum": 12,
+      "question": "Padişahlığı döneminde yüzlerce okul yaptırdığı için Maarifperver ünvanı verilen Osmanlı padişahı kimdir?",
+      "options": {
+        "A": "Fatih Sultan Mehmet",
+        "B": "Yavuz Sultan Selim",
+        "C": "II. Abdülhamit",
+        "D": "Sultan Abdülmecit",
+        "E": "II. Mahmut"
+      },
+      "answer": "C",
+      "solution": "II.Abdülhamit eğitimi vilayetlere yayma yönünde birçok çalışma yapmıştır. Onlarca idadi (lise), rüştiye (ortaokul) ve askerî okul açan padişah eğitim binalarını inşa edilmesi için Paris'ten mimarlar ve planlar getirtmiştir. Kendisi, döneminde çok okul yaptırdığı için kendisine \"Maarifperver\" ünvanı verilmiştir."
+    },
+    {
+      "qNum": 13,
+      "question": "Osmanlı Devleti'nin XIX. yüzyılda demir yolu yatırımlarına önem vermesinin nedenleri arasında aşağıdakilerden hangisi bulunmaz?",
+      "options": {
+        "A": "Merkezî devlet otoritesinin ülkenin uzak bölgelerine kadar ulaştırılması",
+        "B": "İsyan bölgelerine kısa sürede ulaşılarak iç güvenliğin sağlanması",
+        "C": "Tarımsal vergilerin toplanması",
+        "D": "Savaş dönemlerinde cepheye asker ve malzeme sevk edilmesi",
+        "E": "Fetih yapılan bölgelere Türkmenlerin yerleştirilmesi"
+      },
+      "answer": "E",
+      "solution": "Osmanlı Devleti XIX. yüzyılda demir yolu yatırımlarına önem vermeye başlamıştır. Bu durum olmamasında; devlet otoritesinin en uzak bölgelere kadar ulaştırma, çıkan isyanlara daha hızlı müdahale ederek bölgenin güvenliğini sağlama, kırsal kesimlerde vergi toplamayı kolaylaştırma (Tımar ve iltizam sisteminin kaldırılmış olması ve devletin kendi vergi memurlarını ilgili bölgelere gönderme kararı alması) savaş dönemlerinde cepheye asker ve malzeme gönderimi etkili olmuştur. Osmanlı Devleti XIX. yüzyılda fetihten ziyade kendi topraklarını koruma politikasına geçtiği için, Kuruluş ve Yükselme Dönemlerindeki gibi fetih yapılan yerlere iskân politikası ile Türkmenleri yerleştirme uygulaması yapamamıştır."
+    },
+    {
+      "qNum": 14,
+      "question": "I. Mehmet Âkif\nII. Ziya Paşa\nIII. Namık Kemal\nYukarıda verilenlerden hangileri, Osmanlı Devleti'nin dağılmasını önlemek amacıyla ortaya atılan Osmanlıcılık fikrini savunanlar arasında bulunmaz?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "II ve III"
+      },
+      "answer": "A",
+      "solution": "XIX. yüzyılda Osmanlı Devleti'ni dağılmaktan kurtarmak amacıyla; Osmanlıcılık, İslamcılık, Türkçülük ve Batıcılık gibi fikir akımları ortaya çıkmıştır. Bu fikir akımlarıdan biri olan Osmanlıcılığın en önemli temsilcileri ise Ziya Paşa, Mithat Paşa ve Namık Kemal'dir. Mehmet Âkif ise İslamcılığın savunucuları arasındadır."
+    },
+    {
+      "qNum": 15,
+      "question": "Osmanlı Devleti'nde adalete önem verdiği, yeni kanun ve tüzükler hazırlattığı için kendisine Adli ünvanı verilen XIX. yüzyıl padişahı, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Osman Bey",
+        "B": "Orhan Bey",
+        "C": "I. Murat",
+        "D": "I. Süleyman",
+        "E": "II. Mahmut"
+      },
+      "answer": "E",
+      "solution": "1785-1839 yılları arasında yaşayan II.Mahmut, 1808 yılında tahta çıkmıştır. Kendisi reformist bir padişah olan II.Mahmut öncelikle adalete önem verdiği, yeni kanun ve tüzükler hazırlattığı için kendisine \"Adli\" ünvanı verilmiştir."
+    },
+    {
+      "qNum": 16,
+      "question": "İngiltere 1878 yılında yapılan Berlin Konferansı sırasında Ayastefanos Antlaşması'nın şartlarının hafifletilmesi karşılığında Osmanlı Devleti'nden hangi bölgenin yönetiminin kendisine verilmesini istemiştir?",
+      "options": {
+        "A": "Girit",
+        "B": "Rodos",
+        "C": "Boğazlar",
+        "D": "Kıbrıs",
+        "E": "Makedonya"
+      },
+      "answer": "D",
+      "solution": "1877-1878 Osmanlı-Rus Savaşı sonrasında Osmanlı Devleti ile Rusya arasında Ayastefanos Antlaşması imzalandı. Bu antlaşmayı çıkarlarına aykırı bulan Avrupalı devletler Berlin Konferansı'nı topladı. İngiltere ise Osmanlı Devleti'nden Ayastefanos Antlaşması'nın şartlarının hafifletilmesi karşılığında Kıbrıs'ın yönetiminin kendisine verilmesini talep etti. Ayrıca İngiltere, Kıbrıs'ın yönetimine verilmemesi hâlinde burayı işgal etme tehdidinde de bulundu. Mecbur kalan Osmanlı Devleti, Kıbrıs'ın yönetimini İngiltere'ye verdi."
+    },
+    {
+      "qNum": 17,
+      "question": "İngiltere 1791'den beri ilk defa hangi savaş sırasında Osmanlı toprak bütünlüğünü koruma politikasından vazgeçmiştir?",
+      "options": {
+        "A": "Kırım Savaşı",
+        "B": "Belgrad Savaşı",
+        "C": "Balkan Savaşı",
+        "D": "93 Harbi",
+        "E": "Trablusgarp Savaşı"
+      },
+      "answer": "D",
+      "solution": "Rusya, Osmanlı Devleti'nin Tersane (İstanbul) ve Londra Konferansı kararlarını kabul etmeyince Osmanlı Devleti'ne savaş ilan etti. İngiltere ilk kez bu savaş sırasında Rusya'ya karşı Osmanlı toprak bütünlüğünü koruma politikasından vazgeçti. 1877-1878 Osmanlı-Rus Savaşı'nı ise Avrupa devletlerinin yardımı olmayınca Rusya kazandı."
+    },
+    {
+      "qNum": 18,
+      "question": "XIX. yüzyılda Osmanlı Devleti'nde yaşanan hangi gelişme ile Osmanlı vatandaşları ilk defa seçme ve seçilme hakkı elde etmiştir?",
+      "options": {
+        "A": "Tanzimat Fermanı",
+        "B": "Kanunuesasi",
+        "C": "Sened-i İttifak",
+        "D": "Islahat Fermanı",
+        "E": "Kanunname-i Ali Osmani"
+      },
+      "answer": "B",
+      "solution": "Türk tarihini ilk yazılı anayasası Kanunuesasi'dir. Bu anayasada \"Mebusan Meclisi üyeleri dört yılda bir yapılan seçimle erkeklerin seçeceği milletvekillerinden oluşacaktır.\" maddesiyle kısıtlı da olsa (kadınlar oy kullanamadığından) halk ilk defa seçme ve seçilme hakkını elde etmiştir."
+    },
+    {
+      "qNum": 19,
+      "question": "XIX. yüzyılda hangi Osmanlı padişahı, akli dengesinin bozuk olduğu gerekçesiyle şeyhülislamın fetvasıyla görevinden alınmıştır?",
+      "options": {
+        "A": "Sultan Abdülmecit",
+        "B": "II. Mahmut",
+        "C": "Sultan Abdülaziz",
+        "D": "II. Abdülhamit",
+        "E": "V. Murat"
+      },
+      "answer": "E",
+      "solution": "Avrupa'da eğitim alarak tekrar Osmanlıya dönen Jön Türkler, Meşrutiyet'i ilan etmeye yanaşmayan Sultan Abdülaziz'i tahttan indirdiler ve yerine V. Murat'ı padişah yaptılar. V. Murat akli dengesinin bozuk olduğu gerekçesiyle şeyhülislamın fetvasıyla görevinden alındı ve yerine II. Abdülhamit getirildi."
+    },
+    {
+      "qNum": 20,
+      "question": "1877-1878 yılları arasında Osmanlı ile Rusya arasında yaşanan 93 Harbi'nde gösterdiği başarılı mücadelelerinden dolayı Plevne Gazisi veya Plevne Kahramanı ünvanı verilen asker ve devlet adamı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Gazi Osman Paşa",
+        "B": "Ahmet Muhtar Paşa",
+        "C": "Halil Paşa",
+        "D": "Nene Hatun",
+        "E": "Fahrettin Paşa"
+      },
+      "answer": "A",
+      "solution": "Gazi Osman Paşa; 1877-1878 Osmanlı - Rus Savaşı (93 Harbi) sırasında Plevne Kalesini kuşatan Rus askerlerine karşı çok zor şartlar altında kalmasına rağmen kaleyi Ruslar'a vermemiştir. O yüzden kendisine \"Plevne Gazisi\" veya \"Plevne Kahramanı\" ünvanı verilmiştir."
+    },
+    {
+      "qNum": 21,
+      "question": "Osmanlı Devleti'nde çıkarılan ilk resmî gazete aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Ceride-i Havadis",
+        "B": "Tercüman-ı Ahval",
+        "C": "Takvim-i Vekayi",
+        "D": "İrade-i Milliye",
+        "E": "Tercüman-ı Hakikat"
+      },
+      "answer": "C",
+      "solution": "II.Mahmut Zamanı'nda ilk defa resmî gazete çıkartılarak ülkede çıkan kanunların, genelge ve yönetmeliklerin halka ulaşması sağlanmak istenmiştir. Çıkarılan bu gazeteye \"Takvim-i Vekayi\" adı verilmiştir."
+    },
+    {
+      "qNum": 22,
+      "question": "XIX. yüzyılda milliyetçilik hareketleri sonucu Osmanlı Devleti'nden imtiyaz elde eden ilk toplum aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Rumlar",
+        "B": "Sırplar",
+        "C": "Araplar",
+        "D": "Arnavutluk",
+        "E": "Ermeniler"
+      },
+      "answer": "B",
+      "solution": "Fransız İhtilali'nin yaydığı milliyetçilik akımı ile Rus ve Avusturya'nın casusları tarafından kışkırtılan Sırplar, ilk olarak 1804'te Kara Yorgi önderliğinde isyan eti. Sırplar, 1812 yılında Bükreş Antlaşması'yla Osmanlı Devleti'nden imtiyaz elde eden ilk toplum oldu."
+    },
+    {
+      "qNum": 23,
+      "question": "XIX. yüzyılda Avrupa devletlerine eğitim için öğrenci gönderen ilk Osmanlı padişahı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "III. Selim",
+        "B": "II. Mahmut",
+        "C": "II. Abdülhamit",
+        "D": "Sultan Abdülmecit",
+        "E": "Sultan Abdülaziz"
+      },
+      "answer": "B",
+      "solution": "XIX. yüzyıl Osmanlı padişahlarından II.Mahmut Zamanı'nda ilk defa Avrupa devletlerine eğitim amaçlı öğrenci gönderilmiştir."
+    },
+    {
+      "qNum": 24,
+      "question": "II.Abdülhamit'in dış politikada benimsediği ve I.Dünya Savaşı sırasında Arapların Osmanlıya karşı İngilizlerle iş birliği yapması sonucu önemini yitiren Osmanlı Devleti'ni dağılmaktan kurtarma fikri aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Batıcılık",
+        "B": "İslamcılık",
+        "C": "Türkçülük",
+        "D": "Osmanlıcılık",
+        "E": "Federalizm"
+      },
+      "answer": "B",
+      "solution": "Balkanlar'daki Panslavizm politikasını etkisiz hâle getirmek, Müslümanların devlete olan bağlılıklarını artırmak için özellikle II.Abdülhamit Zamanı'nda devletin dış politikasının temelini oluşturan \"İslamcılık\" (Ümmetçilik) fikri, halifenin cihat (Müslümanların, Hristiyanlara karşı savaşa çağrılması) çağrısına uymayarak Kanal ve Hicaz-Yemen cephelerinde Arapların İngilizlerle iş birliği yapmaları sonucu geçerliliğini yitirmiştir."
+    }
+  ],
+  "40": [
+    {
+      "qNum": 9,
+      "question": "Mustafa Kemal Amasya Genelgesi'nden sonra istifa etmiş olduğu askerlik mesleğine, hangi savaş öncesi geri dönmüştür?",
+      "options": {
+        "A": "I. İnönü Savaşı",
+        "B": "II. İnönü Savaşı",
+        "C": "Eskişehir - Kütahya Savaşı",
+        "D": "Sakarya Meydan Savaşı",
+        "E": "Başkomutanlık Meydan Savaşı"
+      },
+      "answer": "D",
+      "solution": "Mustafa Kemal; Erzurum Kongresi öncesi istifa ettiği askerlik mesleğine Sakarya Meydan Savaşı öncesi TBMM tarafından çıkarılan Başkomutanlık Kanunu ile geri dönmüştür."
+    },
+    {
+      "qNum": 10,
+      "question": "Mustafa Kemal hangi gelişme öncesi, “Yarım hazırlıkla, yarım önlemlerle yapılacak saldırı, hiç saldırıda bulunmamaktan daha kötü idi.” diyerek ordunun maddi ve manevi hazırlıklarını tamamlamasının önemine vurgu yapmıştır?",
+      "options": {
+        "A": "I. İnönü Savaşı",
+        "B": "Gediz Taarruzu",
+        "C": "II. İnönü Savaşı",
+        "D": "Sakarya Meydan Muharebesi",
+        "E": "Başkomutanlık Meydan Muharebesi"
+      },
+      "answer": "E",
+      "solution": "Mustafa Kemal; Büyük Taarruz (Başkomutanlık Meydan Muharebesi) öncesi saldırının zamanı, şekli ve amacını gizli tutarak ordunun eksikliklerini gidermesini istemiştir. Bunun için de yapılan hazırlığın yarım olmamasına dikkat çekmiştir."
+    },
+    {
+      "qNum": 11,
+      "question": "Mudanya Ateşkes Antlaşması'nın imzalanmasından sonra TBMM Hükûmetini temsilen Trakya Yüksek Komiseri sıfatıyla Doğu Trakya'yı teslim almakla görevlendirilen asker ve devlet adamı kimdir?",
+      "options": {
+        "A": "İsmet İnönü",
+        "B": "Refet Bele",
+        "C": "Ali Fuat Cebesoy",
+        "D": "Mustafa Kemal",
+        "E": "Fevzi Çakmak"
+      },
+      "answer": "B",
+      "solution": "Mudanya Ateşkes Antlaşması'nın imzalanmasından sonra Refet Bele Doğu Trakya'yı teslim almakla görevlendirildi. Refet Bele TBMM Hükûmeti temsilci olarak “Trakya Yüksek Komiseri” sıfatıyla İstanbul'a 19 Ekim 1922'de coşkulu gösteriler arasında giriş yaptı."
+    },
+    {
+      "qNum": 12,
+      "question": "I. İstiklal Harbimiz\nII. Millî Mücadele Hatıraları\nIII. Atatürk'ten Anılar\nYukarıda verilen Millî Mücadele Dönemi'ni anlatan kitapları yazarı olan komutanlar ve eserlerinin eşleştirilmesi, hangi seçenekte doğru olarak verilmiştir?",
+      "options": {
+        "A": "I: A. Fuat Cebesoy, II: K. Karabekir, III: K. Arıburnu",
+        "B": "I: K.Karabekir, II: A. Fuat Cebesoy, III: K.Arıburnu",
+        "C": "I: K.Arıburnu, II: A. Fuat Cebesoy, III: K.Karabekir",
+        "D": "I: A. Fuat Cebesoy, II: K.Arıburnu, III: K.Karabekir",
+        "E": "I: K.Karabekir, II: K.Arıburnu, III: A. Fuat Cebesoy"
+      },
+      "answer": "B",
+      "solution": "Kurtuluş Savaşı'nda yararlılık gösteren birçok komutanımız ileride bu yıllarda yaşadıklarını anı, hikâye, roman ve makalelerde toplamıştır. Bu komutanlardan Kâzım Karabekir, “İstiklal Harbimiz”, “Ali Fuat Cebesoy” “Millî Mücadele Hatıraları”, Kemal Arıburnu ise “Atatürk'ten Anılar” adında eserler yayımlamışlardır."
+    },
+    {
+      "qNum": 13,
+      "question": "TBMM Hükûmetini resmî olarak tanıyan ilk devlet hangisidir?",
+      "options": {
+        "A": "Gürcistan",
+        "B": "Sovyet Rusya",
+        "C": "İngiltere",
+        "D": "Fransa",
+        "E": "Ermenistan"
+      },
+      "answer": "E",
+      "solution": "TBMM Hükûmetini tanıyan ilk devlet “Gümrü Barış Antlaşması”nı imzalayan “Ermenistan”dır."
+    },
+    {
+      "qNum": 14,
+      "question": "Mustafa Kemal 1921'de aşağıda verilen hangi göreve gelmesinden sonra ordu ve millete, “Sizlere bu bildirgeyi yazdığım dakikadan itibaren Allah'ın yardımına dayanarak ve övünerek bu büyük ve şerefli görevi yapmaya başlamış bulunuyorum. Bana bu görevi vermiş olan Meclisin ve o Mecliste beliren milletin kesin iradesi hareket şeklimin odağını oluşturacaktır.” şeklinde bir bildiri yayımlamıştır?",
+      "options": {
+        "A": "9. Ordu Müfettişliği",
+        "B": "TBMM başkanlığı",
+        "C": "Cumhurbaşkanlığı",
+        "D": "Başkomutanlık",
+        "E": "Kongre başkanlığı"
+      },
+      "answer": "D",
+      "solution": "Mustafa Kemal, 5 Ağustos 1921'de başkomutan olduğu gün ordu ve millete bu bildiriyi yayımlamıştır."
+    },
+    {
+      "qNum": 15,
+      "question": "• TBMM Hükûmetinin tanınma isteği\n• Millî Mücadele için gerekli silah ve paraya duyulan ihtiyaç\n• Doğu sınırının güvenliği\nYukarıda verilen gerekçeler TBMM'yi Millî Mücadele Dönemi'nde hangi devlete daha çok yaklaştırmıştır?",
+      "options": {
+        "A": "Afganistan",
+        "B": "İran",
+        "C": "Sovyet Rusya",
+        "D": "Azerbaycan",
+        "E": "Almanya"
+      },
+      "answer": "C",
+      "solution": "TBMM, soruda verilen gerekçeler doğrultusunda Sovyet Rusya ile ilişkilerini geliştirip Moskova Antlaşması'nı imzalamıştır."
+    },
+    {
+      "qNum": 16,
+      "question": "Millî Mücadele Dönemi'nde Hâkimiyet-i Milliye gazetesi; “Mustafa Kemal Paşa, üçüncü Yunan taarruzunun en ateşli zamanında muallim ordusunun gelecek vazifesiyle meşgul bulunuyor. Bu asil ve yüce örnek Türk tarihinin benzeri ender bulunan kıymetli hatıralarından biri olacaktır.” şeklinde bir yazı yayımlamıştır.\nBu yazıda bahsedilen “üçüncü Yunan taarruzu” aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "I.İnönü Muharebesi",
+        "B": "Gediz Taarruzu",
+        "C": "Kütahya-Eskişehir Muharebesi",
+        "D": "II.İnönü Muharebesi",
+        "E": "Sakarya Meydan Muharebesi"
+      },
+      "answer": "C",
+      "solution": "Yunanlılar Millî Mücadele Dönemi'nde dört defa taarruz etmişlerdir. Bunlar sırasıyla I.İnönü, II.İnönü, Eskişehir - Kütahya Muharebeleri ve Sakarya Meydan Muharebesi'dir. Bunlardan üçüncü Yunan taarruzu Eskişehir - Kütahya Muharebeleri'dir. Mustafa Kemal bu muharebe sırasında Ankara'da Maarif Kongresi'ni toplamıştır."
+    },
+    {
+      "qNum": 17,
+      "question": "Aşağıda verilen hangi İtilaf Devleti İzmir'in işgalini Osmanlı Devleti'ne önceden haber verirken ileride de TBMM'nin Antalya Limanı'ndan yararlanmasına izin vermiştir?",
+      "options": {
+        "A": "Rusya",
+        "B": "İtalya",
+        "C": "Fransa",
+        "D": "İngiltere",
+        "E": "Yunanistan"
+      },
+      "answer": "B",
+      "solution": "İtalya, I. Dünya Savaşı'nda istediğini alamadı. Çünkü İtalya'ya daha önce yapılan gizli antlaşmalarla verilen İzmir ve çevresi, Paris Barış Konferansı'yla kendisinden alınıp Yunanistan'a verildi. Bunun üzerine İtalya; Muğla, Antalya ve Konya'yı işgal etti. İtalya, işgal ettiği yerlerde yumuşak bir işgal politikası izleyerek Yunanlılar gibi halkı katletmedi. Hatta İtalya, İzmir'in işgal edileceğini Osmanlı Devleti'ne haber verirken ileride de TBMM'nin Londra Konferansı'na çağrılmasına ve Antalya Limanı'ndan yararlanmasına da izin verdi."
+    },
+    {
+      "qNum": 18,
+      "question": "Mustafa Kemal Başkomutanlık Yasası'nın verdiği yetkiye dayanarak Türk ordusunun ihtiyaçlarını karşılamak için 7 - 8 Ağustos 1921'de aşağıdakilerden hangisi yayımlamıştır?",
+      "options": {
+        "A": "Tekâlif-i Milliye Emirleri",
+        "B": "Ağnam vergisinin artırılması",
+        "C": "Hıyanet-i Vataniye Kanunu",
+        "D": "Takrir-i Sükûn Kanunu",
+        "E": "Men-i İsrafat Kanunu"
+      },
+      "answer": "A",
+      "solution": "Mustafa Kemal, Sakarya Meydan Savaşı öncesi Türk ordusunun ihtiyaçlarını giderebilmek amacıyla Tekâlif-i Milliye Emirlerini (Millî Yükümlülük Buyrukları) yayımlamıştır."
+    },
+    {
+      "qNum": 19,
+      "question": "Mustafa Kemal 1923'te “Heyetimiz, kendisine verilen görevi mükemmel bir şekilde yerine getirmiştir. Milletimizin ve meclisimizin şerefini korumuştur.” sözünü hangi konferans için söylemiştir?",
+      "options": {
+        "A": "Paris Barış Konferansı",
+        "B": "Lozan Barış Konferansı",
+        "C": "Londra Konferansı",
+        "D": "Moskova Konferansı",
+        "E": "San Remo Konferansı"
+      },
+      "answer": "B",
+      "solution": "Kurtuluş Savaşı'nın kazanılmasından sonra Türk heyeti Lozan Barış Konferansı'na gitmiştir. Konferans kapitülasyonlar konusunda çıkan anlaşmazlık yüzünden yarıda kalmış ve İsmet Paşa ve heyeti Türkiye'ye geri dönmüştür. Bu yaşananlar TBMM'de sert tartışmalara yol açınca Mustafa Kemal heyete karşı yapılan eleştirilere sorudaki sözleriyle karşılık vermiştir."
+    },
+    {
+      "qNum": 20,
+      "question": "Mustafa Kemal'in, “Türk milleti aleyhine asırlardan beri hazırlanmış ve Sevr Antlaşması'yla tamamlandığı zannedilmiş büyük bir suikastin yıkılışını ifade eden bir vesikadır.” şeklinde ifade ettiği antlaşma, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Mudanya Ateşkes Antlaşması",
+        "B": "Versay Antlaşması",
+        "C": "Lozan Barış Antlaşması",
+        "D": "Ankara Antlaşması",
+        "E": "Moskova Antlaşması"
+      },
+      "answer": "C",
+      "solution": "Mustafa Kemal, Lozan Barış Antlaşması'nın imzalanmasıyla ilgili bu sözleri söylemiştir."
+    },
+    {
+      "qNum": 21,
+      "question": "1921'de TBMM'de: “Ordu nereye gidiyor, Millet nereye götürülüyor? Bu gidişin sorumluları nerededir? Onu göremiyoruz. Bugünkü acıklı ve korkunç durumun asıl sorumlusunu ordunun başında görmek isterdik.” gibi sözlerle hangi gelişme sonrası, Mustafa Kemal'e karşı Meclis içindeki muhalefet artmıştır?",
+      "options": {
+        "A": "Sakarya Savaşı",
+        "B": "I. İnönü Savaşı",
+        "C": "Büyük Taarruz",
+        "D": "II. İnönü Savaşı",
+        "E": "Kütahya - Eskişehir Muharebeleri"
+      },
+      "answer": "E",
+      "solution": "Millî Mücadele Dönemi'nde Eskişehir - Kütahya Muharebelerinde alınan yenilgi sonrası Mecliste Mustafa Kemal'e muhalefet artmıştır. Özellikle Mustafa Kemal'in savaş devam ederken Maarif Kongresi'ni toplaması ve orduya Sakarya Irmağı'nın doğusuna çekilme emrini vermesi Mecliste kendisine karşı muhalefetin artmasına neden olmuştur."
+    },
+    {
+      "qNum": 22,
+      "question": "Mustafa Kemal'in 30 Ağustos 1928'de, “Bu zaferi kazanan ben değil, Bunu asıl tel örgüleri hiçe sayarak atlayan, savaş meydanında can veren, yaralanan, kendini esirgemeden düşmanın üzerine atılarak Akdeniz yolunu Türk süngülerine açan kahraman askerler kazanmıştır.” şeklindeki sözlerini hangi savaşın yıl dönümünde söylemiştir?",
+      "options": {
+        "A": "I. İnönü Savaşı",
+        "B": "Eskişehir - Kütahya Muharebeleri",
+        "C": "Çanakkale Savaşı",
+        "D": "Sakarya Meydan Muharebesi",
+        "E": "Başkomutanlık Meydan Muharebesi"
+      },
+      "answer": "E",
+      "solution": "Mustafa Kemal; 30 Ağustos 1928'de (Zafer Bayramı) Büyük Taarruz'un (Başkomutanlık Meydan Muharebesi) yıldönümünde bu savaş ile ilgili konuşmuştur."
+    },
+    {
+      "qNum": 23,
+      "question": "I. Doğu Trakya\nII. İstanbul\nIII. Boğazlar\nYukarıdaki bölgelerden hangileri Mudanya Ateşkes Antlaşması gereği savaş yapılmadan kurtarılmıştır?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "E",
+      "solution": "Mudanya Ateşkes Antlaşması'na göre; Yunanlılar 15 gün içerisinde Meriç Nehri sınır olmak üzere Doğu Trakya'yı boşaltacak, İstanbul ve Boğazlar TBMM Hükûmetine bırakılacak ancak İtilaf kuvvetleri barış antlaşması imzalanana kadar İstanbul'da kalabileceklerdi. Antlaşmaya göre Doğu Trakya, Boğazlar ve İstanbul savaş yapılmadan kurtarılan yerler olmuşlardır."
+    },
+    {
+      "qNum": 24,
+      "question": "Tarihe Rum Sındığı Savaşı olarak da geçen Millî Mücadele muharebesi aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Gediz Taarruzu",
+        "B": "I. İnönü Savaşı",
+        "C": "Sakarya Meydan Muharebesi",
+        "D": "II. İnönü Savaşı",
+        "E": "Başkomutanlık Meydan Muharebesi"
+      },
+      "answer": "E",
+      "solution": "Tarihe Rum Sındığı Savaşı olarak geçen savaş Başkomutanlık Meydan Muharebesidir. Bu savaş sonunda Yunan ordusu Batı Anadolu'dan atılmış ve işgalci devletlerle Mudanya Ateşkes Antlaşması imzalanmıştır."
+    }
+  ],
+  "48": [
+    {
+      "qNum": 17,
+      "question": "Atatürk Dönemi'nde uluslararası ölçü birimlerinin kullanılmaya başlanması, aşağıda verilen hangi alanda diğerlerine göre daha fazla kolaylık sağlanmıştır?",
+      "options": {
+        "A": "Sosyal",
+        "B": "Siyasi",
+        "C": "Turizm",
+        "D": "Ulaşım",
+        "E": "Ticaret"
+      },
+      "answer": "E",
+      "solution": "1931 yılında kabul edilen kanunla Osmanlı Devleti'nde kullanılan ölçü birimleri değiştirilerek, Avrupa ya da Batılı ülkelerin kullandıkları ölçü birimleri kullanılmaya başlanmıştır. Böylece Avrupa'dan gelen bir ticari mal ya da ülkemizden Avrupa'ya ihraç edilen ticari mallardaki ölçü birimlerinin aynı olması ticarette kolaylık sağlarken, ticaretin devamlılığı hususunda da faydalar sağlamıştır."
+    },
+    {
+      "qNum": 18,
+      "question": "Mustafa Kemal'in 18 Ağustos 1932'de Yunus Nadi ile yaptığı görüşmesinde; \"Amaç, Türk milletine kendi mazisinde mevcut ve miras kalmış, geleceğini de kapsayan kendi kültürünü ortaya çıkararak göstermektir.\" demiştir.\nBuna göre, Mustafa Kemal'in amacını açıkladığı kuruluş, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Türk Dil Kurumu",
+        "B": "İstanbul Darülfünunu",
+        "C": "Millet Mektepleri",
+        "D": "İstanbul Şehir Tiyatroları",
+        "E": "Talim Terbiye Kurulu"
+      },
+      "answer": "A",
+      "solution": "Mustafa Kemal, Türk kültürünün unsurlarının ortaya çıkarılması ve korunması için 18 Ağustos 1932 tarihinde parçada verilen sözleriyle Türk Dil Kurumunun kurulma amacını açıklamıştır."
+    },
+    {
+      "qNum": 19,
+      "question": "Yeni Türk Devleti'nde 1923-1929 arası serbest piyasa şartlarında özel girişimciler teşvik edilerek sanayileşme politikaları izlenmiştir.\nBu duruma aşağıdakilerden hangisi örnek olarak gösterilemez?",
+      "options": {
+        "A": "Sermaye birikimi için bankacılığa önem verilmesi",
+        "B": "I. Beş Yıllık Kalkınma Planı'nın hazırlanması",
+        "C": "İş Bankası ve Sanayi Maadin Bankasının kurulması",
+        "D": "Teşvik-i Sanayi Kanunu'nun çıkarılması",
+        "E": "Şeker fabrikası kurarak şirketlere üretim tekeli ve çeşitli ayrıcalıklar verilmesi"
+      },
+      "answer": "B",
+      "solution": "Cumhuriyet'in ilk yıllarında ekonomi politikaları 1923-1929 ve 1930-1939 şeklinde iki evreye ayrılmıştır. Birinci evrede liberal bir ekonomik yaklaşım, ikinci evrede ise devletçiliğin daha ağır bastığı bir ekonomik yaklaşım benimsenmiştir. İlk evrede sanayi yatırımlarına kaynak oluşturmak için ve sermaye birimini hızlandırmak için bankacılığa önem verilmiş ve bu doğrultuda 1924'te İş Bankası ve 1925'te Sanayi ve Maadin Bankası kurulmuştur. Ayrıca şeker fabrikası kuracak şirketlere üretim tekeli ve çeşitli ayrıcalıklar verilmiştir. 1927'de ise sanayi kuruluşlarının kurulabilmesi amacıyla Teşvik-i Sanayi Kanunu çıkarılmıştır. I. Beş Yıllık Kalkınma Planı ise, 1933-1938 yılları arasında uygulandığından ekonomide birinci evre olarak verilen 1923-1929 yılları arasında yaşanan bir gelişme değildir."
+    },
+    {
+      "qNum": 20,
+      "question": "Mustafa Kemal 29 Ağustos 1932'de Türk Dilini özleştirme çalışmaları nedeniyle Millî Türk Talebe Birliğinin çektiği saygı ve bağlılık telgrafına verdiği cevapta; \"Dilimiz çok zengindir, güzeldir. Bunu ortaya çıkaracaklar sizin gibi duygusu derin, yorulmaz Türk gençleridir. Türkçemizi günün en ileri bilgi dili yapmak değerli araştırmacılarınızdan beklenir. Sizlere uğurlar dilerim.\" demiştir.\nBuna göre, aşağıda verilen kurumlardan hangisi, bu alanda yapılacak çalışmalara öncü olması amacıyla kurulmuştur?",
+      "options": {
+        "A": "Türk Ocakları",
+        "B": "Millet Mektepleri",
+        "C": "Halkevleri",
+        "D": "Türk Dil Kurumu",
+        "E": "Talim Terbiye Kurulu"
+      },
+      "answer": "D",
+      "solution": "Türkçenin zenginliğini ortaya koymak, Türk dilinin kökenlerini araştırıp Türk dilinin zenginliğini ve güzelliğini ortaya çıkarması için 12 Temmuz 1932'de Türk Dil Kurumu açılmıştır."
+    },
+    {
+      "qNum": 21,
+      "question": "1926 yılında çıkarılan hangi kanunla, Türk kara sularında yolcu ve yük taşıma hakkı sadece Türk denizcilere verilmiştir?",
+      "options": {
+        "A": "Tevhid-i Tedrisat Kanunu",
+        "B": "Takrir-i Sükûn Kanunu",
+        "C": "Kabotaj Kanunu",
+        "D": "Soyadı Kanunu",
+        "E": "Medeni Kanun"
+      },
+      "answer": "C",
+      "solution": "Osmanlı Devleti'nde kapitülasyon antlaşmalarının etkisiyle deniz taşımacılığı ve ticareti yabancıların eline geçmişti. 1 Temmuz 1926 yılında çıkarılan Kabotaj Kanunu ile Türk kara sularında yolcu ve yük taşıma hakkı sadece Türk milletine verildi."
+    },
+    {
+      "qNum": 22,
+      "question": "Mustafa Kemal Atatürk yaptığı bir konuşmada: \"Eski hayat kuralları ve eski hukuk sistemi yerine, yeni hayat kuralları ve yeni hukuk sistemi ele alarak esaslı ve temelli değişiklikler yapmak teşebbüsündeyiz.\" demiştir.\nBuna göre, aşağıdakilerden hangisi bu doğrultuda yaşanan gelişmeler arasında gösterilemez?",
+      "options": {
+        "A": "Teşkilat-ı Esasiye'nin ilan edilmesi",
+        "B": "Medeni Kanun'un kabul edilmesi",
+        "C": "İtalya'dan ceza hukukunun alınması",
+        "D": "Ankara Hukuk Mektebinin açılması",
+        "E": "Erkân-ı Harbiye Vekâletinin kaldırılması"
+      },
+      "answer": "E",
+      "solution": "Mustafa Kemal Atatürk, yeni hayat kurallarına uygun bir şekilde hukuk sisteminin düzenlenmesinden bahsetmektedir. Erkân-ı Harbiye Vekâletinin kaldırılması bu alanda yapılan yeniliklerden biri değildir. Bu inkılap ile ordu ve siyaset birbirinden ayrılmış ve halk egemenliği güçlendirilmiştir."
+    },
+    {
+      "qNum": 23,
+      "question": "Aşağıdakilerden hangisi 1 Kasım 1922'de saltanatın kaldırılma gerekçelerinden biri değildir?",
+      "options": {
+        "A": "Birçok ülkede monarşinin yıkılıp yerine Cumhuriyet yönetimlerinin kurulması",
+        "B": "Bir ülkede iki hükûmetin olmasının millî menfaatlerle bağdaşmaması",
+        "C": "Millet egemenliğine dayalı yönetimin Türk milletinin karakterine daha uygun olması",
+        "D": "Osmanlı Devleti'nin TBMM Hükûmeti ile birlikte Lozan Konferansı'na davet edilmesi",
+        "E": "Halife Abdülmecit Efendi'nin elçi kabul etmesi ve millî egemenliğe aykırı davranışlarda bulunması"
+      },
+      "answer": "E",
+      "solution": "TBMM, 1 Kasım 1922'de saltanatı kaldırmıştır. Böylece Osmanlı Devleti resmen sona ererken halife olarak da Abdülmecid Efendi seçilmiştir. Abdülmecid Efendi'nin, ulusal egemenlik ve laikliğe aykırı davranması, elçi kabul etmesi, Topkapı Sarayı'nda tören istemesi gibi sebeplerden dolayı 3 Mart 1924'te halifelik kaldırılmıştır. Bu durumun saltanatın kaldırılmasının gerekçeleri ile herhangi bir ilgisi bulunmamaktadır."
+    },
+    {
+      "qNum": 24,
+      "question": "Lozan Barış Antlaşması'nda kapitülasyonlar kaldırılmasına rağmen ülke içinde hâlen yabancıların imtiyazlı olduğu alanlar bulunmaktaydı.\nBuna göre, 1926 yılında yapılan hangi düzenleme, kapitülasyonların kaldırılmasını tamamlayan bir gelişmedir?",
+      "options": {
+        "A": "Kabotaj Kanunu'nun çıkarılması",
+        "B": "Sanayi ve Maadin Bankasının kurulması",
+        "C": "İzmir İktisat Kongresi'nin toplanması",
+        "D": "Aşar vergisinin kaldırılması",
+        "E": "Türk Hava Kurumunun kurulması"
+      },
+      "answer": "A",
+      "solution": "Lozan Barış Antlaşması'nda, Osmanlı Devleti'nin herhangi bir devlete verdiği ticari, mali, siyasi, hukuki, diplomasi ve eğitim gibi alanlardaki ayrıcalık ifade eden kapitülasyonlar kaldırıldı. Ancak ülke içinde Osmanlıdan gelen imtiyazlar yabancılar tarafından kullanılmaya devam ediyordu. Bunlardan biri de denizlerde yük ve yolcu taşıma hakkının yabancıların elinde olmasıydı. 1 Temmuz 1926'da çıkarılan Kabotaj Kanunu ile kara sularında yük ve yolcu taşıma hakkı Türklere verildi. Bu kanun kapitülasyonların kaldırılmasını tamamlayan bir gelişmedir."
+    }
+  ],
+  "49": [
+    {
+      "qNum": 17,
+      "question": "Mustafa Kemal Atatürk'ün \"Türk çocuğu ecdadını tanıdıkça, daha büyük işler yapmak için kendilerinde kuvvet bulacaktır.\" sözüne yönelik yapılan Cumhuriyet Dönemi inkılap hareketi aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Türk Dil Kurumunun açılması",
+        "B": "Tevhid-i Tedrisat Kanunu'nun çıkarılması",
+        "C": "Latin harflerinin kabulü",
+        "D": "Türk Tarih Kurumunun açılması",
+        "E": "İstanbul Üniversitesinin açılması"
+      },
+      "answer": "D",
+      "solution": "Mustafa Kemal'in; “Türk çocuğu ecdadını tanıdıkça daha büyük işler yapmak için kendilerinde kuvvet bulacaktır.” sözlerine yönelik 1931'de Türk Tarih Kurumu açılmıştır."
+    },
+    {
+      "qNum": 18,
+      "question": "1 Eylül 1953 yılında bitirilen ve mimarlığını Ordinaryüs Profesör Halid Emin Onat ve Doç. Ahmet Orhan Arda'nın yaptığı eser aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "TBMM binası",
+        "B": "Anıtkabir",
+        "C": "Dil ve Tarih - Coğrafya Fakültesi",
+        "D": "Güvenpark",
+        "E": "Ulus Atatürk Heykeli"
+      },
+      "answer": "B",
+      "solution": "Bu iki mimarın ortaklaşa hazırladıkları proje ile Anıtkabir yapılmıştır."
+    },
+    {
+      "qNum": 19,
+      "question": "16 Haziran 1938'de kullandığı uçakla Yeşilköy'den Atina'ya giderek yapacağı Balkan turu öncesi Atatürk'ü Savarona Yatı'nda ziyaret eden ve Atatürk'ün; \"Birkaç saat sonra senin büyük bir Balkan turuna çıktığını ve Türk kadınlığını göklerde şerefle temsil ettiğini, bütün dünya radyoları yayımlayacaklar, herkese duyuracaklar!\" sözlerini söylediği ilk Türk kadın savaş pilotu aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Bedriye Tahir Gökmen",
+        "B": "Esra Özatay",
+        "C": "Sabiha Gökçen",
+        "D": "Leman Bozkurt Altınçekiç",
+        "E": "Yıldız Eruçman"
+      },
+      "answer": "C",
+      "solution": "Sabiha Gökçen, 16 Haziran 1938'de Atatürk'ü Balkan turuna çıkmadan önce Savarona Yatı'nda ziyaret etmiş, Mustafa Kemal, Sabiha Gökçen'e rahatsızlığı nedeniyle onu uğurlamaya gelemeyeceği için üzgün olduğunu ancak dünya radyolarının ondan bahsedeceğini söylemiştir."
+    },
+    {
+      "qNum": 20,
+      "question": "Türk İnkılabı'nın toplumsal alanda gerçekleştirdiği çağdaş atılımlar arasında;\nI. eskiden kullanılan lakap ve ünvanların kaldırılması,\nII. kadınların toplumsal ve siyasal alanda erkeklerle eşit tutulması,\nIII. denizlerdeki yük ve yolcu taşıma hakkının Türk milletine verilmesi\ngelişmelerinden hangileri yer almaz?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız III",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "II ve III"
+      },
+      "answer": "B",
+      "solution": "Osmanlı Devleti'nde ayrıcalık belirten zade, paşa, şeyh, şah, hanımefendi, beyefendi vb. ünvan ve lakapların kaldırılması ile toplum arasında eşitlik sağlanmaya çalışılmıştır. Ayrıca kadınlara siyasal ve toplumsal hakların verilmesi (belediye, muhtar ve milletvekili olabilme ve Medeni Kanun vb.) de toplumsal alanda yapılan inkılaplar arasında gösterilebilir. Denizlerde yük ve yolcu taşıma hakkının yabancılardan alınıp Türk milletine verilmesi ise toplumsal alanla ilgili bir düzenleme olmayıp ticaret ile ilgili bir uygulamadır."
+    },
+    {
+      "qNum": 21,
+      "question": "Aşağıdakilerden hangisi Atatürk Dönemi'nde eğitim alanında inkılaplar yapılmasında etkili olmamıştır?",
+      "options": {
+        "A": "Okuma yazma oranın düşük olması",
+        "B": "Okul binalarının çoğunun eğitim ve öğretime elverişli olmaması",
+        "C": "Yabancı okulların kapatılması",
+        "D": "Öğretim programlarının günün ihtiyaçlarına cevap veremez durumda olması",
+        "E": "Ders araç ve gereçlerin eksik ya da kullanılamaz hâlde olması"
+      },
+      "answer": "C",
+      "solution": "Atatürk Dönemi'nde birçok yabancı okul 1924 yılında çıkarılan Tevhid-i Tedrisat Kanunu'na uymadığı için kapatılmıştır. Atatürk bu okullar kapatıldığı için değil, diğer seçeneklerdeki şartlardan dolayı eğitim alanında inkılaplar yapılmasına ihtiyaç duymuştur."
+    },
+    {
+      "qNum": 22,
+      "question": "17 Şubat - 4 Mart 1923 tarihlerinde İzmir'de toplanan Türkiye İktisat Kongresi'nde alınan kararlar arasında aşağıdakilerden hangisi bulunmaz?",
+      "options": {
+        "A": "Yabancıların kurdukları tekellerden kaçınılmalıdır.",
+        "B": "Özel teşebbüslere kredi sağlayacak bir devlet bankası kurulmalıdır.",
+        "C": "Osmanlının kalan borçları eşit taksitler hâlinde ilgili devletlere ödenmelidir.",
+        "D": "Ham maddesi yurt içinde yetişen veya yetiştirilebilen sanayi dalları kurulmalıdır.",
+        "E": "Özel sektörler tarafından kurulamayan teşebbüsler devletçe ele alınmalıdır."
+      },
+      "answer": "C",
+      "solution": "Osmanlı Devleti'nin dış borçlarının ödenmesi ile ilgili planlama, Lozan Görüşmeleri ile sağlanmıştır."
+    },
+    {
+      "qNum": 23,
+      "question": "\"Eğitim alanında yiğitçe bir atılımdır bu. Biz, kendi beyaz çocuklarımız arasındaki okuryazarlık oranını ancak bir buçuk yüzyılda, yavaş yavaş yükseltebildik. Vali Smith (Simit), Amerika'da okuma yazma bilmeyen beş milyon insan bulunduğunu söylemektedir. Mustafa Kemal'in Türkiye'yi okutmak için gösterdiği ilgi bizde de olsaydı okullara devamı sağlayacak bir yol bulabilir, bunun için gerekiyorsa davul da çalabilirdik.\"\nCumhuriyet'in ilk yıllarında Türkiye'de aşağıdakilerden hangisinin açılması, The New York Times gazetesinde yukarıda verilen haberin yayımlanmasına yol açmıştır?",
+      "options": {
+        "A": "Dil ve Tarih - Coğrafya Fakültesi",
+        "B": "İstanbul Üniversitesi",
+        "C": "Musiki Muallim Mektebi",
+        "D": "Köy Enstitüleri",
+        "E": "Millet Mektepleri"
+      },
+      "answer": "E",
+      "solution": "The New York Times gazetesi Cumhuriyet yılarında açılan Millet Mektepleri'nin başarısını haber yapmıştır. Çünkü yeni Türk harflerinin öğretilebilmesi amacıyla Millet Mektepleri açılmış ve her yaştan kişiler ücretsiz bir şekilde okuma - yazma öğrenmişlerdir."
+    },
+    {
+      "qNum": 24,
+      "question": "1936'da Türkçenin dünya dillerinin kaynağı olduğunu savunan, dil bilim teorisi aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Türk Tarih Tezi",
+        "B": "Güneş Dil Teorisi",
+        "C": "Edebiyat Teorisi",
+        "D": "Avrasyatik Dil Teorisi",
+        "E": "Nostratik Dil Teorisi"
+      },
+      "answer": "B",
+      "solution": "Mustafa Kemal Atatürk; tüm dillerin kaynağının Türkçe olduğunu \"Güneş Dil Teorisi\" ile savunmuştur."
+    }
+  ],
+  "50": [
+    {
+      "qNum": 17,
+      "question": "1927 yılında yaşanan Bozkurt - Lotus Olayı'nda Türkiye'yi Milletler Cemiyetinde temsil eden devlet adamı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Ali Fethi Bey",
+        "B": "Ali Fuat Bey",
+        "C": "Mahmut Esat Bey",
+        "D": "Fahrettin Paşa",
+        "E": "İsmet Bey"
+      },
+      "answer": "C",
+      "solution": "Türkiyenin Milletler Cemiyeti'ne bağlı Lahey Adalet Divanı'na götürdüğü ilk mesele Bozkurt - Lotus Davası'dır. Davada Türkiye'yi Mahmut Esat Bey (Bozkurt) temsil etmiştir. Atatürk davayı kazanan Mahmut Esat Bey'e Soyadı Kanunu çıktığında \"Bozkurt\" soyadını vermiştir."
+    },
+    {
+      "qNum": 18,
+      "question": "Mustafa Kemal Atatürk'ün 1938 yılında Hatay Devlet Başkanlığına seçilmesinden dolayı; \"Hatay'daki çalışmalarınızda başarınızı temenni eder ve Hatay'ın yeni idare altında pek çok âdet ve refahlar görmesini yürekten temenni ederim\" sözlerini içeren tebrik telgrafı gönderdiği devlet adamı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Tayfur Sökmen",
+        "B": "Fazıl Küçük",
+        "C": "Mahmut Esat Bozkurt",
+        "D": "Celal Bayar",
+        "E": "Nuri Demirağ"
+      },
+      "answer": "A",
+      "solution": "Hatay; Lozan Barış Antlaşması'nda Fransa mandasındaki Suriye sınırları içinde kalmıştı. Yaşanan gelişmeler sonucu ise Hatay 1938'de bağımsız olmuş ve Tayfur Sökmen devlet başkanı seçilmiştir. Mustafa Kemal soruda verilen tebrik telgrafını Tayfur Sökmen'e göndermiştir. (Hatay ana vatana 1939 yılında katılmıştır.)"
+    },
+    {
+      "qNum": 19,
+      "question": "12 Ocak 1934'te Yunanistan eski Başbakanı Venizelos Nobel Ödül Komisyonu Başkanlığına yazdığı mektupta; \"Barışı sağlamlaştırma hareketi, yeni ve seçkin bir devlete bugünkü görüntüsünü veren tüm iç reform hareketleri ile birlikte yürümüştür. O'nu Yüksek Nobel Barış Ödülü için aday göstermekle şeref kazanırım.\" demiştir.\nBuna göre, Yunan Başbakanı'nın Nobel Barış Ödülü'ne aday gösterdiği kişi aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "İsmet İnönü",
+        "B": "Mustafa Kemal Atatürk",
+        "C": "Ali Fethi Okyar",
+        "D": "Winston Churchill",
+        "E": "Rıza Şah Pehlevi"
+      },
+      "answer": "B",
+      "solution": "Yunanistan eski Başbakanı Venizelos'un 1934 yılında Nobel Barış Ödülü'ne aday gösterdiği kişi Mustafa Kemal Atatürk'tür."
+    },
+    {
+      "qNum": 20,
+      "question": "Mustafa Kemal Atatürk'ün, 10 Temmuz 1937'de Afganistan Kralı Muhammed Zahir Han'a cevaben gönderdiği telgrafta; \"...Dört kardeş millet arasında mevcut en sıkı dostluk bağlarını bir kat daha pekiştirerek cihan barışının esaslı desteklerinden birisini oluşturan bu önemli eserin, milletlerimizin barışseverliği sayesinde meydana gelmiş olması, hepimiz için iftiharı gerektiren bir olaydır.\" sözleriyle anlattığı gelişme aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Briand-Kellog Paktı'nın kurulması",
+        "B": "Balkan Antantı'nın kurulması",
+        "C": "Sadabat Paktı'nın kurulması",
+        "D": "Akdeniz Paktı'nın kurulması",
+        "E": "Montrö Boğazlar Sözleşmesi'nin imzalanması"
+      },
+      "answer": "C",
+      "solution": "Mustafa Kemal 10 Temmuz 1937'de Afganistan Kralı Muhammed Zahir Han'a bu telgrafı Sadabat Paktı'nın kurulmasından dolayı göndermiştir. Sadabat Paktı; Türkiye, İran, Irak ve Afganistan arasında imzalanmış ve Orta Doğu'da ortak bir savunma hattı kurulmasını amaçlamıştır."
+    },
+    {
+      "qNum": 21,
+      "question": "Atatürk Dönemi'nde 1923 - 1930 yılları arasında;\nI. Türkiye - Irak sınırı,\nII. Boğazlar sorunu,\nIII. Yabancı okullar\nsorunlarından hangileri çözüme kavuşturulmuştur?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız III",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "D",
+      "solution": "Türkiye Cumhuriyeti 1926 yılında İngiltere ile yapılan Ankara Antlaşması'yla Musul Meselesi'ni, Tevhid-i Tedrisat Kanunu'yla ortaya çıkan Yabancı Okullar Sorunu'nu, bir iç sorunu kabul ederek 1925 ve 1926 yıllarında kesin olarak çözmüştür. Boğazlar Sorunu ise 1936 yılında imzalanan Montrö Boğazlar Sözleşmesi ile çözülmüştür."
+    },
+    {
+      "qNum": 22,
+      "question": "Aşağıdakilerden hangisi Türkiye'nin 1923-1939 yılları arasında Fransa ile yaşadığı sorunlardan biri değildir?",
+      "options": {
+        "A": "Yabancı okullar",
+        "B": "Adana - Mersin demir yolunun millîleştirmesi",
+        "C": "Hatay Sorunu",
+        "D": "Dış borçlar",
+        "E": "Nüfus Mübadelesi"
+      },
+      "answer": "E",
+      "solution": "Türkiye; 1923-39 yılları arasında yabancı okullar, Adana - Mersin demir yollarının millileştirilmesi, Hatay meselesi ve Osmanlı dış borçları konusunda sorunlar yaşarken, Nüfus Mübadelesi Sorunu'nu ise Yunanistan ile yaşamıştır."
+    },
+    {
+      "qNum": 23,
+      "question": "22 Ocak 1937'de Kurun (Vakit) gazetesinde, Hatay davasıyla ilgili olarak; \"...Acaba Fransız devlet adamlarının bu işi böyle çıkmaza sokmaktan maksatları ne olabilir? ...Biz artık Fransız devlet adamlarına hitap etmeye gerek görmüyoruz. Bundan sonra Fransızların kendi menfaatleri namına dostları ve müttefikleri olan devletlerin, gerçeği yakından görerek durumun gereğine göre hareket etmesini istiyoruz!\" ifadelerini Asım Us takma adıyla kullanan kişi, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Rauf Orbay",
+        "B": "Ali Fuat Cebesoy",
+        "C": "Ali Fethi Okyar",
+        "D": "İsmet İnönü",
+        "E": "Mustafa Kemal Atatürk"
+      },
+      "answer": "E",
+      "solution": "Mustafa Kemal Atatürk; Hatay Meselesi ile ilgili olarak Kurun (Vakit) gazetesinde Asım Us takma adıyla yazılar yazmış gerek hükûmete gerekse dış ülkelere mesajlarını bu yolla iletmiştir."
+    },
+    {
+      "qNum": 24,
+      "question": "I. Okullardaki dinî ayin yapılan salonların kapatılması\nII. Okullardaki dinî iz ve işaretlerini kaldırılması\nIII. Okullarda tarih ve coğrafya derslerinin Türkçe okutulması ve Türk öğretmenlerin derse girmesi kararlaştırılması\nYeni Türk Devleti'nde yukarıdaki verilen durumlardan hangilerinin gerçekleşmesi, Fransa ile sorunlar yaşanmasına neden olmuştur?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız III",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "E",
+      "solution": "1924 yılında çıkarılan Tevhid-i Tedrisat Kanunu'yla beraber yabancı okullardaki dinî iz ve işaretler kaldırıldı, dinî ayin salonları kapatıldı ve bazı derslere Türk öğretmenlerin girmesi kararlaştırıldı. Bu durum da Fransa ile Türkiye arasında soruna dönüştü."
+    }
+  ],
+  "55": [
+    {
+      "qNum": 17,
+      "question": "II. Dünya Savaşı'nın başlamasına engel olabilmek amacıyla İngiltere Başbakanı Chamberlain tarafından ortaya atılan politika aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Hayat Sahası",
+        "B": "Bizim Deniz",
+        "C": "Yatıştırma",
+        "D": "Truman Doktrini",
+        "E": "Eisenhower Doktrini"
+      },
+      "answer": "C",
+      "solution": "Yatıştırma Politikası, II. Dünya Savaşı'na giden dönemde İngiltere Başbakanı Chamberlain'in ortaya attığı ve Almanya'ya istediği yerlerin verilerek yeni bir dünya savaşının çıkmasını engelleme politikasıdır."
+    },
+    {
+      "qNum": 18,
+      "question": "I. Südetler\nII. Saar\nIII. Habeşistan\nYukarıda verilen bölgelerden hangileri II. Dünya Savaşı öncesi Almanya tarafından sınırlarına dâhil edilmiştir?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "I, II ve III"
+      },
+      "answer": "C",
+      "solution": "Almanya, II.Dünya Savaşı öncesinde Versay Antlaşması'yla Fransa'ya bırakılan Saar bölgesini halk oylaması sonucunda (1 Mart 1935) sınırlarına katarken, 3,5 milyon Alman'ın yaşadığı Çekoslovakya'nın Südetler bölgesini 29 Eylül 1938 tarihinde toplanan Münih Konferansı'yla topraklarına katmıştır. Habeşistan ise 1936 tarihinde İtalya tarafından işgal edilmiştir."
+    },
+    {
+      "qNum": 19,
+      "question": "Aşağıda verilen devletlerden hangileri, SSCB tehlikesine karşı 1936'da Anti - Komitern Paktı kurmuşlardır?",
+      "options": {
+        "A": "İngiltere - Fransa",
+        "B": "Almanya - Japonya",
+        "C": "Japonya - İngiltere",
+        "D": "İtalya - Almanya",
+        "E": "İngiltere - ABD"
+      },
+      "answer": "B",
+      "solution": "Almanya ve Japonya, SSCB tehlikesine karşı 1936'da Anti - Komitern Paktı kurmuşlardır."
+    },
+    {
+      "qNum": 20,
+      "question": "İngiltere Başbakanı Winston Churchill ile İsmet İnönü'nün II. Dünya Savaşı devam ederken 1943 yılında gerçekleştirdikleri konferans, aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Potsdam Konferansı",
+        "B": "Adana Konferansı",
+        "C": "Moskova Konferansı",
+        "D": "Kahire Konferansı",
+        "E": "Münih Konferansı"
+      },
+      "answer": "B",
+      "solution": "Almanların 1942 yılında Ruslar tarafından Stalingrad'da durdurulmalarının ardından İngiltere Başbakanı Winston Churchill, Türkiye'yi Müttefik Devletlerin yanında savaşa sokmak için İsmet İnönü'yle 30 Ocak 1943'te \"Adana Konferansı\"nı yaptılar. Ancak Türkiye ise bu konferans sonunda İngiltere'nin savaşa katılma teklifini reddetmiştir."
+    },
+    {
+      "qNum": 21,
+      "question": "II. Dünya Savaşı öncesi Roma İmparatorluğu'nu tekrar kurma düşüncesinde olan devlet aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Yunanistan",
+        "B": "ABD",
+        "C": "SSCB",
+        "D": "İtalya",
+        "E": "Almanya"
+      },
+      "answer": "D",
+      "solution": "İtalya'da Benito Mussolini'nin başa gelmesiyle \"Roma İmparatorluğu'nu yeniden kurmak\" millî bir ideal hâline gelmiştir."
+    },
+    {
+      "qNum": 22,
+      "question": "\"Asya Asyalılarındır.\" anlayışı doğrultusunda yayılmacı bir politika izleyen Uzak Doğu devleti aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Çin",
+        "B": "Kore",
+        "C": "Endonezya",
+        "D": "Tayland",
+        "E": "Japonya"
+      },
+      "answer": "E",
+      "solution": "Japonya, 1920'den itibaren Uzak Doğu'nun en güçlü devleti hâline geldi. 1931'de Mançurya'yı işgal eden Japonya 1933'te Milletler Cemiyetinden çekildi. 1934'te de \"Asya Asyalılarındır.\" diyerek Batılı ülkelerin Çin ile olan münasebetlerini kesmesini istedi."
+    },
+    {
+      "qNum": 23,
+      "question": "I. Almanya\nII. Japonya\nIII. İngiltere\nIV. İtalya\nV. Fransa\nYukarıda verilen devletlerden hangileri, II. Dünya Savaşı'ndan önce kurulan \"Mihver\" grubunun içinde yer almıştır?",
+      "options": {
+        "A": "I ve II",
+        "B": "II ve III",
+        "C": "I, II ve IV",
+        "D": "III ve IV",
+        "E": "II, III ve V"
+      },
+      "answer": "C",
+      "solution": "25 Kasım 1936'da Alman-Japon Paktı kuruldu. Bu pakta 5 Kasım 1937'de İtalya'nın da katılmasıyla \"Mihver\" grubu kuruldu."
+    },
+    {
+      "qNum": 24,
+      "question": "Mustafa Kemal Atatürk'ün onayı ile 1925'te Türkiye'nin savunma sanayisinin ilk özel sektör fabrikasını kuran ve bu fabrikada ilk yerli uçak bombaları ile birlikte ilk Türk denizaltı su bombalarını üreten ve ürettiği silahları yurtdışına ihraç eden sanayici ve devlet adamı kimdir?",
+      "options": {
+        "A": "Nuri Killigil",
+        "B": "Şakir Zümre",
+        "C": "Fevzi Çakmak",
+        "D": "Vecihi Hürkuş",
+        "E": "Nuri Demirağ"
+      },
+      "answer": "B",
+      "solution": "Şakir Zümre; 1885'te Bulgaristan'ın Varna kentinde dünyaya geldi. Hukuk üzerine aldığı eğitimden sonra savunma sanayisi ile ilgilenmeye başladı. Mustafa Kemal Atatürk'ün Sofya Ateşemiliterliği görevindeyken kendisi ile tanışıp dostluk kurdu. Kurtuluş Savaşı sırasında Anadolu'ya silah sevkiyatı yaptı. Bu nedenle kendisine İstiklal Madalyası verildi. 1923 yılından itibaren savunma sanayisinin ilk özel sektör fabrikasını Haliç'te açan Şakir Zümre bu fabrikada Türkiye'nin ilk yerli uçak bombaları ile birlikte ilk Türk denizaltı su bombalarını üretti. Üretmiş olduğu silahları da Avrupa ülkelerine ihraç etmeye başladı. II.Dünya Savaşı'ndan sonra ABD'nin Türkiye'ye vermiş olduğu silah desteği sonucunda fabrikası kapatıldı."
+    }
+  ],
+  "56": [
+    {
+      "qNum": 17,
+      "question": "I. BM\nII. Avrupa Konseyi\nIII. NATO\nTürkiye, yukarıda verilen kuruluşlardan hangilerinin kurucu üyesidir?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "Yalnız III",
+        "D": "I ve II",
+        "E": "I, II ve III"
+      },
+      "answer": "D",
+      "solution": "Türkiye; II. Dünya Savaşı'ndan sonra kurulan BM'nin ve Avrupa Konseyinin kurucu üyesiyken; NATO'ya ise daha sonra üye olmuştur."
+    },
+    {
+      "qNum": 18,
+      "question": "İsrail Devleti'ni tanıyan toplumunun çoğunluğunu Müslümanların oluşturduğu ilk ülke aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Mısır",
+        "B": "Suudi Arabistan",
+        "C": "Suriye",
+        "D": "Türkiye",
+        "E": "Azerbaycan"
+      },
+      "answer": "D",
+      "solution": "İsrail kurulduktan sonra İsrail'i tanıyan, toplumunun çoğunluğunu Müslümanların oluşturduğu ilk ülke Türkiye'dir."
+    },
+    {
+      "qNum": 19,
+      "question": "1957 yılında ABD'nin hangi başkanı, Orta Doğu ülkelerindeki ABD karşıtlığını azaltmak ve bölgedeki SSCB etkisini ortadan kaldırmak amacıyla aşağıdaki hangi doktrinlerden hangisini yayımlamıştır?",
+      "options": {
+        "A": "Eisenhower",
+        "B": "Truman",
+        "C": "Monreo",
+        "D": "Marshall",
+        "E": "Nixon"
+      },
+      "answer": "A",
+      "solution": "1956 yılında Mısır Devlet Başkanı Nasır Süveyş Kanalı'nı millîleştirdiğini açıkladı. Bu durum Süveyş Krizi'ne neden oldu. Bunun üzerine aynı yıl İngiltere ve Fransa ittifak yaparak Mısır'a saldırdı. Bu olayda SSCB bölge Araplarını destekledi. Bu da Arap dünyasındaki Batı karşıtlığını artırdı. Bölgenin SSCB'nin kontrolüne girmesini istemeyen ABD Başkanı Eisenhower, 5 Ocak 1957 yılında Orta Doğu ülkelerine ekonomik ve askerî yardım yapılmasına yönelik kararları Amerikan Kongresinde kabul ettirdi. Bu kararlara \"Eisenhower Doktrini\" denildi."
+    },
+    {
+      "qNum": 20,
+      "question": "ABD, Soğuk Savaş Dönemi'nde Uzak Doğu'da etkisini artırabilmek amacıyla aşağıda verilen hangi kuruluşun oluşmasını sağlamıştır?",
+      "options": {
+        "A": "SEATO",
+        "B": "NATO",
+        "C": "Kyoto Protokolü",
+        "D": "Şanghay İş Birliği Örgütü",
+        "E": "ASEAN"
+      },
+      "answer": "A",
+      "solution": "ABD, Uzak Doğu'da etkinliğini artırabilmek amacıyla Filipinler, Tayland, Pakistan, Fransa, İngiltere, Yeni Zelanda, Avustralya ile birlikte \"Güney Doğu Asya Anlaşma Teşkilatı\"nı (SEATO) kurmuştur."
+    },
+    {
+      "qNum": 21,
+      "question": "Aşağıdakilerden hangisi 1947 yılında bağımsızlığını kazanan Hindistan Devleti'nin kurucusudur?",
+      "options": {
+        "A": "Muhammed Ali Cinnah",
+        "B": "Mahatma Gandhi",
+        "C": "Buhimihol Adülyadej",
+        "D": "Saddam Hüseyin",
+        "E": "Pervez Müşerref"
+      },
+      "answer": "B",
+      "solution": "1858 yılında Babür İmparatorluğu'nun yıkılmasından sonra Hindistan'ı, İngiltere kontrol etmeye başladı. 1947'de ise Mahatma Gandhi önderliğinde Hindistan Devleti kuruldu."
+    },
+    {
+      "qNum": 22,
+      "question": "Aşağıdakilerden hangisi 1950-1953 yılları arasında yaşanan Kore Savaşı'nda Türk birliklerinin komutanlığını yapmıştır?",
+      "options": {
+        "A": "Cemal Gürsel",
+        "B": "Tahsin Yazıcı",
+        "C": "Abdullah Bozdoğan",
+        "D": "Alparslan Türkeş",
+        "E": "Teoman Koman"
+      },
+      "answer": "B",
+      "solution": "1950 - 1953 yılları arasında yaşanan Kore Savaşı'na Türkiye'de Birleşmiş Milletler aracılığı ile bölgeye barış gücü göndermiştir. Bu barış gücünün komutanlığını ise Tuğgeneral Tahsin Yazıcı yapmıştır."
+    },
+    {
+      "qNum": 23,
+      "question": "1947 yılında bağımsızlığını kazanan Pakistan Devleti'nin kurucusu aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Muhammed Ali Clay",
+        "B": "Hasan El Bakr",
+        "C": "Ayetullah Humeyni",
+        "D": "Muhammed Ali Cinnah",
+        "E": "Malcolm X"
+      },
+      "answer": "D",
+      "solution": "1917'de Mahatma Gandhi'nin İngiltere'ye başkaldırması bölgedeki Müslümanları da hareketlendirdi. Bunun üzerine bölge Müslümanları Muhammed Ali Cinnah önderliğinde 1940 yılında bir araya geldi. 1947'de ise Muhammed Ali Cinnah önderliğinde Pakistan Devleti kuruldu."
+    },
+    {
+      "qNum": 24,
+      "question": "Aşağıdakilerden hangisi Demokrat Partinin kurucuları arasında yer almaz?",
+      "options": {
+        "A": "Celâl Bayar",
+        "B": "Refik Koraltan",
+        "C": "Adnan Menderes",
+        "D": "Fuat Köprülü",
+        "E": "Alparslan Türkeş"
+      },
+      "answer": "E",
+      "solution": "II. Dünya Savaşı'ndan sonra ilk muhalefet partisi olan Millî Kalkınma Partisinin kurulmasının ardından CHP milletvekilleri Celâl Bayar, Adnan Menderes, Refik Koraltan ve Fuat Köprülü'nün parti tüzüğünde değişiklik yapılması taleplerinin CHP yönetimi tarafından reddedilmesiyle \"Dörtlü Takrir\" diye nitelendirilen bu milletvekilleri CHP'den ayrılarak 1946 yılında Demokrat Partiyi (DP) kurmuşlardır. Alparslan Türkeş ise bu partinin içinde yer almamıştır."
+    }
+  ],
+  "57": [
+    {
+      "qNum": 17,
+      "question": "ABD ve Batı'nın, SSCB'nin kendi sınırları içinde kalmasını ve yayılmasını engellemeye yönelik giriştiği faaliyetlere ne isim verilmiştir?",
+      "options": {
+        "A": "Mekik Diplomasisi",
+        "B": "Çevreleme Politikası",
+        "C": "Truman Doktrini",
+        "D": "Hayat Sahası",
+        "E": "Glasnost ve Perestrokia"
+      },
+      "answer": "B",
+      "solution": "Çevreleme Politikası; ABD'nin Soğuk Savaş'ın ilk yıllarından başlayarak izlediği ve SSCB'nin II. Dünya Savaşı sonrasında artan etkisini sınırlamayı hedefleyen doktrine verilen isimdir."
+    },
+    {
+      "qNum": 18,
+      "question": "1947 yılında Hindistan ve Pakistan devletlerinin bağımsızlıklarını kazanmasıyla ortaya çıkan ve bu iki devlet arasında savaşa sebep olan bölge aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Kyoto",
+        "B": "Keşmir",
+        "C": "Dağlık Karabağ",
+        "D": "Golan Tepeleri",
+        "E": "Südetler"
+      },
+      "answer": "B",
+      "solution": "1947 yılında Hindistan ve Pakistan'ın arasında savaşa neden olan bölge Keşmir'dir. Hindistan, Pakistan ve Çin'in sınırlarında bulunması sebebiyle de stratejik öneme sahip olan bölge, Dünya'nın en yüksek ikinci tepesinin bulunduğu çevre topraklara hâkim bir konumdadır. Dolayısıyla hem verimli toprakları hem de stratejik konumu ile Keşmir, bölgesel güç mücadelelerinin odağındadır."
+    },
+    {
+      "qNum": 19,
+      "question": "28 Şubat 1953'te, SSCB'nin Türkiye, Yugoslavya'yı ve Yunanistan'ı tehdit etmesi üzerine aşağıdakilerden hangisi kurulmuştur?",
+      "options": {
+        "A": "Balkan Paktı",
+        "B": "Akdeniz Paktı",
+        "C": "NATO",
+        "D": "Bağdat Paktı",
+        "E": "CENTO"
+      },
+      "answer": "A",
+      "solution": "Balkan Paktı; 28 Şubat 1953'te, Yunanistan, Türkiye ve Yugoslavya Sosyalist Federal Cumhuriyeti arasında imzalanan antlaşmadır. Ankara'da imzalanmıştır. Antlaşma, Sovyetler Birliği'nin Balkanlar'daki etkisine karşı caydırıcı bir rol oynaması için imzalanmıştır."
+    },
+    {
+      "qNum": 20,
+      "question": "1949 yılında on iki kurucu üyesinin ardından 1952 yılında NATO'ya katılan ilk iki ülke şağıdakilerden hangisidir?",
+      "options": {
+        "A": "Hindistan - Pakistan",
+        "B": "Türkiye - Yunanistan",
+        "C": "İsrail - Mısır",
+        "D": "Azerbaycan - Ermenistan",
+        "E": "Yunanistan - Bulgaristan"
+      },
+      "answer": "B",
+      "solution": "Türkiye ve Yunanistan; 1949 yılında kurulmuş olan NATO'ya 1952 yılında birlikte alınmışlardır."
+    },
+    {
+      "qNum": 21,
+      "question": "1955 yılında Türkiye-Irak arasında Sovyet yayılmacaği ve tehdidine karşı kurulan Bağdat Paktı, Irak'ın 24 Mart 1959'da paktan ayrıldığını resmen açıklaması ile 19 Ağustos 1959'da hangi ismi alarak faaliyetlerine devam etmiştir?",
+      "options": {
+        "A": "NATO",
+        "B": "SEATO",
+        "C": "İKÖ",
+        "D": "CENTO",
+        "E": "NASA"
+      },
+      "answer": "D",
+      "solution": "CENTO (Merkezî Antlaşma Teşkilatı); önceki adı ile Bağdat Paktı (1955-1959), Türkiye, İran, Irak, Pakistan ve Birleşik Krallık arasında, Sovyetler Birliği'nin Orta Doğu'da nüfuz kurmasını önlemeye yönelik olarak kurulan karşılıklı güvenlik ve savunma antlaşmasıdır."
+    },
+    {
+      "qNum": 22,
+      "question": "1955 yılında kurulan Bağdat Paktı, hangi üye ülkenin yaşadığı askerî darbe sonucu pakttan ayrılmasıyla, merkezini Ankara'ya taşıyıp adını da Merkezi Antlaşma Teşkilatı anlamına gelen CENTO'ya dönüşmesine neden olmuştur?",
+      "options": {
+        "A": "İran",
+        "B": "Irak",
+        "C": "Pakistan",
+        "D": "İngiltere",
+        "E": "ABD"
+      },
+      "answer": "B",
+      "solution": "1955 yılında kurulan Bağdat Paktının merkezi Irak'ın Bağdat şehriydi. Irak'ta yaşanan askerî darbe sonucu Irak pakttan çekilmek zorunda kalınca paktın merkezi Ankara'ya taşınmıştır."
+    },
+    {
+      "qNum": 23,
+      "question": "7 Haziran 1945'te CHP'nin tek parti yönetimden çok partili hayata geçmesini, seçimlerin serbest yapılmasını ve tek dereceli seçim sisteminin uygulamasını isteyen CHP'li dört milletvekili meclis grubunda açık olarak görüş almak üzere bir önerge vermiştir. Bu önerge tarihte \"Dörtlü Takrir\" adı verilmiştir.\n\nBuna göre, aşağıdakilerden hangisi bu önergeyi verenler arasında yer almamıştır?",
+      "options": {
+        "A": "Refik Koraltan",
+        "B": "Fuat Köprülü",
+        "C": "Celal Bayar",
+        "D": "Adnan Menderes",
+        "E": "İsmet İnönü"
+      },
+      "answer": "E",
+      "solution": "Dörtlü Takrir; 7 Haziran 1945'te CHP'li Celal Bayar, Refik Koraltan, Adnan Menderes ve Fuat Köprülü'nün meclis grubunda açık olarak görüşülmek üzere verdiği önergedir."
+    },
+    {
+      "qNum": 24,
+      "question": "7 Ocak 1946 yılında kurulan Demokrat Parti'nin ilk genel başkanı aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Adnan Menderes",
+        "B": "Refik Koraltan",
+        "C": "Bülent Ecevit",
+        "D": "Cevdet Sunay",
+        "E": "Celal Bayar"
+      },
+      "answer": "E",
+      "solution": "7 Ocak 1946 tarihinde kurulan Demokrat Partinin ilk genel başkanı Celal Bayar'dır."
+    }
+  ],
+  "58": [
+    {
+      "qNum": 17,
+      "question": "1973-77 yılları arasında İsrail ile Mısır'ı barıştırmak ve Orta Doğu'da barışı sağlamak amacıyla Mekik diplomasisi ile Camp David Antlaşması'nın yapılmasını sağlayan ABD'nin dışişleri bakanı kimdir?",
+      "options": {
+        "A": "Arthur Balfour",
+        "B": "Henry Kissinger",
+        "C": "George Marshall",
+        "D": "Colin Powell",
+        "E": "George Shutz"
+      },
+      "answer": "B",
+      "solution": "Henry Kissinger; Amerikalı diplomat, politikacı ve devlet adamıdır. 1973-77 yılları arasında ABD'nin 56. dışişleri bakanı olarak görev yapmıştır. Özellikle Vietnam Sorunu'na getirmiş olduğu barışçıl çözümden dolayı 1973'te Nobel Barış Ödülünü alırken yine İsrail ile Mısır'ın barışması için yapmış olduğu Mekik Diplomasisi ile İsrail ve Mısır arasında 1978 yılında Camp David Antlaşması'nın imzalanmasında çok etkili olmuştur."
+    },
+    {
+      "qNum": 18,
+      "question": "1953 yılında Türkiye, Yunanistan ve Yugoslavya arasında kurulan Balkan Paktı'nın, 1954'te dağılmasına yol açan gelişme aşağıdakilerden hangisidir?",
+      "options": {
+        "A": "Cemal Abdülnasır'ın Mısır'da darbe yapması",
+        "B": "Vietnam Savaşı'nın başlaması",
+        "C": "Kıbrıs Sorunu'nun ortaya çıkması",
+        "D": "Türkiye'nin NATO'ya üye olması",
+        "E": "Kıbrıs Barış Harekâtı'nın başlaması"
+      },
+      "answer": "C",
+      "solution": "Türkiye ile Yunanistan arasında 1954 yılında Kıbrıs Sorunu'nun çıkması sonucu Balkan Paktı sona ermiştir."
+    },
+    {
+      "qNum": 19,
+      "question": "ABD'nin II.Dünya Savaşı'ndan zarar gören Avrupa ülkelerine yardım yapacağını açıklaması üzerine, SSCB tarafından komünist ülkeler için hazırlanan ekonomi yardım planına ne isim verilmiştir?",
+      "options": {
+        "A": "Marshall Planı",
+        "B": "Molotov Planı",
+        "C": "Schuman Planı",
+        "D": "Maastricht Kriterleri",
+        "E": "Reagan Planı"
+      },
+      "answer": "B",
+      "solution": "Molotov Planı; ABD'nin Marshall Planı'na karşılık SSCB tarafından hazırlanan mali yardım planıdır. Bu plan ile komünist ülkeler arasında ticaretin geliştirilmesi amaçlanmıştır."
+    },
+    {
+      "qNum": 20,
+      "question": "SSCB'nin II.Dünya Savaşı sırasında işgal ettiği Alman topraklarından çıkmayı reddederek kendi bölgesinde Demokratik (Doğu) Almanya'yı kurduğunu ilan etmesi aşağıdakilerden hangisine neden olmuştur?",
+      "options": {
+        "A": "Küba Krizi",
+        "B": "U-2 Hadisesi",
+        "C": "Domuzlar Körfezi Çıkarması",
+        "D": "Kore Savaşı",
+        "E": "Berlin Buhranı"
+      },
+      "answer": "E",
+      "solution": "Berlin Buhranı; SSCB'nin II.Dünya Savaşı sırasında işgal ettiği Alman topraklarında Demokratik (Doğu) Almanya'yı kurarken, ABD, İngiltere ve Fransa'nın işgal ettiği yerlerde ise Federal (Batı) Almanya kurulmuştur. Tarihte bu olaya \"Berlin Buhranı\" adı verilmiştir."
+    },
+    {
+      "qNum": 21,
+      "question": "18 Nisan 1951'de Fransız bakanı Schuman tarafından yayımlanan bildiri sonucunda Fransa, Batı Almanya, İtalya ve Benelüks ülkeleri bir araya gelerek aşağıdakilerden hangisini kurmuşlardır?",
+      "options": {
+        "A": "Avrupa Kömür ve Çelik Topluluğu",
+        "B": "Ulusal Enerji Ajansı",
+        "C": "Manilla Paktı",
+        "D": "İslam Konferansı Örgütü",
+        "E": "Batı Avrupa Birliği"
+      },
+      "answer": "A",
+      "solution": "Fransız dışişleri bakanı Schuman yayımlamış olduğu bir bildiriyle yıllardır Fransa ve Almanya arasında yaşanan siyasi ve askerî çekişmeler yüzünden kömür ve çelik üretiminde istenilen başarının elde edemediğini söylemiştir. Bunun üzerine bir araya gelen Fransa, Batı Almanya, İtalya ve Benelüks ülkeleri tarafından Avrupa Kömür ve Çelik Topluluğu kurulmuştur."
+    },
+    {
+      "qNum": 22,
+      "question": "Aşağıda İsrail Devleti'ne ait farklı zamanlara ait harita görselleri verilmiştir.\nBu görsele bakılarak;\nI. İsrail'in sınırlarını genişlettiği,\nII. Filistin Kurtuluş Örgütünün kurulduğu,\nIII. Mısır ile İsrail arasında Camp David Antlaşması'nın yapıldığı\nbilgilerinden hangilerine ulaşılabilir?",
+      "options": {
+        "A": "Yalnız I",
+        "B": "Yalnız II",
+        "C": "I ve II",
+        "D": "I ve III",
+        "E": "II ve III"
+      },
+      "answer": "A",
+      "solution": "1948 yılında kurulan İsrail Devleti süreç içinde Filistin topraklarının çoğunu ele geçirerek sınırlarını genişletmiştir. Bu görsele bakıldığında, Filistin Kurtuluş Örgütünün kurulduğu veya Mısır ile İsrail'in Camp David Antlaşması'nın imzalandığı bilgisine ulaşılamaz."
+    },
+    {
+      "qNum": 23,
+      "question": "Aşağıdakilerden hangisi Demokrat Parti Dönemi'nde yaşanan gelişmelerden biri değildir?",
+      "options": {
+        "A": "Köy Enstitüleri ve Halkevleri kapatılmıştır.",
+        "B": "Atatürk Aleyhine İşlenen Suçlar Hakkında Kanun çıkarılmıştır.",
+        "C": "ODTÜ, Ege Üniversitesi ve Atatürk Üniversitesi kurulmuştur.",
+        "D": "Ezan Türkçeden tekrar Arapçaya çevrilmiştir.",
+        "E": "Kıbrıs Barış Harekâtı yapılmıştır."
+      },
+      "answer": "E",
+      "solution": "Adnan Menderes Dönemi 1950-60 yıllarını kapsamaktadır. Bu dönem Kıbrıs Barış Harekatı yapılmamıştır. Kıbrıs Barış Harekatı 1974 yılında Başbakan Bülent Ecevit Dönemi'nde yapılmıştır."
+    },
+    {
+      "qNum": 24,
+      "question": "Türkiye'de II.Dünya Savaşı'ndan sonra ilk defa çok partili seçimler hangi yıl yapılmıştır?",
+      "options": {
+        "A": "1946",
+        "B": "1950",
+        "C": "1954",
+        "D": "1958",
+        "E": "1961"
+      },
+      "answer": "A",
+      "solution": "1946 yılında yapılan genel seçimler, Türkiye'de II.Dünya Savaşı'ndan sonra birden fazla partinin katıldığı seçimlerdir. Bu seçimlere Cumhuriyet Halk Partisi ve Demokrat Parti katılmıştır."
+    }
+  ]
+};

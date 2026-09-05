@@ -229,3 +229,64 @@ export async function deleteSuggestion(suggestionId) {
 }
 
 window.deleteSuggestion = deleteSuggestion;
+
+window.injectMissingQuestions = async function() {
+    if (!confirm("Eksik sorular veritabanına eklenecek. Onaylıyor musunuz?")) return;
+    
+    try {
+        const { missingQuestions } = await import('../data/missing_questions.js');
+        let successCount = 0;
+        let skipCount = 0;
+        let totalAdded = 0;
+        
+        for (const [testNum, newQs] of Object.entries(missingQuestions)) {
+            const testId = `test_${testNum}`;
+            const testRef = doc(db, "tests", testId);
+            const snap = await getDoc(testRef);
+            
+            if (snap.exists()) {
+                const data = snap.data();
+                let existingQuestions = [...(data.questions || [])];
+                
+                if (existingQuestions.length < 24) {
+                    for (const nq of newQs) {
+                        const formattedQ = {
+                            questionText: nq.question,
+                            options: [
+                                { id: 'A', text: nq.options.A || nq.options.a || '' },
+                                { id: 'B', text: nq.options.B || nq.options.b || '' },
+                                { id: 'C', text: nq.options.C || nq.options.c || '' },
+                                { id: 'D', text: nq.options.D || nq.options.d || '' },
+                                { id: 'E', text: nq.options.E || nq.options.e || '' }
+                            ],
+                            correctAnswer: (nq.answer || '').toUpperCase().trim(),
+                            solution: nq.solution || ''
+                        };
+                        existingQuestions.push(formattedQ);
+                        totalAdded++;
+                    }
+                    
+                    if (existingQuestions.length > 24) {
+                        existingQuestions = existingQuestions.slice(0, 24);
+                    }
+                    
+                    await updateDoc(testRef, { questions: existingQuestions });
+                    successCount++;
+                    console.log(`[OK] ${testId} güncellendi. Yeni soru sayısı: ${existingQuestions.length}`);
+                } else {
+                    skipCount++;
+                }
+            }
+        }
+        
+        alert(`Tamamlandı!\n\nGüncellenen Test: ${successCount}\nEklenen Toplam Soru: ${totalAdded}\nAtlanan (Zaten Tam): ${skipCount}`);
+        
+        if (typeof window.auditTests === 'function') {
+            window.auditTests();
+        }
+        
+    } catch (e) {
+        console.error("Enjeksiyon hatası:", e);
+        alert("Bir hata oluştu. Lütfen konsola bakın.");
+    }
+};

@@ -534,7 +534,10 @@
                     <span class="truncate">Soru Yönetim Paneli</span>
                 </h1>
                 <div class="flex items-center gap-2 shrink-0">
-                    <button onclick="window.auditTests()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base" title="Tüm testlerin soru sayısını kontrol et">
+                    <button onclick="window.injectMissingQuestions()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap" title="Eksik soruları PDF'den aktar">
+                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Eksikleri Aktar
+                    </button>
+                    <button onclick="window.auditTests()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap" title="Tüm testlerin soru sayısını kontrol et">
                         Veritabanı Denetimi
                     </button>
                     <button onclick="window.closeAdminPanel()" class="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base">
