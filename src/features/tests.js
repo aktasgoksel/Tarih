@@ -570,3 +570,11 @@ import { showModal } from "../ui/modal.js";
 
 window.showReviewMistakes = showReviewMistakes;
 window.updateUI = updateUI;
+
+window.showTest = showTest;
+window.generateRandomTest = generateRandomTest;
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
+window.submitCurrentTest = submitCurrentTest;
+window.generateMistakeTest = generateMistakeTest;
+window.generateFavoritesTest = generateFavoritesTest;
