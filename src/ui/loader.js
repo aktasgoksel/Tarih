@@ -3,7 +3,7 @@
  * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
  */
 import { db } from "../firebase.js";
-import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getDocs, collection } from "firebase/firestore";
 import { State } from "../state.js";
 
 let loaderTimeout = null;

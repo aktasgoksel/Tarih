@@ -1,12 +1,12 @@
-﻿/**
+/**
  * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
  * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
  */
 import { State } from "../state.js";
 
 import { db } from "../firebase.js";
-import { deleteUser, updateEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { doc, deleteDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { deleteUser, updateEmail, updateProfile } from "firebase/auth";
+import { doc, deleteDoc, collection, addDoc } from "firebase/firestore";
 import { saveUserDataCloud, updateMistakeBadge, updateFavoritesBadge } from "../core/auth.js";
 import { renderGrid, updateGridUI } from "./optic.js";
 import { prepareTimer, stopTimer } from "./timer.js";
@@ -55,13 +55,13 @@ import { showModal } from "../ui/modal.js";
             });
         }
 
-        export function generateMistakeTest() {
-            State.setCurrentMode('MISTAKES');
+        export function generateTestFromList(mode, sourceList, maxItems, emptyMessage, titlePrefix, titleSuffix) {
+            State.setCurrentMode(mode);
             State.setCurrentTestQuestions([]);
             setReshuffleVisible(false);
             
-            const shuffled = [...State.getUserData().mistakes].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 30); // up to 30 mistake questions
+            const shuffled = [...sourceList].sort(() => 0.5 - Math.random());
+            const selected = maxItems ? shuffled.slice(0, maxItems) : shuffled;
             
             selected.forEach(m => {
                 const test = State.getTestData()[m.testIdx];
@@ -74,9 +74,10 @@ import { showModal } from "../ui/modal.js";
                 }
             });
             
-            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
-                ? `ğŸ”¥ YanlÄ±ÅŸlarÄ±m (${State.getCurrentTestQuestions().length} Soru)` 
-                : 'HiÃ§ yanlÄ±ÅŸÄ±nÄ±z yok! Tebrikler!';
+            const cTitle = document.getElementById('current-test-title'); 
+            if(cTitle) cTitle.textContent = State.getCurrentTestQuestions().length > 0 
+                ? `${titlePrefix} (${State.getCurrentTestQuestions().length} ${titleSuffix})` 
+                : emptyMessage;
                 
             State.setCurrentQuestionIndex(0);
             renderTestUI(State.getCurrentTestQuestions());
@@ -90,40 +91,27 @@ import { showModal } from "../ui/modal.js";
             }
             window.updateUI();
         }
+
+        export function generateMistakeTest() {
+            generateTestFromList(
+                'MISTAKES',
+                State.getUserData().mistakes || [],
+                30,
+                'Hiç yanlışınız yok! Tebrikler!',
+                '🔥 Yanlışlarım',
+                'Soru'
+            );
+        }
         
         export function generateFavoritesTest() {
-            State.setCurrentMode('FAVORITES');
-            State.setCurrentTestQuestions([]);
-            setReshuffleVisible(false);
-            
-            const shuffled = [...State.getUserData().favorites].sort(() => 0.5 - Math.random());
-            
-            shuffled.forEach(m => {
-                const test = State.getTestData()[m.testIdx];
-                if(test && test.questions && test.questions[m.qIdx]) {
-                    State.getCurrentTestQuestions().push({
-                        originalTestIdx: m.testIdx,
-                        originalQIdx: m.qIdx,
-                        data: test.questions[m.qIdx]
-                    });
-                }
-            });
-            
-            const cTitle2 = document.getElementById('current-test-title'); if(cTitle2) cTitle2.textContent = State.getCurrentTestQuestions().length > 0 
-                ? `â­ Favori SorularÄ±m (${State.getCurrentTestQuestions().length} Soru)` 
-                : 'HenÃ¼z favori sorunuz yok.';
-                
-            State.setCurrentQuestionIndex(0);
-            renderTestUI(State.getCurrentTestQuestions());
-            renderGrid(State.getCurrentTestQuestions().length);
-            
-            if(State.getCurrentTestQuestions().length > 0) {
-                prepareTimer(State.getCurrentTestQuestions().length);
-            } else {
-                stopTimer();
-                document.getElementById('grid-container').classList.add('hidden');
-            }
-            window.updateUI();
+            generateTestFromList(
+                'FAVORITES',
+                State.getUserData().favorites || [],
+                null,
+                'Henüz favori sorunuz yok.',
+                '⭐ Favori Sorularım',
+                'Soru'
+            );
         }
 
         function setReshuffleVisible(visible) {
@@ -580,330 +568,4 @@ import { showModal } from "../ui/modal.js";
             }
         }
 
-        let myChart = null;
-
-        export function showStatsModal() {
-            const modal = document.getElementById('stats-modal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.firstElementChild.classList.remove('scale-95');
-                modal.firstElementChild.classList.add('scale-100');
-            }, 10);
-            
-            renderStats();
-        }
-
-        export function closeStatsModal() {
-            const modal = document.getElementById('stats-modal');
-            modal.classList.add('opacity-0');
-            modal.firstElementChild.classList.add('scale-95');
-            modal.firstElementChild.classList.remove('scale-100');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                if (myChart) {
-                    myChart.destroy();
-                    myChart = null;
-                }
-            }, 300);
-        }
-        
-        export function getCategoryName(title) {
-            if(!title.includes(':')) return "Genel";
-            const part = title.split(':')[1];
-            return part.split('-')[0].trim();
-        }
-
-        export function renderStats() {
-            let catData = {};
-            let hasData = false;
-            
-            if(State.getUserData().testProgress) {
-                Object.keys(State.getUserData().testProgress).forEach(tIdx => {
-                    const prog = State.getUserData().testProgress[tIdx];
-                    if(prog && prog.finished) {
-                        const test = State.getTestData()[tIdx];
-                        if (!test || !test.questions) return;
-                        hasData = true;
-                        const cat = getCategoryName(test.title);
-                        if(!catData[cat]) catData[cat] = { correct: 0, total: 0 };
-                        catData[cat].correct += prog.score;
-                        catData[cat].total += test.questions.length;
-                    }
-                });
-            }
-            
-            const emptyEl = document.getElementById('stats-empty');
-            const contentEl = document.getElementById('stats-content');
-            
-            if(!hasData) {
-                emptyEl.classList.remove('hidden');
-                contentEl.classList.add('hidden');
-                return;
-            }
-            
-            emptyEl.classList.add('hidden');
-            contentEl.classList.remove('hidden');
-            
-            // Sort categories by total questions solved (descending)
-            const labels = Object.keys(catData).sort((a,b) => catData[b].total - catData[a].total);
-            const correctData = labels.map(l => catData[l].correct);
-            const wrongData = labels.map(l => catData[l].total - catData[l].correct);
-            
-            // Build progress bars
-            const detailsEl = document.getElementById('category-details');
-            detailsEl.innerHTML = '<h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 border-b border-gray-200 dark:border-slate-700 pb-2">Konu BazlÄ± BaÅŸarÄ± OranlarÄ±</h3>';
-            
-            labels.forEach(l => {
-                const pct = Math.round((catData[l].correct / catData[l].total) * 100);
-                let colorClass = 'bg-emerald-500';
-                if(pct < 50) colorClass = 'bg-rose-500';
-                else if(pct < 75) colorClass = 'bg-yellow-400';
-                else if(pct < 90) colorClass = 'bg-blue-500';
-                
-                detailsEl.innerHTML += `
-                    <div class="mb-4">
-                        <div class="flex justify-between text-xs mb-1 font-bold text-gray-700 dark:text-gray-300">
-                            <span class="truncate pr-2">${window.escapeHTML(l)}</span>
-                            <span class="shrink-0">%${pct} (${catData[l].correct}/${catData[l].total})</span>
-                        </div>
-                        <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
-                            <div class="${colorClass} h-2 rounded-full transition-all" style="width: ${pct}%"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            // Render Chart
-            const ctx = document.getElementById('categoryChart').getContext('2d');
-            if(myChart) myChart.destroy();
-            
-            const isDark = document.documentElement.classList.contains('dark');
-            const textColor = isDark ? '#e2e8f0' : '#475569';
-            
-            myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'DoÄŸru SayÄ±sÄ±',
-                        data: correctData,
-                        backgroundColor: [
-                            '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e', '#f97316', '#6366f1', '#84cc16'
-                        ],
-                        borderWidth: isDark ? 2 : 1,
-                        borderColor: isDark ? '#1e293b' : '#ffffff',
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    cutout: '65%',
-                    plugins: {
-                        legend: { 
-                            position: 'bottom', 
-                            labels: { color: textColor, font: { family: 'Inter', size: 11, weight: '500' }, padding: 15 } 
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const val = context.raw || 0;
-                                    const total = catData[label].total;
-                                    const pct = Math.round((val / total) * 100);
-                                    return ` ${label}: ${val} DoÄŸru (%${pct})`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        export function openSuggestionModal() {
-            document.getElementById('suggestion-modal').classList.remove('hidden');
-        }
-        export function closeSuggestionModal() {
-            document.getElementById('suggestion-modal').classList.add('hidden');
-            document.getElementById('suggestion-text').value = '';
-        }
-        
-        export async function submitSuggestion() {
-            const text = document.getElementById('suggestion-text').value.trim();
-            if(!text) return;
-            
-
-            
-            try {
-                const btn = document.getElementById('submit-suggestion-btn');
-                btn.textContent = 'GÃ¶nderiliyor...';
-                btn.disabled = true;
-                
-                await addDoc(collection(db, 'suggestions'), {
-                    uid: State.getCurrentUser().uid,
-                    displayName: State.getCurrentUser().displayName || State.getCurrentUser().email.split('@')[0],
-                    email: State.getCurrentUser().email,
-                    text: text,
-                    timestamp: new Date().toISOString()
-                });
-                
-                showModal({ type: 'success', title: 'BaÅŸarÄ±lÄ±', text: 'Ã–neriniz baÅŸarÄ±yla alÄ±ndÄ±! Geri bildiriminiz iÃ§in teÅŸekkÃ¼r ederiz.', confirmText: 'Tamam' });
-                window.closeSuggestionModal();
-                btn.textContent = 'GÃ¶nder';
-                btn.disabled = false;
-            } catch (e) {
-                console.error(e);
-                let errorMsg = 'Bir hata oluÅŸtu. LÃ¼tfen baÄŸlantÄ±nÄ±zÄ± kontrol edin.';
-                if (e.code === 'permission-denied' || (e.message && e.message.includes('permission'))) {
-                    errorMsg = 'VeritabanÄ± eriÅŸim yetkisi reddedildi. Firestore kurallarÄ±nÄ±zda "suggestions" koleksiyonuna yazma izni verildiÄŸinden emin olun.';
-                } else if (e.message) {
-                    errorMsg = `Hata detayÄ±: ${e.message}`;
-                }
-                showModal({ type: 'error', title: 'Hata', text: errorMsg, confirmText: 'Tamam' });
-                document.getElementById('submit-suggestion-btn').textContent = 'Tekrar Dene';
-                document.getElementById('submit-suggestion-btn').disabled = false;
-            }
-        }
-
-
-
-        export function openProfileModal() {
-            if(!State.getCurrentUser()) return;
-            const modal = document.getElementById('profile-modal');
-            
-            document.getElementById('profile-email').value = State.getCurrentUser().email;
-            document.getElementById('profile-username').value = State.getCurrentUser().displayName || State.getCurrentUser().email.split('@')[0];
-            
-            let totalQ = 0;
-            let correctQ = 0;
-            if(State.getUserData().testProgress) {
-                Object.keys(State.getUserData().testProgress).forEach(tIdx => {
-                    const prog = State.getUserData().testProgress[tIdx];
-                    if(prog && prog.finished) {
-                        const test = State.getTestData()[tIdx];
-                        if (!test || !test.questions) return;
-                        totalQ += test.questions.length;
-                        correctQ += prog.score;
-                    }
-                });
-            }
-            
-            const pst = document.getElementById('profile-stat-total'); if(pst) pst.textContent = totalQ;
-            const psc = document.getElementById('profile-stat-correct'); if(psc) psc.textContent = correctQ;
-            const psw = document.getElementById('profile-stat-wrong'); if(psw) psw.textContent = totalQ - correctQ;
-            
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.firstElementChild.classList.remove('scale-95');
-                modal.firstElementChild.classList.add('scale-100');
-            }, 10);
-        }
-
-        export function closeProfileModal() {
-            const modal = document.getElementById('profile-modal');
-            modal.classList.add('opacity-0');
-            modal.firstElementChild.classList.add('scale-95');
-            modal.firstElementChild.classList.remove('scale-100');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
-        }
-
-        export async function updateUsername() {
-            const newName = document.getElementById('profile-username').value.trim();
-            if(!newName) return;
-            
-            const btn = document.getElementById('profile-update-btn');
-            btn.textContent = '...';
-            btn.disabled = true;
-            
-            try {
-                await updateProfile(State.getCurrentUser(), { displayName: newName });
-                document.getElementById('welcome-text').textContent = `HoÅŸ geldin, ${newName}`;
-                
-                showModal({ type: 'success', title: 'Ä°ÅŸlem BaÅŸarÄ±lÄ±', text: 'KullanÄ±cÄ± adÄ±nÄ±z baÅŸarÄ±yla gÃ¼ncellenmiÅŸtir.', confirmText: 'Tamam' });
-            } catch(e) {
-                console.error(e);
-                showModal({ type: 'error', title: 'Hata', text: 'KullanÄ±cÄ± adÄ± gÃ¼ncellenirken sistemsel bir hata oluÅŸtu.', confirmText: 'Kapat' });
-            }
-            btn.textContent = 'GÃ¼ncelle';
-            btn.disabled = false;
-        }
-
-        export async function updateEmailAddress() {
-            const newEmail = document.getElementById('profile-email').value.trim();
-            if(!newEmail || newEmail === State.getCurrentUser().email) return;
-            
-            const btn = document.getElementById('profile-email-btn');
-            btn.textContent = '...';
-            btn.disabled = true;
-            
-            try {
-                await updateEmail(State.getCurrentUser(), newEmail);
-                showModal({ type: 'success', title: 'Ä°ÅŸlem BaÅŸarÄ±lÄ±', text: 'E-posta adresiniz baÅŸarÄ±yla gÃ¼ncellenmiÅŸtir. HesabÄ±nÄ±za artÄ±k yeni e-posta adresinizle giriÅŸ yapabilirsiniz.', confirmText: 'Tamam' });
-            } catch(error) {
-                console.error(error);
-                if (error.code === 'auth/requires-recent-login') {
-                    showModal({ type: 'error', title: 'DoÄŸrulama Gerekiyor', text: 'GÃ¼venlik prosedÃ¼rleri gereÄŸi e-posta adresinizi deÄŸiÅŸtirmeden Ã¶nce sistemden Ã§Ä±kÄ±ÅŸ yapÄ±p tekrar giriÅŸ yapmanÄ±z gerekmektedir.', confirmText: 'AnladÄ±m' });
-                } else if (error.code === 'auth/email-already-in-use') {
-                    showModal({ type: 'error', title: 'Hata', text: 'GirdiÄŸiniz e-posta adresi baÅŸka bir hesaba aittir. LÃ¼tfen farklÄ± bir adres deneyin.', confirmText: 'Kapat' });
-                } else if (error.code === 'auth/invalid-email') {
-                    showModal({ type: 'error', title: 'Hata', text: 'GeÃ§ersiz bir e-posta formatÄ± girdiniz.', confirmText: 'Kapat' });
-                } else {
-                    showModal({ type: 'error', title: 'Hata', text: 'E-posta adresi gÃ¼ncellenirken sistemsel bir hata oluÅŸtu.', confirmText: 'Kapat' });
-                }
-            }
-            btn.textContent = 'GÃ¼ncelle';
-            btn.disabled = false;
-        }
-
-        export function deleteAccount() {
-            showModal({
-                type: 'warning',
-                title: 'Dikkat!',
-                text: 'HesabÄ±nÄ±zÄ± ve Ã§Ã¶zdÃ¼ÄŸÃ¼nÃ¼z tÃ¼m sorularÄ± kalÄ±cÄ± olarak silmek Ã¼zeresiniz. Bu iÅŸlem kesinlikle geri alÄ±namaz. OnaylÄ±yor musunuz?',
-                confirmText: 'Evet, HesabÄ±mÄ± Sil',
-                cancelText: 'Ä°ptal Et',
-                onConfirm: async () => {
-                    try {
-                        await deleteDoc(doc(db, "users", State.getCurrentUser().uid));
-                        await deleteUser(State.getCurrentUser());
-                        
-                        window.closeProfileModal();
-                        showModal({ type: 'info', title: 'Hesap Silindi', text: 'HesabÄ±nÄ±z ve tÃ¼m verileriniz kalÄ±cÄ± olarak silindi. HoÅŸÃ§akalÄ±n!', confirmText: 'Tamam' });
-                        setTimeout(() => window.location.reload(), 2000);
-                        
-                    } catch(error) {
-                        console.error(error);
-                        if (error.code === 'auth/requires-recent-login') {
-                            showModal({ type: 'error', title: 'GÃ¼venlik DoÄŸrulamasÄ±', text: 'GÃ¼venlik nedeniyle hesabÄ±nÄ±zÄ± silebilmemiz iÃ§in yakÄ±n zamanda giriÅŸ yapmÄ±ÅŸ olmanÄ±z gerekiyor. LÃ¼tfen Ã§Ä±kÄ±ÅŸ yapÄ±p tekrar giriÅŸ yaptÄ±ktan sonra bu iÅŸlemi tekrarlayÄ±n.', confirmText: 'Tamam' });
-                        } else {
-                            showModal({ type: 'error', title: 'Hata', text: 'Hesap silinirken bir hata oluÅŸtu: ' + error.message, confirmText: 'Tamam' });
-                        }
-                    }
-                }
-            });
-        }
-
-        
-// Expose functions to window for legacy inline calls in HTML
-window.renderDropdown = renderDropdown;
-window.showTest = showTest;
-window.updateUI = updateUI;
-window.nextQuestion = nextQuestion;
-window.prevQuestion = prevQuestion;
-window.handleOptionSelect = handleOptionSelect;
-window.evaluateSingleQuestion = evaluateSingleQuestion;
-window.submitCurrentTest = submitCurrentTest;
-window.generateRandomTest = generateRandomTest;
-window.openSuggestionModal = openSuggestionModal;
-window.closeSuggestionModal = closeSuggestionModal;
-window.submitSuggestion = submitSuggestion;
-window.openProfileModal = openProfileModal;
-window.closeProfileModal = closeProfileModal;
 window.showReviewMistakes = showReviewMistakes;
-window.showStatsModal = showStatsModal;
-window.closeStatsModal = closeStatsModal;
-window.updateUsername = updateUsername;
-window.updateEmailAddress = updateEmailAddress;
-window.deleteAccount = deleteAccount;
-

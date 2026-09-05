@@ -4,7 +4,7 @@
  */
 import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
-import { doc, setDoc, collection, getDocs, query, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { doc, setDoc, collection, getDocs, query, deleteDoc } from "firebase/firestore";
 import { showModal } from "../ui/modal.js";
 
 // ==========================================

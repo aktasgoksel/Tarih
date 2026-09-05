@@ -4,8 +4,8 @@
  */
 import { State } from "../state.js";
 import { auth, db } from "../firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import { loadTestsFromFirestore, showLoader, hideLoader, updateLoaderText } from "../ui/loader.js";
 import { stopTimer } from "../features/timer.js";
@@ -203,7 +203,7 @@ onAuthStateChanged(auth, async (user) => {
         showLoader('Giriş yapılıyor...');
         
         // ADMIN ROLE CHECK
-        const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
+        const ADMIN_EMAILS = [import.meta.env.VITE_ADMIN_EMAIL];
         const adminBtn = document.getElementById('admin-panel-btn');
         if (adminBtn) {
             if (ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
