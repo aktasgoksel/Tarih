@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2026 Göksel Aktaş. All Rights Reserved.
  * Bu dosyanın izinsiz kopyalanması veya kullanılması yasaktır.
  */
@@ -14,6 +14,8 @@ import './features/favorites.js';
 import './features/timer.js';
 import './features/optic.js';
 import './features/tests.js';
+import './features/stats.js';
+import './features/profile.js';
 import './ui/modal.js';
 import './features/admin.js';
 
