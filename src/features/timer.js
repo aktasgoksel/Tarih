@@ -71,9 +71,9 @@ export function startTimerManually() {
                 window.stopTimer();
                 showModal({
                     type: 'warning',
-                    title: 'SÃ¼re Doldu!',
-                    text: 'Test sÃ¼reniz sona erdi. Test otomatik olarak bitiriliyor.',
-                    confirmText: 'Sonucu GÃ¶r',
+                    title: 'Süre Doldu!',
+                    text: 'Test süreniz sona erdi. Test otomatik olarak bitiriliyor.',
+                    confirmText: 'Sonucu Gör',
                     onConfirm: () => {
                         submitCurrentTest(true);
                     }

@@ -8,35 +8,35 @@ import { saveUserDataCloud } from "../core/auth.js";
 
 const legalTexts = {
     'terms': {
-        title: 'KullanÄ±m KoÅŸullarÄ±',
+        title: 'Kullanım Koşulları',
         content: `
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">1. Hizmetin KapsamÄ±</h3>
-            <p class="mb-4">TarihApp, KPSS ve benzeri sÄ±navlara hazÄ±rlanan Ã¶ÄŸrencilere yÃ¶nelik tamamen Ã¼cretsiz bir eÄŸitim asistanÄ±dÄ±r. Sistemdeki sorular ve denemeler eÄŸitim amacÄ±yla sunulmaktadÄ±r. GeliÅŸtirici, sorularÄ±n kesin doÄŸruluÄŸunu taahhÃ¼t etmez.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">1. Hizmetin Kapsamı</h3>
+            <p class="mb-4">TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrencilere yönelik tamamen ücretsiz bir eğitim asistanıdır. Sistemdeki sorular ve denemeler eğitim amacıyla sunulmaktadır. Geliştirici, soruların kesin doğruluğunu taahhüt etmez.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Hesap ve Veri GÃ¼venliÄŸi</h3>
-            <p class="mb-4">UygulamamÄ±zÄ± kullanÄ±rken oluÅŸturduÄŸunuz hesap bilgileri Google Firebase altyapÄ±sÄ± ile ÅŸifrelenerek korunmaktadÄ±r. KullanÄ±cÄ±, kendi hesabÄ±nÄ±n gÃ¼venliÄŸinden sorumludur.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Hesap ve Veri Güvenliği</h3>
+            <p class="mb-4">Uygulamamızı kullanırken oluşturduğunuz hesap bilgileri Google Firebase altyapısı ile şifrelenerek korunmaktadır. Kullanıcı, kendi hesabının güvenliğinden sorumludur.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. KÃ¶tÃ¼ye KullanÄ±m</h3>
-            <p class="mb-4">Sistemin iÅŸleyiÅŸini bozacak, veri trafiÄŸini manipÃ¼le edecek her tÃ¼rlÃ¼ otomasyon aracÄ±nÄ±n (bot vb.) kullanÄ±lmasÄ± yasaktÄ±r. Bu tÃ¼r durumlar tespit edildiÄŸinde hesabÄ±nÄ±z kalÄ±cÄ± olarak silinebilir.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. Kötüye Kullanım</h3>
+            <p class="mb-4">Sistemin işleyişini bozacak, veri trafiğini manipüle edecek her türlü otomasyon aracının (bot vb.) kullanılması yasaktır. Bu tür durumlar tespit edildiğinde hesabınız kalıcı olarak silinebilir.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. DeÄŸiÅŸiklik HaklarÄ±</h3>
-            <p>YÃ¶netim, uygulama iÃ§erisindeki Ã¶zellikleri, soru tiplerini veya kullanÄ±m koÅŸullarÄ±nÄ± Ã¶nceden haber vermeksizin deÄŸiÅŸtirme hakkÄ±nÄ± saklÄ± tutar.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. Değişiklik Hakları</h3>
+            <p>Yönetim, uygulama içerisindeki özellikleri, soru tiplerini veya kullanım koşullarını önceden haber vermeksizin değiştirme hakkını saklı tutar.</p>
         `
     },
     'privacy': {
-        title: 'Gizlilik PolitikasÄ±',
+        title: 'Gizlilik Politikası',
         content: `
             <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">1. Toplanan Veriler</h3>
-            <p class="mb-4">Sizlere daha iyi bir deneyim sunabilmek iÃ§in ÅŸu verileri depolarÄ±z: E-posta adresiniz, belirlediÄŸiniz kullanÄ±cÄ± adÄ±, Ã§Ã¶zdÃ¼ÄŸÃ¼nÃ¼z testlerin istatistikleri, yanlÄ±ÅŸ yaptÄ±ÄŸÄ±nÄ±z ve favoriye aldÄ±ÄŸÄ±nÄ±z sorular.</p>
+            <p class="mb-4">Sizlere daha iyi bir deneyim sunabilmek için şu verileri depolarız: E-posta adresiniz, belirlediğiniz kullanıcı adı, çözdüğünüz testlerin istatistikleri, yanlış yaptığınız ve favoriye aldığınız sorular.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Verilerin KullanÄ±mÄ±</h3>
-            <p class="mb-4">Toplanan istatistiksel veriler (Ã§Ã¶zÃ¼len sorular, hatalar vs.) tamamen size Ã¶zel kiÅŸiselleÅŸtirilmiÅŸ "YanlÄ±ÅŸlarÄ±m" veya "Ä°statistikler" ekranlarÄ±nÄ± oluÅŸturmak iÃ§in kullanÄ±lÄ±r. Verileriniz hiÃ§bir ÅŸekilde Ã¼Ã§Ã¼ncÃ¼ ÅŸahÄ±s veya reklam ÅŸirketleriyle paylaÅŸÄ±lmaz, satÄ±lmaz.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">2. Verilerin Kullanımı</h3>
+            <p class="mb-4">Toplanan istatistiksel veriler (çözülen sorular, hatalar vs.) tamamen size özel kişiselleştirilmiş "Yanlışlarım" veya "İstatistikler" ekranlarını oluşturmak için kullanılır. Verileriniz hiçbir şekilde üçüncü şahıs veya reklam şirketleriyle paylaşılmaz, satılmaz.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. Ã‡erezler (Cookies) ve Yerel Depolama</h3>
-            <p class="mb-4">Uygulama, "KaranlÄ±k Mod/AydÄ±nlÄ±k Mod" tercihlerinizi ve aktif oturum bilgilerinizi hatÄ±rlamak iÃ§in tarayÄ±cÄ±nÄ±zÄ±n yerel depolama (Local Storage) Ã¶zelliÄŸini kullanÄ±r. Ä°zleme (Tracking) veya reklam Ã§erezleri kullanÄ±lmamaktadÄ±r.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">3. Çerezler (Cookies) ve Yerel Depolama</h3>
+            <p class="mb-4">Uygulama, "Karanlık Mod/Aydınlık Mod" tercihlerinizi ve aktif oturum bilgilerinizi hatırlamak için tarayıcınızın yerel depolama (Local Storage) özelliğini kullanır. İzleme (Tracking) veya reklam çerezleri kullanılmamaktadır.</p>
             
-            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. KVKK ve Unutulma HakkÄ±</h3>
-            <p>KullanÄ±cÄ±lar istedikleri zaman "Profil ve Ayarlar" paneli Ã¼zerinden hesaplarÄ±nÄ± ve iliÅŸkili tÃ¼m verilerini (yanlÄ±ÅŸlar, favoriler, Ã§Ã¶zÃ¼len testler) sistemden kalÄ±cÄ± olarak silebilirler. Bu iÅŸlem geri alÄ±namaz.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">4. KVKK ve Unutulma Hakkı</h3>
+            <p>Kullanıcılar istedikleri zaman "Profil ve Ayarlar" paneli üzerinden hesaplarını ve ilişkili tüm verilerini (yanlışlar, favoriler, çözülen testler) sistemden kalıcı olarak silebilirler. Bu işlem geri alınamaz.</p>
         `
     }
 };
@@ -148,10 +148,10 @@ export function resetTest() {
     
     showModal({
         type: 'warning',
-        title: 'Testi SÄ±fÄ±rla',
-        text: 'Testi sÄ±fÄ±rlamak istediÄŸinize emin misiniz? Bu iÅŸlem test sonucunuzu tamamen silecektir.',
-        confirmText: 'SÄ±fÄ±rla',
-        cancelText: 'Ä°ptal',
+        title: 'Testi Sıfırla',
+        text: 'Testi sıfırlamak istediğinize emin misiniz? Bu işlem test sonucunuzu tamamen silecektir.',
+        confirmText: 'Sıfırla',
+        cancelText: 'İptal',
         onConfirm: () => {
             State.getUserData().testProgress[State.getCurrentTestIndex()] = null;
             saveUserDataCloud();

@@ -22,21 +22,21 @@ import { showModal } from "../ui/modal.js";
             // Random Trial Option
             const randomOpt = document.createElement('option');
             randomOpt.value = 'RANDOM_27';
-            randomOpt.textContent = 'ğŸ² GerÃ§ek KPSS Denemesi (Rastgele 27 Soru)';
+            randomOpt.textContent = 'ğŸ² Gerçek KPSS Denemesi (Rastgele 27 Soru)';
             randomOpt.className = 'font-bold text-indigo-600 dark:text-indigo-400';
             dropdown.appendChild(randomOpt);
             
             // Mistake Option
             const mistakeOpt = document.createElement('option');
             mistakeOpt.value = 'MISTAKES';
-            mistakeOpt.textContent = 'ğŸ”¥ YanlÄ±ÅŸ YaptÄ±ÄŸÄ±m Sorular (Ã–zel Test)';
+            mistakeOpt.textContent = 'ğŸ”¥ Yanlış Yaptığım Sorular (Özel Test)';
             mistakeOpt.className = 'font-bold text-rose-600 dark:text-rose-400';
             dropdown.appendChild(mistakeOpt);
             
             // Favorite Option
             const favOpt = document.createElement('option');
             favOpt.value = 'FAVORITES';
-            favOpt.textContent = 'â­ Favori SorularÄ±m (Kaydedilenler)';
+            favOpt.textContent = 'â­ Favori Sorularım (Kaydedilenler)';
             favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
             dropdown.appendChild(favOpt);
             
@@ -48,7 +48,7 @@ import { showModal } from "../ui/modal.js";
                 let scoreText = '';
                 if(isFinished) {
                     const score = State.getUserData().testProgress[index].score;
-                    scoreText = ` \u2713 (Ã‡Ã¶zÃ¼ldÃ¼ - ${score}/${test.questions.length})`;
+                    scoreText = ` \u2713 (Çözüldü - ${score}/${test.questions.length})`;
                 }
                 opt.textContent = `${test.title}${scoreText}`;
                 dropdown.appendChild(opt);
@@ -182,7 +182,7 @@ import { showModal } from "../ui/modal.js";
             }
             if (!tests[index]) {
                 const cTitleEmpty = document.getElementById('current-test-title');
-                if (cTitleEmpty) cTitleEmpty.textContent = 'HenÃ¼z test yÃ¼klenmedi';
+                if (cTitleEmpty) cTitleEmpty.textContent = 'Henüz test yüklenmedi';
                 return;
             }
             State.setCurrentTestIndex(index);
@@ -217,7 +217,7 @@ import { showModal } from "../ui/modal.js";
             container.innerHTML = '';
             
             if(questions.length === 0) {
-                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">GÃ¶sterilecek soru bulunamadÄ±.</span></div>';
+                container.innerHTML = '<div class="text-center p-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700"><span class="text-gray-500 dark:text-gray-400 font-medium text-lg">Gösterilecek soru bulunamadı.</span></div>';
                 document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
@@ -238,7 +238,7 @@ import { showModal } from "../ui/modal.js";
                     ? `<svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`
                     : `<svg class="w-6 h-6 text-gray-400 hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
 
-                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-4 right-4 min-h-11 min-w-11 p-2 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110 flex items-center justify-center" title="Favorilere Ekle/Ã‡Ä±kar">${starSvg}</button>`;
+                const favButton = `<button id="star-btn-${index}" onclick="window.toggleFavorite(${index})" class="absolute top-4 right-4 min-h-11 min-w-11 p-2 bg-white dark:bg-slate-800 rounded-full focus:outline-none z-10 transition-transform hover:scale-110 flex items-center justify-center" title="Favorilere Ekle/Çıkar">${starSvg}</button>`;
 
                 let optionsHtml = '';
                 Object.keys(q.options).forEach((optKey, optIndex) => {
@@ -271,16 +271,16 @@ import { showModal } from "../ui/modal.js";
                     <div id="check-btn-container-${index}" class="mt-5 flex justify-end">
                         <button onclick="window.evaluateSingleQuestion(${index})" class="px-5 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/50 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/50 font-bold transition-colors text-sm shadow-sm flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            CevabÄ± Kontrol Et
+                            Cevabı Kontrol Et
                         </button>
                     </div>
 
                     <div id="solution-${index}" class="hidden mt-6 p-5 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg">
                         <h4 class="font-bold text-amber-800 dark:text-amber-400 mb-2 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Ã‡Ã¶zÃ¼m ve AÃ§Ä±klama (DoÄŸru Cevap: ${q.answer})
+                            Çözüm ve Açıklama (Doğru Cevap: ${q.answer})
                         </h4>
-                        <p class="text-amber-900 dark:text-amber-200/90 leading-relaxed font-medium">${q.solution ? (typeof q.solution === 'string' ? window.escapeHTML(q.solution).replace(/\n/g, '<br>') : window.escapeHTML(q.solution)) : 'AÃ§Ä±klama bulunmuyor.'}</p>
+                        <p class="text-amber-900 dark:text-amber-200/90 leading-relaxed font-medium">${q.solution ? (typeof q.solution === 'string' ? window.escapeHTML(q.solution).replace(/\n/g, '<br>') : window.escapeHTML(q.solution)) : 'Açıklama bulunmuyor.'}</p>
                     </div>`
                 ;
                 container.appendChild(questionEl);
@@ -355,13 +355,13 @@ import { showModal } from "../ui/modal.js";
                 // if random test is submitted, it will show result-container. We shouldn't force hide it here unless it's resetting.
                 // It will be handled in evaluateTest / submitCurrentTest
             } else if(isFinished) {
-                statusText = 'TamamlandÄ±';
+                statusText = 'Tamamlandı';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 border border-transparent dark:border-emerald-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800/50';
                 resultContainer.classList.remove('hidden');
                 stopTimer();
             } else {
-                statusText = 'Ã‡Ã¶zÃ¼lÃ¼yor';
+                statusText = 'Çözülüyor';
                 statusClass = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200 border border-transparent dark:border-yellow-800/50';
                 mobStatusClass = 'sm:hidden px-3 py-1.5 rounded-full text-xs font-bold border shadow-sm bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/50 dark:text-yellow-200 dark:border-yellow-800/50';
             }
@@ -439,7 +439,7 @@ import { showModal } from "../ui/modal.js";
             
             const selectedOption = document.querySelector(`input[name="${radioName}"]:checked`);
             if (!selectedOption) {
-                showModal({ type: 'info', title: 'UyarÄ±', text: 'Ã‡Ã¶zÃ¼mÃ¼ gÃ¶rmek iÃ§in lÃ¼tfen Ã¶nce bir ÅŸÄ±k iÅŸaretleyin.', confirmText: 'Tamam' });
+                showModal({ type: 'info', title: 'Uyarı', text: 'Çözümü görmek için lütfen önce bir şık işaretleyin.', confirmText: 'Tamam' });
                 return;
             }
             
@@ -502,9 +502,9 @@ import { showModal } from "../ui/modal.js";
                 showModal({
                     type: 'warning',
                     title: 'Eksik Sorular Var',
-                    text: `HenÃ¼z ${emptyCount} soruyu boÅŸ bÄ±raktÄ±nÄ±z. Testi yine de bitirmek istediÄŸinize emin misiniz?`,
+                    text: `Henüz ${emptyCount} soruyu boş bıraktınız. Testi yine de bitirmek istediğinize emin misiniz?`,
                     confirmText: 'Evet, Bitir',
-                    cancelText: 'VazgeÃ§',
+                    cancelText: 'Vazgeç',
                     onConfirm: () => {
                         window.submitCurrentTest(true);
                     }
@@ -569,3 +569,4 @@ import { showModal } from "../ui/modal.js";
         }
 
 window.showReviewMistakes = showReviewMistakes;
+window.updateUI = updateUI;

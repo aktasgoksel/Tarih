@@ -19,16 +19,16 @@ export async function login() {
     const pass = document.getElementById('login-password').value;
     const err = document.getElementById('auth-error');
     
-    if(!email || !pass) { err.textContent = 'LÃ¼tfen e-posta ve ÅŸifrenizi girin.'; return; }
+    if(!email || !pass) { err.textContent = 'Lütfen e-posta ve şifrenizi girin.'; return; }
     
-    err.textContent = 'GiriÅŸ yapÄ±lÄ±yor...';
+    err.textContent = 'Giriş yapılıyor...';
     try {
-        // Oturumu sadece tarayÄ±cÄ±/sekme aÃ§Ä±kken geÃ§erli kÄ±l (sayfa kapanÄ±nca otomatik Ã§Ä±kÄ±ÅŸ)
+        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
         await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, email, pass);
     } catch(error) {
         console.error(error);
-        err.textContent = 'GiriÅŸ baÅŸarÄ±sÄ±z. E-posta veya ÅŸifrenizi kontrol edin.';
+        err.textContent = 'Giriş başarısız. E-posta veya şifrenizi kontrol edin.';
     }
 }
 
@@ -38,10 +38,10 @@ export async function register() {
     const pass = document.getElementById('register-password').value;
     const err = document.getElementById('auth-error');
     
-    if(!username || !email || !pass) { err.textContent = 'LÃ¼tfen tÃ¼m alanlarÄ± doldurun.'; return; }
-    if(pass.length < 6) { err.textContent = 'Åifre en az 6 karakter olmalÄ±.'; return; }
+    if(!username || !email || !pass) { err.textContent = 'Lütfen tüm alanları doldurun.'; return; }
+    if(pass.length < 6) { err.textContent = 'Åifre en az 6 karakter olmalı.'; return; }
     
-    err.textContent = 'KayÄ±t olunuyor... LÃ¼tfen bekleyin.';
+    err.textContent = 'Kayıt olunuyor... Lütfen bekleyin.';
     try {
         const userCred = await createUserWithEmailAndPassword(auth, email, pass);
         await updateProfile(userCred.user, { displayName: username });
@@ -56,11 +56,11 @@ export async function register() {
     } catch(error) {
         console.error(error);
         if(error.code === 'auth/email-already-in-use') {
-            err.textContent = 'Bu e-posta adresi zaten kullanÄ±mda.';
+            err.textContent = 'Bu e-posta adresi zaten kullanımda.';
         } else if(error.code === 'auth/invalid-email') {
-            err.textContent = 'GeÃ§ersiz e-posta adresi.';
+            err.textContent = 'Geçersiz e-posta adresi.';
         } else {
-            err.textContent = 'KayÄ±t olurken bir hata oluÅŸtu: ' + error.message;
+            err.textContent = 'Kayıt olurken bir hata oluştu: ' + error.message;
         }
     }
 }
@@ -69,22 +69,22 @@ export async function sendResetEmail() {
     const email = document.getElementById('forgot-email').value.trim();
     const err = document.getElementById('auth-error');
     
-    if(!email) { err.textContent = "LÃ¼tfen e-posta adresinizi girin."; return; }
+    if(!email) { err.textContent = "Lütfen e-posta adresinizi girin."; return; }
     
     err.className = "text-sm text-center font-medium min-h-5 mt-3 text-blue-600 dark:text-blue-400";
-    err.textContent = "BaÄŸlantÄ± gÃ¶nderiliyor...";
+    err.textContent = "Bağlantı gönderiliyor...";
     
     try {
         await sendPasswordResetEmail(auth, email);
         err.className = "text-sm text-center font-medium min-h-5 mt-3 text-emerald-600 dark:text-emerald-400";
-        err.textContent = "Åifre sÄ±fÄ±rlama baÄŸlantÄ±sÄ± e-postanÄ±za gÃ¶nderildi!";
+        err.textContent = "Åifre sıfırlama bağlantısı e-postanıza gönderildi!";
         setTimeout(() => window.switchAuth('login'), 3500);
     } catch(error) {
         err.className = "text-sm text-center font-medium min-h-5 mt-3 text-red-500 dark:text-red-400";
         if(error.code === 'auth/user-not-found') {
-            err.textContent = "Bu e-posta adresiyle kayÄ±tlÄ± bir hesap bulunamadÄ±.";
+            err.textContent = "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.";
         } else if(error.code === 'auth/invalid-email') {
-            err.textContent = "GeÃ§ersiz e-posta formatÄ±.";
+            err.textContent = "Geçersiz e-posta formatı.";
         } else {
             err.textContent = "Hata: " + error.message;
         }
@@ -93,12 +93,12 @@ export async function sendResetEmail() {
 
 export async function loginWithGoogle() {
     const provider = new GoogleAuthProvider();
-    // Her giriÅŸte hesap seÃ§im ekranÄ±nÄ± zorunlu kÄ±l (son hesaba otomatik baÄŸlanmayÄ± engeller)
+    // Her girişte hesap seçim ekranını zorunlu kıl (son hesaba otomatik bağlanmayı engeller)
     provider.setCustomParameters({ prompt: 'select_account' });
     const err = document.getElementById('auth-error');
-    err.textContent = 'Google ekranÄ± bekleniyor...';
+    err.textContent = 'Google ekranı bekleniyor...';
     try {
-        // Oturumu sadece tarayÄ±cÄ±/sekme aÃ§Ä±kken geÃ§erli kÄ±l (sayfa kapanÄ±nca otomatik Ã§Ä±kÄ±ÅŸ)
+        // Oturumu sadece tarayıcı/sekme açıkken geçerli kıl (sayfa kapanınca otomatik çıkış)
         await setPersistence(auth, browserSessionPersistence);
         await signInWithPopup(auth, provider);
     } catch(error) {
@@ -216,7 +216,7 @@ onAuthStateChanged(auth, async (user) => {
         }
         
         let displayName = user.displayName || user.email.split('@')[0];
-        const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `HoÅŸ geldin, ${displayName}`;
+        const wt = document.getElementById('welcome-text'); if(wt) wt.textContent = `Hoş geldin, ${displayName}`;
         const err = document.getElementById('auth-error'); if(err) err.textContent = '';
         
         // Fetch data from Firestore in parallel
@@ -225,7 +225,7 @@ onAuthStateChanged(auth, async (user) => {
             
             updateLoaderText('Kullanıcı bilgileri doğrulanıyor...');
             const userPromise = getDoc(docRef).catch(e => {
-                console.error("KullanÄ±cÄ± verisi Ã§ekilemedi, geÃ§ici profil kullanÄ±lacak:", e);
+                console.error("Kullanıcı verisi çekilemedi, geçici profil kullanılacak:", e);
                 return null;
             });
             
@@ -242,7 +242,7 @@ onAuthStateChanged(auth, async (user) => {
                     try {
                         await setDoc(docRef, State.getUserData());
                     } catch(writeErr) {
-                        console.error("Yeni kullanÄ±cÄ± veritabanÄ±na kaydedilemedi:", writeErr);
+                        console.error("Yeni kullanıcı veritabanına kaydedilemedi:", writeErr);
                     }
                 }
             }
@@ -258,11 +258,11 @@ onAuthStateChanged(auth, async (user) => {
             updateMistakeBadge();
             updateFavoritesBadge();
         } catch(error) {
-            console.error("GiriÅŸ sonrasÄ± yÃ¼kleme hatasÄ±:", error);
+            console.error("Giriş sonrası yükleme hatası:", error);
             showModal({
                 type: 'error',
-                title: 'YÃ¼kleme HatasÄ±',
-                text: 'Verileriniz yÃ¼klenirken bir hata oluÅŸtu: ' + error.message + '. LÃ¼tfen internet baÄŸlantÄ±nÄ±zÄ± kontrol edip sayfayÄ± yenileyin.',
+                title: 'Yükleme Hatası',
+                text: 'Verileriniz yüklenirken bir hata oluştu: ' + error.message + '. Lütfen internet bağlantınızı kontrol edip sayfayı yenileyin.',
                 confirmText: 'Yeniden Dene',
                 onConfirm: () => window.location.reload()
             });
@@ -316,13 +316,13 @@ export async function saveUserDataCloud() {
     try {
         await setDoc(doc(db, "users", State.getCurrentUser().uid), State.getUserData());
     } catch(e) {
-        console.error("VeritabanÄ±na kaydedilemedi:", e);
+        console.error("Veritabanına kaydedilemedi:", e);
         if (!hasShownSaveWarning) {
             hasShownSaveWarning = true;
             showModal({
                 type: 'warning',
-                title: 'BaÄŸlantÄ± HatasÄ±',
-                text: 'Ä°lerlemeniz bulut veritabanÄ±na kaydedilemedi. Ä°nternet baÄŸlantÄ±nÄ±zÄ± kontrol edin. Ä°lerlemeniz geÃ§ici olarak tarayÄ±cÄ±nÄ±zda saklanmaya devam edecektir.',
+                title: 'Bağlantı Hatası',
+                text: 'İlerlemeniz bulut veritabanına kaydedilemedi. İnternet bağlantınızı kontrol edin. İlerlemeniz geçici olarak tarayıcınızda saklanmaya devam edecektir.',
                 confirmText: 'Tamam'
             });
             // Reset warning flag after 5 minutes
@@ -365,10 +365,10 @@ export function clearAllMistakes() {
     if(State.getUserData().mistakes && State.getUserData().mistakes.length > 0) {
         showModal({
             type: 'warning',
-            title: 'YanlÄ±ÅŸlarÄ± SÄ±fÄ±rla',
-            text: 'TÃ¼m yanlÄ±ÅŸ soru kayÄ±tlarÄ±nÄ±zÄ± sÄ±fÄ±rlamak (silmek) istediÄŸinize emin misiniz? Bu iÅŸlem geri alÄ±namaz.',
-            confirmText: 'Evet, SÄ±fÄ±rla',
-            cancelText: 'Ä°ptal',
+            title: 'Yanlışları Sıfırla',
+            text: 'Tüm yanlış soru kayıtlarınızı sıfırlamak (silmek) istediğinize emin misiniz? Bu işlem geri alınamaz.',
+            confirmText: 'Evet, Sıfırla',
+            cancelText: 'İptal',
             onConfirm: () => {
                 State.getUserData().mistakes = [];
                 saveUserDataCloud();

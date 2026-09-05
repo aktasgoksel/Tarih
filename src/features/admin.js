@@ -13,7 +13,7 @@ import { showModal } from "../ui/modal.js";
 export async function openAdminPanel() {
     const ADMIN_EMAILS = ['gokselaktas84@gmail.com'];
     if(!State.getCurrentUser() || !ADMIN_EMAILS.includes(State.getCurrentUser().email)) {
-        showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz eriÅŸim!', confirmText: 'Tamam' });
+        showModal({ type: 'error', title: 'Hata', text: 'Yetkisiz erişim!', confirmText: 'Tamam' });
         return;
     }
 
@@ -24,7 +24,7 @@ export async function openAdminPanel() {
 
     const list = document.getElementById('admin-suggestions-list');
     if (list) {
-        list.innerHTML = '<div class="text-center py-10 text-gray-500">VeritabanÄ±ndan Ã¶neriler Ã§ekiliyor...</div>';
+        list.innerHTML = '<div class="text-center py-10 text-gray-500">Veritabanından öneriler çekiliyor...</div>';
         
         try {
             const q = query(collection(db, "suggestions"));
@@ -59,12 +59,12 @@ export async function openAdminPanel() {
             });
             
             if(items.length === 0) {
-                html = '<div class="text-center py-10 text-gray-500 font-medium">HenÃ¼z kimse bir Ã¶neri gÃ¶ndermemiÅŸ.</div>';
+                html = '<div class="text-center py-10 text-gray-500 font-medium">Henüz kimse bir öneri göndermemiş.</div>';
             }
             list.innerHTML = html;
         } catch (e) {
             console.error(e);
-            list.innerHTML = '<div class="text-center text-red-500 py-10 font-bold">Veriler Ã§ekilemedi! Firebase Rules (Kurallar) izin vermiyor olabilir.</div>';
+            list.innerHTML = '<div class="text-center text-red-500 py-10 font-bold">Veriler çekilemedi! Firebase Rules (Kurallar) izin vermiyor olabilir.</div>';
         }
     }
 }
@@ -210,19 +210,19 @@ window.auditTests = function() {
 export async function deleteSuggestion(suggestionId) {
     showModal({
         type: 'warning',
-        title: 'Ã–neriyi Sil',
-        text: 'Bu Ã¶neriyi silmek istediÄŸinize emin misiniz? Bu iÅŸlem geri alÄ±namaz.',
+        title: 'Öneriyi Sil',
+        text: 'Bu öneriyi silmek istediğinize emin misiniz? Bu işlem geri alınamaz.',
         confirmText: 'Evet, Sil',
-        cancelText: 'Ä°ptal',
+        cancelText: 'İptal',
         onConfirm: async () => {
             try {
                 await deleteDoc(doc(db, "suggestions", suggestionId));
                 // Reload suggestions list instantly
                 await openAdminPanel();
-                showModal({ type: 'success', title: 'BaÅŸarÄ±lÄ±', text: 'Ã–neri baÅŸarÄ±yla silindi.', confirmText: 'Kapat' });
+                showModal({ type: 'success', title: 'Başarılı', text: 'Öneri başarıyla silindi.', confirmText: 'Kapat' });
             } catch (e) {
                 console.error(e);
-                showModal({ type: 'error', title: 'Hata', text: 'Ã–neri silinirken bir hata oluÅŸtu: ' + e.message, confirmText: 'Tamam' });
+                showModal({ type: 'error', title: 'Hata', text: 'Öneri silinirken bir hata oluştu: ' + e.message, confirmText: 'Tamam' });
             }
         }
     });
