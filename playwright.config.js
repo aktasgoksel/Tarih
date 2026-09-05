@@ -21,7 +21,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npx vite --host 127.0.0.1 --port 5173',
-    url: 'http://127.0.0.1:5173/index_dev.html',
+    url: 'http://127.0.0.1:5173/',
     reuseExistingServer: !process.env.CI,
     stdout: 'ignore',
     stderr: 'pipe',
