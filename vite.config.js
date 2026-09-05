@@ -1,17 +1,13 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
-import { viteSingleFile } from 'vite-plugin-singlefile'
 
 export default defineConfig({
+  base: '/Tarih/',
   plugins: [
     tailwindcss(),
-    viteSingleFile(),
   ],
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    rollupOptions: {
-      input: 'index.html'
-    }
   }
 })
