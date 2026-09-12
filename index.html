@@ -36,8 +36,8 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-  <script type="module" crossorigin src="/Tarih/assets/index-Cz82MTUq.js"></script>
-  <link rel="stylesheet" crossorigin href="/Tarih/assets/index-D-eAIHUY.css">
+  <script type="module" crossorigin src="/Tarih/assets/index-LbBHuLNk.js"></script>
+  <link rel="stylesheet" crossorigin href="/Tarih/assets/index-DWTsqty2.css">
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
     
@@ -527,25 +527,24 @@
 
     <!-- ADMIN SCREEN -->
     <div id="admin-screen" class="hidden min-h-screen bg-slate-50 dark:bg-slate-900 flex-col pb-20">
-        <header class="bg-indigo-600 dark:bg-indigo-800 text-white p-4 shadow-lg sticky top-0 z-50">
-            <div class="max-w-4xl mx-auto flex justify-between items-center gap-3">
-                <h1 class="text-lg sm:text-xl font-bold flex items-center gap-2 min-w-0">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span class="truncate">Soru Yönetim Paneli</span>
-                </h1>
-                <div class="flex items-center gap-2 shrink-0">
-                    <button onclick="window.injectMissingQuestions()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap" title="Eksik soruları PDF'den aktar">
-                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Eksikleri Aktar
-                    </button>
-                    <button onclick="window.auditTests()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap" title="Tüm testlerin soru sayısını kontrol et">
-                        Veritabanı Denetimi
-                    </button>
-                    <button onclick="window.closeAdminPanel()" class="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 min-h-11 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base">
-                        Ana Ekrana Dön
-                    </button>
-                </div>
-            </div>
-        </header>
+                  <header class="bg-indigo-600 dark:bg-indigo-800 text-white p-4 shadow-lg sticky top-0 z-50">
+              <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-3">
+                  <h1 class="text-lg sm:text-xl font-bold flex items-center gap-2 min-w-0 w-full sm:w-auto justify-center sm:justify-start">
+                      <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                      <span class="truncate">Soru Yönetim Paneli</span>
+                  </h1>
+                  <div class="flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto shrink-0">
+                      <button onclick="window.auditTests()" class="flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-400 dark:bg-indigo-700 dark:hover:bg-indigo-600 border border-indigo-400 dark:border-indigo-500 text-white px-4 min-h-11 py-2 rounded-lg font-medium transition-all text-sm sm:text-base shadow-sm w-full sm:w-auto" title="Tüm testlerin soru sayısını kontrol et">
+                          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                          <span class="truncate">Veritabanı Denetimi</span>
+                      </button>
+                      <button onclick="window.closeAdminPanel()" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 min-h-11 py-2 rounded-lg font-medium transition-all text-sm sm:text-base border border-white/20 shadow-sm w-full sm:w-auto">
+                          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
+                          <span class="truncate">Ana Ekrana Dön</span>
+                      </button>
+                  </div>
+              </div>
+          </header>
 
         <main class="max-w-4xl mx-auto w-full p-4 mt-6">
             <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-6">
