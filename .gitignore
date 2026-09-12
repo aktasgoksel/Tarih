@@ -30,3 +30,6 @@ Thumbs.db
 test-results/
 playwright-report/
 *.log
+ocr_scripts/
+
+ocr_scripts/

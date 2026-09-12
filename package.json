@@ -2,7 +2,6 @@
   "name": "tarih",
   "version": "1.0.0",
   "description": "TarihApp, KPSS ve benzeri sınavlara hazırlanan öğrenciler için geliştirilmiş, ilerleme takibi ve analiz yetenekleriyle donatılmış dijital bir eğitim platformudur. Bu doküman, uygulamanın sunduğu özellikleri ve temel kullanım prensiplerini içermektedir.",
-  "main": "data.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,7 +25,6 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "autoprefixer": "^10.5.4",
-    "firebase-tools": "^15.28.2",
     "postcss": "^8.5.26",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.2"

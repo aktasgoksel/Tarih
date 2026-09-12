@@ -207,7 +207,7 @@ window.auditTests = function() {
     }
 };
 
-export async function deleteSuggestion(suggestionId) {
+async function deleteSuggestion(suggestionId) {
     showModal({
         type: 'warning',
         title: 'Öneriyi Sil',

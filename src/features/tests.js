@@ -394,7 +394,7 @@ import { showModal } from "../ui/modal.js";
             }
         }
         
-        export function handleOptionSelect(qIndex) {
+        function handleOptionSelect(qIndex) {
             const isInstant = document.getElementById('instant-feedback').checked;
             const isFinished = (State.getCurrentMode() === 'NORMAL') ? (State.getUserData().testProgress[State.getCurrentTestIndex()] && State.getUserData().testProgress[State.getCurrentTestIndex()].finished) : false;
             
@@ -578,3 +578,5 @@ window.prevQuestion = prevQuestion;
 window.submitCurrentTest = submitCurrentTest;
 window.generateMistakeTest = generateMistakeTest;
 window.generateFavoritesTest = generateFavoritesTest;
+
+window.handleOptionSelect = handleOptionSelect;

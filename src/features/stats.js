@@ -32,13 +32,13 @@ export function closeStatsModal() {
     }, 300);
 }
 
-export function getCategoryName(title) {
+function getCategoryName(title) {
     if(!title.includes(':')) return "Genel";
     const part = title.split(':')[1];
     return part.split('-')[0].trim();
 }
 
-export function renderStats() {
+function renderStats() {
     let catData = {};
     let hasData = false;
     
