@@ -22,21 +22,21 @@ import { showModal } from "../ui/modal.js";
             // Random Trial Option
             const randomOpt = document.createElement('option');
             randomOpt.value = 'RANDOM_27';
-            randomOpt.textContent = 'ğŸ² Gerçek KPSS Denemesi (Rastgele 27 Soru)';
+            randomOpt.textContent = '🎲 Gerçek KPSS Denemesi (Rastgele 27 Soru)';
             randomOpt.className = 'font-bold text-indigo-600 dark:text-indigo-400';
             dropdown.appendChild(randomOpt);
             
             // Mistake Option
             const mistakeOpt = document.createElement('option');
             mistakeOpt.value = 'MISTAKES';
-            mistakeOpt.textContent = 'ğŸ”¥ Yanlış Yaptığım Sorular (Özel Test)';
+            mistakeOpt.textContent = '🔥 Yanlış Yaptığım Sorular (Özel Test)';
             mistakeOpt.className = 'font-bold text-rose-600 dark:text-rose-400';
             dropdown.appendChild(mistakeOpt);
             
             // Favorite Option
             const favOpt = document.createElement('option');
             favOpt.value = 'FAVORITES';
-            favOpt.textContent = 'â­ Favori Sorularım (Kaydedilenler)';
+            favOpt.textContent = '⭐ Favori Sorularım (Kaydedilenler)';
             favOpt.className = 'font-bold text-amber-600 dark:text-amber-400';
             dropdown.appendChild(favOpt);
             
@@ -141,7 +141,7 @@ import { showModal } from "../ui/modal.js";
             allQ.sort(() => 0.5 - Math.random());
             State.setCurrentTestQuestions(allQ.slice(0, 27));
             
-            const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = 'ğŸ² Rastgele KPSS Denemesi (27 Soru)';
+            const cTitle3 = document.getElementById('current-test-title'); if(cTitle3) cTitle3.textContent = '🎲 Rastgele KPSS Denemesi (27 Soru)';
             State.setCurrentQuestionIndex(0);
             
             renderTestUI(State.getCurrentTestQuestions());
