@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aktasgoksel/Tarih.git"
+    "url": "git+https://github.com/aktasgoksel/TarihApp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/aktasgoksel/Tarih/issues"
+    "url": "https://github.com/aktasgoksel/TarihApp/issues"
   },
-  "homepage": "https://github.com/aktasgoksel/Tarih#readme",
+  "homepage": "https://github.com/aktasgoksel/TarihApp#readme",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.3.3",
